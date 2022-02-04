@@ -46,3 +46,15 @@ export async function setCartItemAmount(req: Request, res: Response) {
     }
 }
 
+export async function deleteCartItem(req: Request, res: Response) {
+
+    try {
+        const productToSet = req.body;
+        await Cart().delete(productToSet)
+        return res.status(200).json({ success: true })
+
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error })
+    }
+}
+

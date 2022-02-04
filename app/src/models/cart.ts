@@ -81,6 +81,17 @@ export function Cart() {
             return res.rows
         },
 
+        async delete({ cart_item_id, user_id }: { cart_item_id: number, user_id: number }) {
+
+            const query = {
+                text: 'DELETE FROM cart_items WHERE cart_item_id = $1 AND user_id = $2',
+                values: [ cart_item_id, user_id ],
+            }
+
+            const res = await pool.query(query)
+            return res.rows
+        },
+
     }
 
 }

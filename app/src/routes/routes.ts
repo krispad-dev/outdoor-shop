@@ -3,7 +3,8 @@ import express from "express";
 import { 
     addToCart, 
     getCart,
-    setCartItemAmount
+    setCartItemAmount,
+    deleteCartItem
 } from "../controllers/cartController";
 
 import { 
@@ -18,11 +19,14 @@ export const productRouter = express.Router()
 export const cartRouter = express.Router()
 
 
+//PRODUCTS
 productRouter.get('/', getAllProducts)
 productRouter.post('/', addProduct)
 productRouter.put('/', updateProduct)
 productRouter.delete('/', deleteProduct)
 
+//CART
 cartRouter.post('/', addToCart)
 cartRouter.get('/', getCart)
 cartRouter.put('/', setCartItemAmount)
+cartRouter.delete('/', deleteCartItem)
