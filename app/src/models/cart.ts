@@ -23,7 +23,7 @@ export function Cart() {
 
             const query = {
                 text: `
-                SELECT item_count, product_name, price, image, description FROM cart_items
+                SELECT cart_item_id, product_name, price, item_count, image, description FROM cart_items
                 JOIN users 
                 ON users.user_id = cart_items.user_id 
                 JOIN products 
@@ -50,11 +50,14 @@ export function Cart() {
 
         async increment({ cart_item_id }: { cart_item_id: number }) {
 
+            console.log(cart_item_id);
+            
+
             const query = {
                 text: `
-                UPDATE products
-                SET item_count = item_count + 1, 
-                WHERE cart_product_id = $1;
+                UPDATE cart_items
+                SET item_count = item_count + 1 
+                WHERE cart_item_id = $1;
                 `,
                 values: [ cart_item_id ],
             }
@@ -67,9 +70,9 @@ export function Cart() {
 
             const query = {
                 text: `
-                UPDATE products
-                SET item_count = item_count - 1, 
-                WHERE cart_product_id = $1;
+                UPDATE cart_items
+                SET item_count = item_count - 1
+                WHERE cart_item_id = $1;
                 `,
                 values: [ cart_item_id ],
             }

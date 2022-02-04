@@ -2,7 +2,8 @@ import express from "express";
 
 import { 
     addToCart, 
-    getCart 
+    getCart,
+    setCartItemAmount
 } from "../controllers/cartController";
 
 import { 
@@ -24,3 +25,4 @@ productRouter.delete('/', deleteProduct)
 
 cartRouter.post('/', addToCart)
 cartRouter.get('/', getCart)
+cartRouter.put('/', setCartItemAmount)

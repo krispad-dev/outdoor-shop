@@ -34,9 +34,9 @@ export async function setCartItemAmount(req: Request, res: Response) {
         const productToSet = req.body;
 
         if (productToSet.increment) {
-            await Cart().increment(productToSet.id)
+            await Cart().increment(productToSet)
         } else {
-            await Cart().decrement(productToSet.id)
+            await Cart().decrement(productToSet)
         }
 
         return res.status(200).json({ success: true })
