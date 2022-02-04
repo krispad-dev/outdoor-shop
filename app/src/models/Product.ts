@@ -7,6 +7,7 @@ interface Product {
     description: string;
     price: number;
     in_stock: number;
+    image: string;
 
 }
 
@@ -17,7 +18,7 @@ interface updateOne {
     price: number;
     in_stock: number;
     product_id: number;
-
+    image: string;
 }
 
 
@@ -30,27 +31,26 @@ export function Product() {
             return res.rows
         },
 
-        async addOne({ product_name, description, in_stock, price }: Product) {
-
+        async addOne({ product_name, description, in_stock, price, image }: Product) {
+ 
             const query = {
-                text:'INSERT INTO products (product_name, description, in_stock, price ) VALUES($1, $2, $3, $4)',
-                values: [product_name, description, in_stock, price],
+                text:'INSERT INTO products (product_name, description, in_stock, price, image ) VALUES($1, $2, $3, $4, $5)',
+                values: [product_name, description, in_stock, price, image],
               }
               
             const res = await pool.query(query)
             return res.rows
         },
 
-        async update({ product_id, product_name, description, in_stock, price }: updateOne) {
-
+        async update({ product_id, product_name, description, in_stock, price, image }: updateOne) {
 
             const query = {
                 text:`    
                 UPDATE products
-                SET product_name = $1, description = $2, price = $3, in_stock = $4  
-                WHERE product_id = $5;
+                SET product_name = $1, description = $2, price = $3, in_stock = $4, image = $ = $5
+                WHERE product_id = $6;
             `,
-                values: [product_name, description, in_stock, price, product_id],
+                values: [product_name, description, in_stock, price, product_id, image],
               }
               
             const res = await pool.query(query)
@@ -59,9 +59,8 @@ export function Product() {
 
         async delete({ product_id }: { product_id: number }) {
 
-
             const query = {
-                text:` DELETE FROM products WHERE product_id = $1`,
+                text:`DELETE FROM products WHERE product_id = $1`,
                 values: [product_id],
               }
               
