@@ -1,4 +1,4 @@
-import { Cart } from "../models/cart";
+import { Cart } from "../models/Cart";
 import { Request, Response } from "express";
 
 

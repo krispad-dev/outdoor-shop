@@ -20,6 +20,7 @@ export function User() {
         },
 
         async addOne({ user_name, email, user_password, role }: User) {
+
             const query = {
                 text: 'INSERT INTO users(user_name, email, user_password, role) VALUES($1, $2, $3, $4)',
                 values: [user_name, email, user_password, role]
