@@ -1,13 +1,12 @@
 import env from 'dotenv'
 import express from "express";
 
-
-import { itemRouter } from './routes/routes'
+import { productRouter } from './routes/routes'
 
 const app = express()
 env.config()
 app.use(express.json())
-app.use('/api/products', itemRouter)
+app.use('/api/products', productRouter)
 
 app.use(express.static('./public'))
 
