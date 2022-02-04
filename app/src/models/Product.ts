@@ -55,6 +55,18 @@ export function Product() {
               
             const res = await pool.query(query)
             return res.rows
+        },
+
+        async delete({ product_id }: { product_id: number }) {
+
+
+            const query = {
+                text:` DELETE FROM products WHERE product_id = $1`,
+                values: [product_id],
+              }
+              
+            const res = await pool.query(query)
+            return res.rows
         }
 
     }
