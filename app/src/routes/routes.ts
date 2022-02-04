@@ -1,6 +1,11 @@
 import express from "express";
 
 import { 
+    registerUser,
+    getUsers
+} from "../controllers/userController";
+
+import { 
     addToCart, 
     getCart,
     setCartItemAmount,
@@ -17,6 +22,7 @@ import {
 
 export const productRouter = express.Router()
 export const cartRouter = express.Router()
+export const userRouter = express.Router()
 
 
 //PRODUCTS
@@ -30,3 +36,7 @@ cartRouter.post('/', addToCart)
 cartRouter.get('/', getCart)
 cartRouter.put('/', setCartItemAmount)
 cartRouter.delete('/', deleteCartItem)
+
+//USER
+userRouter.post('/', registerUser)
+userRouter.get('/', getUsers)

@@ -27,10 +27,10 @@ export async function addToCart(req: Request, res: Response) {
     }
 }
 
+
 export async function setCartItemAmount(req: Request, res: Response) {
 
     try {
-
         const productToSet = req.body;
 
         if (productToSet.increment) {
@@ -38,9 +38,7 @@ export async function setCartItemAmount(req: Request, res: Response) {
         } else {
             await Cart().decrement(productToSet)
         }
-
         return res.status(200).json({ success: true })
-
     } catch (error) {
         return res.status(400).json({ success: false, message: error })
     }
