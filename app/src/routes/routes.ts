@@ -19,10 +19,18 @@ import {
     deleteProduct 
 } from '../controllers/productController'
 
+import { 
+    loginUser
+} from "../controllers/authController";
+
+import { authUser } from '../middleware/authUser';
+
+
 
 export const productRouter = express.Router()
 export const cartRouter = express.Router()
 export const userRouter = express.Router()
+export const authRouter = express.Router()
 
 
 //PRODUCTS
@@ -40,3 +48,6 @@ cartRouter.delete('/', deleteCartItem)
 //USER
 userRouter.post('/', registerUser)
 userRouter.get('/', getUsers)
+
+//AUTH 
+authRouter.post('/login', authUser, loginUser)

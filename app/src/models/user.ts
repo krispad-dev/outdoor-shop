@@ -1,13 +1,11 @@
 import { pool } from '../database/pg'
 
-
 interface User {
     user_name: string;
     email: string;
     user_password: string;
     role: string;
 }
-
 
 export function User() {
 
@@ -17,6 +15,17 @@ export function User() {
             const query = 'SELECT * FROM users'
             const res = await pool.query(query)
             return res.rows
+        },
+
+        async getOne({ user_id }: { user_id: number }) {
+
+            const query = {
+                text: 'SELECT * FROM users WHERE user_id = $1',
+                values: [ user_id ]
+            }
+
+            const res = await pool.query(query)
+            return res.rows[0]
         },
 
         async addOne({ user_name, email, user_password, role }: User) {

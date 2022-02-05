@@ -7,3 +7,9 @@ export async function bcHash(pwd: string) {
     return await bcrypt.hash(pwd, saltRounds);
     
 }
+
+export async function bcCompare(pwdInput: string, dbHash: string) {
+
+    return await bcrypt.compare(pwdInput, dbHash);
+    
+}
