@@ -5,3 +5,4 @@ dist-ssr
 public
 *.local
 .env
+queries.sql

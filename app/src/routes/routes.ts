@@ -1,5 +1,8 @@
 import express from "express";
 
+import { validateTokenUser } from '../middleware/validateTokenUser';
+import { validateTokenAdmin } from '../middleware/validateTokenAdmin';
+
 import { 
     registerUser,
     getUsers
@@ -20,11 +23,9 @@ import {
 } from '../controllers/productController'
 
 import { 
-    loginUser
+    loginUser,
+    authUser
 } from "../controllers/authController";
-
-import { authUser } from '../middleware/authUser';
-
 
 
 export const productRouter = express.Router()
@@ -32,22 +33,22 @@ export const cartRouter = express.Router()
 export const userRouter = express.Router()
 export const authRouter = express.Router()
 
-
 //PRODUCTS
 productRouter.get('/', getAllProducts)
-productRouter.post('/', addProduct)
-productRouter.put('/', updateProduct)
-productRouter.delete('/', deleteProduct)
+productRouter.post('/', validateTokenAdmin, addProduct)
+productRouter.put('/', validateTokenAdmin, updateProduct)
+productRouter.delete('/', validateTokenAdmin, deleteProduct)
 
 //CART
-cartRouter.post('/', authUser, addToCart)
-cartRouter.get('/', authUser, getCart)
-cartRouter.put('/', authUser, setCartItemAmount)
-cartRouter.delete('/', authUser, deleteCartItem)
+cartRouter.post('/', validateTokenUser, addToCart)
+cartRouter.get('/', validateTokenUser, getCart)
+cartRouter.put('/', validateTokenUser, setCartItemAmount)
+cartRouter.delete('/', validateTokenUser, deleteCartItem)
 
 //USER
-userRouter.post('/', registerUser)
-userRouter.get('/', getUsers)
+userRouter.post('/', validateTokenAdmin, registerUser)
+userRouter.get('/', validateTokenAdmin, getUsers)
 
 //AUTH 
 authRouter.post('/login', loginUser)
+authRouter.post('/auth', validateTokenUser, authUser)
