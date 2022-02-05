@@ -16,8 +16,10 @@ export async function validateTokenUser(req: Request, res: Response, next: NextF
         res.locals.loggedInUser = {
             username: isVerified.username,
             role: isVerified.role,
-            email: isVerified.email
+            email: isVerified.email,
+            id: isVerified.userId
         }
+        
         next()
     } catch (error) {
         return res.status(401).json({ success: false, error: parseError(error) })

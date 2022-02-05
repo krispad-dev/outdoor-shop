@@ -16,7 +16,8 @@ export async function validateTokenAdmin(req: Request, res: Response, next: Next
         res.locals.loggedInUser = {
             username: isVerified.username,
             role: isVerified.role,
-            email: isVerified.email
+            email: isVerified.email,
+            id: isVerified.userId
         }
         next()
     } catch (error) {

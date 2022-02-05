@@ -46,8 +46,8 @@ cartRouter.put('/', validateTokenUser, setCartItemAmount)
 cartRouter.delete('/', validateTokenUser, deleteCartItem)
 
 //USER
-userRouter.post('/', validateTokenAdmin, registerUser)
-userRouter.get('/', validateTokenAdmin, getUsers)
+userRouter.post('/', registerUser)
+userRouter.get('/', getUsers)
 
 //AUTH 
 authRouter.post('/login', loginUser)

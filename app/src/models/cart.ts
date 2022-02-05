@@ -37,7 +37,7 @@ export function Cart() {
             return res.rows
         },
 
-        async addOne({ user_id, product_id }: Cart) {
+        async addOne({ user_id, product_id }: {  user_id: number, product_id: number }) {
 
             const query = {
                 text: 'INSERT INTO cart_items (user_id, product_id) VALUES($1, $2)',

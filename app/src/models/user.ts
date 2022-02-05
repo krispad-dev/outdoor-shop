@@ -17,11 +17,11 @@ export function User() {
             return res.rows
         },
 
-        async getOne({ user_id }: { user_id: number }) {
+        async getOne({ email }: { email: string }) {
 
             const query = {
-                text: 'SELECT * FROM users WHERE user_id = $1',
-                values: [ user_id ]
+                text: 'SELECT * FROM users WHERE email = $1',
+                values: [ email ]
             }
 
             const res = await pool.query(query)

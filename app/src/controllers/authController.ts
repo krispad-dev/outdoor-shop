@@ -9,13 +9,16 @@ import jwt from 'jsonwebtoken'
 
 export async function loginUser(req: Request, res: Response) {
 
-
     try {
-        const { user_id, user_password } = req.body;
-        const userTryingToLogIn = await User().getOne({ user_id: user_id })
+        const { user_password, email } = req.body;
+        const userTryingToLogIn = await User().getOne({ email: email })
 
+        if (!userTryingToLogIn) {
+            throw Error('Could not find user with given email')
+        }
+        
         if (!await bcCompare(user_password, userTryingToLogIn.user_password)) {
-            throw Error('Unauthorized - password is not a match')
+            throw Error('Password is not a match')
         }
 
         const jwtPayload = {
@@ -42,11 +45,11 @@ export async function loginUser(req: Request, res: Response) {
 
         .json({
             success: true, message:
-                `You are logged in as ${userTryingToLogIn.role}`
+                `${userTryingToLogIn.user_name}, You are logged in as ${userTryingToLogIn.role}`
         })
 
     } catch (error) {
-        return res.status(401).json({ success: false, error: parseError(error) })
+        return res.status(400).json({ success: false, error: parseError(error) })
     }
 }
 
@@ -54,8 +57,8 @@ export async function authUser(req: Request, res: Response) {
 
 
     try {
-        const { user_id, user_password } = req.body;
-        const userTryingToLogIn = await User().getOne({ user_id: user_id })
+        const { email, user_password } = req.body;
+        const userTryingToLogIn = await User().getOne({ email: email })
 
         if (!await bcCompare(user_password, userTryingToLogIn.user_password)) {
             throw Error('Password is not a match')
@@ -85,10 +88,10 @@ export async function authUser(req: Request, res: Response) {
 
         .json({
             success: true, message:
-                `You are logged in as ${userTryingToLogIn.role}`
+                `${userTryingToLogIn.role}, You are logged in as ${userTryingToLogIn.role}`
         })
 
     } catch (error) {
         return res.status(400).json({ success: false, error: parseError(error) })
     }
-}
+} 

@@ -6,3 +6,4 @@ public
 *.local
 .env
  query.sql
+pgadmin
