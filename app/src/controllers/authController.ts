@@ -32,15 +32,13 @@ export async function loginUser(req: Request, res: Response) {
         })
 
         return res
-
         .cookie(
             'authToken', 
-            authToken, { 
+            authToken, /* { 
                 sameSite: 'strict', 
                 httpOnly: true, 
                 secure: true, 
-                maxAge: 3600000 
-            })
+            } */)
 
         .json({
             success: true, message:

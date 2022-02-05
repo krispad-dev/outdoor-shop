@@ -1,5 +1,6 @@
 import env from 'dotenv'
 import express from "express";
+import cookieParser from 'cookie-parser'
 
 import { 
     productRouter, 
@@ -12,6 +13,7 @@ import {
 const app = express()
 env.config()
 app.use(express.json())
+app.use(cookieParser())
 
 app.use('/api/products', productRouter)
 app.use('/api/cart', cartRouter)

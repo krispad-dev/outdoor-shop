@@ -40,14 +40,14 @@ productRouter.put('/', updateProduct)
 productRouter.delete('/', deleteProduct)
 
 //CART
-cartRouter.post('/', addToCart)
-cartRouter.get('/', getCart)
-cartRouter.put('/', setCartItemAmount)
-cartRouter.delete('/', deleteCartItem)
+cartRouter.post('/', authUser, addToCart)
+cartRouter.get('/', authUser, getCart)
+cartRouter.put('/', authUser, setCartItemAmount)
+cartRouter.delete('/', authUser, deleteCartItem)
 
 //USER
 userRouter.post('/', registerUser)
 userRouter.get('/', getUsers)
 
 //AUTH 
-authRouter.post('/login', authUser, loginUser)
+authRouter.post('/login', loginUser)
