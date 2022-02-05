@@ -48,7 +48,7 @@ export function Cart() {
             return res.rows
         },
 
-        async increment({ cart_item_id }: { cart_item_id: number }) {
+        async increment({ cart_item_id, user_id }: { cart_item_id: number, user_id: number }) {
 
             console.log(cart_item_id);
 
@@ -57,24 +57,24 @@ export function Cart() {
                 text: `
                 UPDATE cart_items
                 SET item_count = item_count + 1 
-                WHERE cart_item_id = $1;
+                WHERE cart_item_id = $1 AND user_id = $2;
                 `,
-                values: [cart_item_id],
+                values: [cart_item_id, user_id],
             }
 
             const res = await pool.query(query)
             return res.rows
         },
 
-        async decrement({ cart_item_id }: { cart_item_id: number }) {
+        async decrement({ cart_item_id, user_id }: { cart_item_id: number, user_id: number }) {
 
             const query = {
                 text: `
                 UPDATE cart_items
                 SET item_count = item_count - 1
-                WHERE cart_item_id = $1;
+                WHERE cart_item_id = $1 AND user_id = $2;
                 `,
-                values: [cart_item_id],
+                values: [cart_item_id, user_id],
             }
 
             const res = await pool.query(query)

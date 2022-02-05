@@ -35,13 +35,17 @@ export async function addToCart(req: Request, res: Response) {
 export async function setCartItemAmount(req: Request, res: Response) {
 
     try {
-        const productToSet = req.body;
+        const isIncrement = req.body.increment;
 
-        if (productToSet.increment) {
-            await Cart().increment(productToSet)
+        const { id } = res.locals.loggedInUser; // User id from token 
+        const { cart_item_id } = req.body; 
+
+        if (isIncrement) {
+            await Cart().increment({ cart_item_id: cart_item_id, user_id: id})
         } else {
-            await Cart().decrement(productToSet)
+            await Cart().decrement({ cart_item_id: cart_item_id, user_id: id})
         }
+
         return res.status(200).json({ success: true })
     } catch (error) {
         return res.status(400).json({ success: false, message: error })
@@ -51,8 +55,11 @@ export async function setCartItemAmount(req: Request, res: Response) {
 export async function deleteCartItem(req: Request, res: Response) {
 
     try {
-        const productToSet = req.body;
-        await Cart().delete(productToSet)
+        
+        const { cart_item_id } = req.body;
+        const { id } = res.locals.loggedInUser; // User id from token 
+
+        await Cart().delete({ cart_item_id: cart_item_id, user_id: id})
         return res.status(200).json({ success: true })
 
     } catch (error) {
