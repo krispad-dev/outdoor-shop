@@ -4,7 +4,9 @@ export const lightTheme = {
     __bgColorLargePageWidth: '#151515',
     cardColor: '#FAFAFA',
 
-    textColor: '#0000',
+    black: '#111',
+
+    textColor: '#fff',
     textColorDark: '#121212',
 
     accentColor: '#87C5C5',

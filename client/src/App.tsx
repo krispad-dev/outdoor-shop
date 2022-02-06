@@ -16,13 +16,12 @@ function App() {
 				<Logo />
 			</header>}
 
-
-			<main>
-{/* 			<Tools />  */}
+{/* 			<Tools />   */}
+			<main> 		
 				<Routes>
 					<Route path='/login' element={<LoginPage />} />
 				</Routes>
-			</main>
+			</main> 
 		</div>
 		</ThemeProvider>
 	);
