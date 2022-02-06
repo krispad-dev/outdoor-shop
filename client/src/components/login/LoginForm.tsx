@@ -7,10 +7,13 @@ import { LoginUser } from '../../modules/auth/useLoginUser';
 
 import useLoginUser from '../../modules/auth/useLoginUser';
 import BtnSpinner from '../global/loaders/BtnSpinner';
+import { useNavigate } from 'react-router-dom';
 
 import { isEmpty } from '../../helpers/validators';
 
 export default function LoginForm() {
+	const navigate = useNavigate();
+
 	const { mutate, data, isLoading } = useLoginUser();
 	const [formData, setFormData] = useState<LoginUser>({ email: '', password: '' });
 
@@ -33,6 +36,7 @@ export default function LoginForm() {
 			setIsError(false);
 			setErrorMessage(`Inloggning lyckades - Välkommen`);
 		}
+
 	}, [data?.success]);
 
 	return (
