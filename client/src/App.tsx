@@ -23,7 +23,7 @@ function App() {
 		navigate(`/`);
 	}
 
-
+	
 	return (
 		<ThemeProvider theme={lightTheme}>
 		<div className='App'>
