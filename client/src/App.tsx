@@ -4,46 +4,49 @@ import { useLocation } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme } from './themes/themes';
 import { Routes, Route } from 'react-router-dom';
-import Tools from './components/Tools';
+
+import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 
-import useAuth from './modules/auth/useAuth'
+import useAuth from './modules/auth/useAuth';
 import MainProductsPage from './pages/MainProductsPage';
 
 function App() {
+	const navigate = useNavigate();
 
+	const { pathname } = useLocation();
+	const { data: isAuthenticated } = useAuth();
 
-	const navigate = useNavigate()
-
-	const { pathname } = useLocation()
-	const { data: isAuthenticated } = useAuth()
-
-	if(pathname === '/login' && isAuthenticated?.loggedIn) {
+	if (pathname === '/login' && isAuthenticated?.loggedIn) {
 		navigate(`/`);
 	}
 
-	
 	return (
 		<ThemeProvider theme={lightTheme}>
-		<div className='App'>
+			<AppOuterContainer className='App'>
+				<header>
+					<Logo />
+				</header>
 
- 			{pathname !== '/login' && <header>
-				<Logo />
-			</header>}
+				<main>
+					<Routes>
+						<Route path='/login' element={<LoginPage />} />
+						<Route path='/' element={<MainProductsPage />} />
+					</Routes>
+				</main>
 
-
-			<main> 		
-				<Routes>
-
-					<Route path='/login' element={<LoginPage />} />
-					<Route path='/' element={<MainProductsPage />} />
-
-				</Routes>
-			</main> 
-		</div>
+				<footer>
+					<small>&copy; Kristofer Padoan 2022</small>
+				</footer>
+			</AppOuterContainer>
 		</ThemeProvider>
 	);
 }
 
 export default App;
+
+const AppOuterContainer = styled.div`
+	width: 100vw;
+	height: 100vh;
+`;

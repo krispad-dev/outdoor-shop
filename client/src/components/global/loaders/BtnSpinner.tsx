@@ -8,15 +8,16 @@ export default function BtnSpinner() {
 const SpinnerContainer = styled.div`
 	background-color: #fff;
 
-	height: 2rem;
-	width: 2rem;
+	height: 1.5rem;
+	width: 1.5rem;
 	border-radius: 100%;
 	border: 5px solid white;
 	border-top: 5px solid ${props => props.theme.accentColor};
 	background-color: transparent;
 	position: absolute;
 
-	animation: spin 1s ease-in-out infinite;
+	animation: spin 1s ease-in-out infinite, puls 1s ease-in-out alternate-reverse infinite;
+
 
 	@keyframes spin {
 		from {
@@ -25,6 +26,16 @@ const SpinnerContainer = styled.div`
 
 		to {
 			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes puls {
+		from {
+			opacity: 100%;
+		}
+
+		to {
+			opacity: 50%;
 		}
 	}
 `;
