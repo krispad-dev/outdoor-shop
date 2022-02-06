@@ -51,4 +51,4 @@ userRouter.get('/', getUsers)
 
 //AUTH 
 authRouter.post('/login', loginUser)
-authRouter.post('/auth', validateTokenUser, authUser)
+authRouter.post('/', validateTokenUser, authUser)
