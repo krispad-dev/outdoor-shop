@@ -9,7 +9,7 @@ export function UiReducer(state: UiState, action: ActionType) {
         case 'TOGGLE_HEADER_MENU_IS_OPEN':
             return {
                 ...state,
-                isAdmin: !state.headerMenuIsOpen,
+                headerMenuIsOpen: !state.headerMenuIsOpen,
             };
 
         default:
