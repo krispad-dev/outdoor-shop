@@ -8,6 +8,7 @@ interface Product {
     price: number;
     in_stock: number;
     image: string;
+    category: string;
 
 }
 
@@ -19,6 +20,7 @@ interface updateOne {
     in_stock: number;
     product_id: number;
     image: string;
+    category: string;
 }
 
 
@@ -31,26 +33,26 @@ export function Product() {
             return res.rows
         },
 
-        async addOne({ product_name, description, in_stock, price, image }: Product) {
+        async addOne({ product_name, description, in_stock, price, image, category }: Product) {
  
             const query = {
-                text:'INSERT INTO products (product_name, description, in_stock, price, image ) VALUES($1, $2, $3, $4, $5)',
-                values: [product_name, description, in_stock, price, image],
+                text:'INSERT INTO products (product_name, description, in_stock, price, image, category ) VALUES($1, $2, $3, $4, $5, $6)',
+                values: [product_name, description, in_stock, price, image, category],
               }
               
             const res = await pool.query(query)
             return res.rows
         },
 
-        async update({ product_id, product_name, description, in_stock, price, image }: updateOne) {
+        async update({ product_id, product_name, description, in_stock, price, image, category }: updateOne) {
 
             const query = {
                 text:`    
                 UPDATE products
-                SET product_name = $1, description = $2, price = $3, in_stock = $4, image = $ = $5
+                SET product_name = $1, description = $2, price = $3, in_stock = $4, image = $5, category = $6
                 WHERE product_id = $6;
             `,
-                values: [product_name, description, in_stock, price, product_id, image],
+                values: [product_name, description, in_stock, price, product_id, image, category],
               }
               
             const res = await pool.query(query)
