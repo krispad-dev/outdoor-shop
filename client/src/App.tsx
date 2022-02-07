@@ -39,6 +39,8 @@ function App() {
 				<footer>
 					<small>&copy; Kristofer Padoan 2022</small>
 				</footer>
+
+				<div className="bg"></div>
 			</AppOuterContainer>
 		</ThemeProvider>
 	);

@@ -5,6 +5,6 @@ async function  getProducts(searchString?: string) {
     return await res.json()
 }
 
-export default function useGetShoppingList(searchString?: string) {
-    return useQuery(['shoppingList', searchString], () => getProducts(searchString));
+export default function useGetProducts(searchString?: string) {
+    return useQuery(['products', searchString], () => getProducts(searchString));
   }

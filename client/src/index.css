@@ -8,8 +8,7 @@ body {
 	height: 100vh;
 	width: 100vw;
 	display: flex;
-	justify-content: center;
-	align-items: center;
+
 	overflow-x: hidden;
 }
 
@@ -20,16 +19,23 @@ body {
 	flex-direction: column;
 }
 
-h1,
-h2,
-h3 {
+h1 {
 	opacity: 87%;
-	margin: 0rem;
 	padding: 0;
 	opacity: 60%;
 	color: rgb(55, 158, 158);
 	color: linear-gradient(90deg, rgba(55, 158, 158, 1) 0%, rgba(87, 56, 143, 1) 75%);
-	font-size: 5em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+	padding: 0;
+	margin: 0;
 }
 
 button {
@@ -58,22 +64,18 @@ li {
 
 header {
 	width: 100%;
-	height: 10rem;
-
+	height: 6rem;
 }
 
 main {
 	width: 100%;
-	justify-content: center;
-	align-items: center;
 	flex-grow: 1;
+	overflow-y: scroll;
 }
 
 footer {
 	width: 100%;
-
 	background-color: #fff;
-
 }
 
 small {

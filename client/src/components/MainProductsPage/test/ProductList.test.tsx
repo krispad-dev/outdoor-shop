@@ -1,27 +1,28 @@
 import { render, screen } from '@testing-library/react';
-
-import { BrowserRouter, Routes } from 'react-router-dom';
-import { useQuery, QueryClient, QueryClientProvider } from 'react-query';
 import ProductList from '../ProductList';
+import { mockData } from './MockData';
 
-const queryClient = new QueryClient();
+// Mock my hook
+import useGetProducts from '../../../modules/products/useGetProducts';
+jest.mock('../../../modules/products/useGetProducts')
+const useGetProductsMock = useGetProducts as jest.Mock<any>;
 
-describe('login Component', () => {
-    
-	function useCustomHook() {
-		return useQuery('customHook', () => 'Hello');
-	}
 
-	const ProductListWrapper = () => (
-		<BrowserRouter>
-			<QueryClientProvider client={queryClient}>
-				<ProductList />
-			</QueryClientProvider>
-		</BrowserRouter>
-	);
+describe('ProductList component', () => {
+
+	// mock my return value 
+	useGetProductsMock.mockReturnValue({ data: {data: [mockData]}, success: true });
 
 	it('should render', () => {
-		render(<ProductListWrapper />);
+		render(<ProductList />);
+	});
+
+	it('should show one product listed', () => {
+		render(<ProductList />);
+
+		const productListItem = screen.getByRole('listitem')
+		expect(productListItem).toHaveTextContent(/test product/i)
+
 	});
 
 });

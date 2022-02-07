@@ -17,34 +17,40 @@ export default function LoginForm() {
 	const { mutate, data, isLoading } = useLoginUser();
 	const [formData, setFormData] = useState<LoginUser>({ email: '', password: '' });
 
-	const [errorMessage, setErrorMessage] = useState('');
+	const [userMessage, setUserMessage] = useState('');
 	const [isError, setIsError] = useState(false);
 
+	
 	function submitHandler(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
 		if (isEmpty(formData.email || formData.password)) {
-			setErrorMessage('Fel - fält kan inte vara tomt');
+			setUserMessage('Fel - fält kan inte vara tomt');
 			setIsError(true);
 		} else {
 			mutate(formData);
+			setIsError(true);
 		}
 	}
 
 	useEffect(() => {
+		setUserMessage(data?.error);
+	}, [data?.error]);
+	
+
+ 	useEffect(() => {
 		if (data?.success) {
 			setIsError(false);
-			setErrorMessage(`Inloggning lyckades - Välkommen`);
-		}
-
-	}, [data?.success]);
+			setUserMessage(`Inloggning lyckades - Välkommen`);
+		}  
+	}, [data?.success]); 
 
 	return (
 		<OuterContainer>
 			<h2 className='logo'>outdoor</h2>
 			<form action='submit' onSubmit={e => submitHandler(e)}>
 				<TextField
-					error={isError || data?.success === false}
+					error={isError}
 					margin='normal'
 					id='email'
 					label='Epost'
@@ -55,13 +61,13 @@ export default function LoginForm() {
 				/>
 
 				<TextField
-					error={isError || data?.success === false}
+					error={isError}
 					margin='normal'
 					id='password'
 					label='Lösenord'
 					variant='outlined'
 					placeholder='Lösenord'
-					helperText={data?.error ? data?.error : errorMessage}
+					helperText={userMessage}
 					onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
 					name='password'
 					type={'password'}
