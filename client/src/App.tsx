@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme } from './themes/themes';
 import { Routes, Route } from 'react-router-dom';
+import HeaderInnerContainer from './components/header/HeaderInnerContainer';
 
 import styled from 'styled-components';
 
@@ -26,7 +27,7 @@ function App() {
 		<ThemeProvider theme={lightTheme}>
 			<AppOuterContainer className='App'>
 				<header>
-					<Logo />
+					<HeaderInnerContainer />
 				</header>
 
 				<main>
@@ -40,7 +41,7 @@ function App() {
 					<small>&copy; Kristofer Padoan 2022</small>
 				</footer>
 
-				<div className="bg"></div>
+				<div className='bg'></div>
 			</AppOuterContainer>
 		</ThemeProvider>
 	);
@@ -49,6 +50,7 @@ function App() {
 export default App;
 
 const AppOuterContainer = styled.div`
-	width: 100vw;
+
+	width: 100vw;    
 	height: 100vh;
 `;

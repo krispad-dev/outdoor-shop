@@ -10,14 +10,10 @@ export default function Logo() {
 }
 
 const StyledLogoContainer = styled.div`
-	font-size: 5rem;
+	font-size: 2rem;
 	position: absolute;
 	z-index: -1;
 	top: -5;
 	left: 0;
 	opacity: 50%;
-	margin-left: 3rem;
-	@media(max-width: 700px) {
-		font-size: 2rem;
-	}
 `;

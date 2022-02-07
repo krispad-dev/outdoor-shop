@@ -12,13 +12,6 @@ body {
 	overflow-x: hidden;
 }
 
-.App {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-}
-
 h1 {
 	opacity: 87%;
 	padding: 0;
@@ -38,22 +31,7 @@ p {
 	margin: 0;
 }
 
-button {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	cursor: pointer;
-	border: none;
-	width: 15rem;
-	height: 4rem;
-	background-color: #111;
-	color: #fff;
-	border-radius: 0.4rem;
-	font-size: 3rem;
-	text-transform: uppercase;
-	margin-right: 1rem;
-	padding: 1rem;
-}
+
 
 ul,
 li {
@@ -63,8 +41,10 @@ li {
 }
 
 header {
+	height: 5rem;
 	width: 100%;
-	height: 6rem;
+
+
 }
 
 main {

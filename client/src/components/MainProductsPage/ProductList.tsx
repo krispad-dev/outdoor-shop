@@ -28,6 +28,4 @@ const OuterListContainer = styled.ul`
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
 	gap: 1rem;
-	padding: 0rem 3rem;
-	
 `;
