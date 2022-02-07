@@ -37,11 +37,11 @@ export async function loginUser(req: Request, res: Response) {
         return res
         .cookie(
             'authToken', 
-            authToken, /* { 
+            authToken,  { 
                 sameSite: 'strict', 
                 httpOnly: true, 
                 secure: true, 
-            } */)
+            })
 
         .json({
             success: true, message:
