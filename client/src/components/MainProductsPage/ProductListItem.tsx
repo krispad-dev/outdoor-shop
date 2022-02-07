@@ -3,12 +3,23 @@ import styled from 'styled-components';
 import { Product } from '../../models/Product';
 import TagChip from '../global/TagChip';
 
-export default function ProductListItem({ image, product_name, description, price, category }: Product) {
+import { Link } from 'react-router-dom';
+
+export default function ProductListItem({
+	image,
+	product_name,
+	description,
+	price,
+	category,
+	product_id,
+}: Product) {
 	return (
 		<OuterCardContainer image={image}>
-			<div className='top-container'>
-			<TagChip tag={category} />
+			<Link to={`/${product_id}`}></Link>
+			<div role={'image'} className='top-container'>
+				<TagChip tag={category} />
 			</div>
+
 			<div className='bottom-container'>
 				<article className='info-article'>
 					<h3 className='product-name'>{product_name}</h3>
@@ -21,9 +32,10 @@ export default function ProductListItem({ image, product_name, description, pric
 }
 
 const OuterCardContainer = styled.li<{ image: string }>`
+	position: relative;
 	display: grid;
 	cursor: pointer;
-	:hover{
+	:hover {
 		opacity: 80%;
 		transition: 0.2s;
 	}
@@ -32,7 +44,6 @@ const OuterCardContainer = styled.li<{ image: string }>`
 	grid-template-areas:
 		'top'
 		'bottom';
-
 
 	background-color: ${props => props.theme.cardColor};
 
@@ -51,26 +62,25 @@ const OuterCardContainer = styled.li<{ image: string }>`
 		grid-area: bottom;
 		padding: 1rem;
 
-			article.info-article {
-				h3 {
-					font-size: 1.5rem;
-					opacity: ${props => props.theme.textMediumEmph};
-					text-transform: uppercase;
-					font-weight: 300;
-				}
-				p.product-description {
-					font-size: 0.8rem;
-					opacity: ${props => props.theme.blach};
-					font-weight: 300;
-
-				}
-				p.product-price {
-					font-size: 1rem;
-					opacity: ${props => props.theme.textHighEmph};
-					font-weight: 300;
-					margin-top: 2rem;
-					font-weight: 100;
-				}
+		article.info-article {
+			h3 {
+				font-size: 1.5rem;
+				opacity: ${props => props.theme.textMediumEmph};
+				text-transform: uppercase;
+				font-weight: 300;
 			}
+			p.product-description {
+				font-size: 0.8rem;
+				opacity: ${props => props.theme.blach};
+				font-weight: 300;
+			}
+			p.product-price {
+				font-size: 1rem;
+				opacity: ${props => props.theme.textHighEmph};
+				font-weight: 300;
+				margin-top: 2rem;
+				font-weight: 100;
+			}
+		}
 	}
 `;

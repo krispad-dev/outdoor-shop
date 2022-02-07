@@ -19,9 +19,9 @@ export default function ProductList() {
 				<ProductListItem key={product.product_id} {...product} />
 			))} 
 
-{/* 			{isLoading && loaderArray.map((loader) => (
+			{isLoading && loaderArray.map((loader) => (
 				<SkeletonColor key={loader} />
-			))} */}
+			))} 
 			
 		</OuterListContainer>
 	);
