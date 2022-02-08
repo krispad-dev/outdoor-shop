@@ -3,6 +3,7 @@ import { User } from '../models/User';
 
 export type ActionType =
     | { type: 'TOGGLE_HEADER_MENU_IS_OPEN' }
+    | { type: 'CLOSE_HEADER_MENU' }
 
 
 
@@ -13,6 +14,13 @@ export function UiReducer(state: UiState, action: ActionType) {
                 ...state,
                 headerMenuIsOpen: !state.headerMenuIsOpen,
             };
+
+        case 'CLOSE_HEADER_MENU':
+            return {
+                ...state,
+                headerMenuIsOpen: false,
+            };
+
         default:
             return state;
     }

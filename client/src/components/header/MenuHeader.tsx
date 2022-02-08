@@ -6,24 +6,32 @@ import { UiStateContext } from '../../context/UiStateContext';
 
 import useGetCart from '../../modules/cart/useGetCart'
 import useAuth from '../../modules/auth/useAuth';
+import useLogoutUser from '../../modules/auth/useLogoutUser';
 
 export default function MenuHeader() {
 
 	const { state, dispatch } = useContext(UiStateContext);
   const { data: auth } = useAuth()
   const { data: cart } = useGetCart()
+  const { mutate } = useLogoutUser()
+
+  console.log(cart);
+  
   
 
 	return (
 		<ButtonsWrapper disabled={auth?.loggedIn}>
 			<div className='inner-wrapper'>
+
 				<button onClick={() => dispatch({'type': 'TOGGLE_HEADER_MENU_IS_OPEN'})} className='menu-btn'>MENY</button>
 				<button disabled={true} className='cart-btn'>CART (<p data-testid="cart-quantity" >{cart?.data?.length ? cart?.data?.length : 0 }</p>) <RiShoppingCartLine /></button>
 			</div>
+      
 
       {state.headerMenuIsOpen &&
       <div className="menu-items-container">
-        <button className="menu-item-card">LOGIN<Link to={'/login'}></Link> </button> 
+{ !auth?.loggedIn &&        <button className="menu-item-card">LOGIN<Link to={'/login'}></Link> </button> }
+{ auth?.loggedIn &&       <button onClick={() => mutate()} className="menu-item-card">LOGOUT </button> }
       </div>
       }
 		</ButtonsWrapper>

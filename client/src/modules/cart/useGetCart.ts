@@ -5,6 +5,6 @@ async function  getCart() {
     return await res.json()
 }
 
-export default function useGetProducts() {
+export default function useGetCart() {
     return useQuery(['cart'], () => getCart());
   }

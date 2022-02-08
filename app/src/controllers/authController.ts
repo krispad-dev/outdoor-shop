@@ -9,6 +9,9 @@ import jwt from 'jsonwebtoken'
 
 export async function loginUser(req: Request, res: Response) {
 
+    console.log(req.body);
+    
+
     try {
         const { user_password, email } = req.body;
         const userTryingToLogIn = await User().getOne({ email: email })
@@ -59,6 +62,15 @@ export async function authUser(req: Request, res: Response) {
         const user = res.locals.loggedInUser; 
     
         res.json({ loggedIn: true, user, message: 'You are authenticated' });
+      } catch (error) {
+        res.status(400).json({ success: false, message: error });
+      }
+} 
+
+export async function logoutUser(req: Request, res: Response) {
+
+    try {
+        res.clearCookie('authToken').status(200).json({ success: true, message: 'Logged out'});
       } catch (error) {
         res.status(400).json({ success: false, message: error });
       }

@@ -24,7 +24,8 @@ import {
 
 import { 
     loginUser,
-    authUser
+    authUser,
+    logoutUser
 } from "../controllers/authController";
 
 
@@ -47,8 +48,9 @@ cartRouter.delete('/', validateTokenUser, deleteCartItem)
 
 //USER
 userRouter.post('/', registerUser)
-userRouter.get('/', getUsers)
+userRouter.get('/', validateTokenAdmin, getUsers)
 
 //AUTH 
 authRouter.post('/login', loginUser)
+authRouter.post('/logout', logoutUser)
 authRouter.post('/', validateTokenUser, authUser)
