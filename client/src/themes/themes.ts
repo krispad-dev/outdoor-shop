@@ -3,6 +3,7 @@ export const lightTheme = {
     bgColor: '#151515',
     __bgColorLargePageWidth: '#151515',
     cardColor: '#FAFAFA',
+    cardColorDark: '#F2F2F2',
 
     black: '#111',
 
