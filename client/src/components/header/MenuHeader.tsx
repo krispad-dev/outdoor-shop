@@ -15,10 +15,6 @@ export default function MenuHeader() {
   const { data: cart } = useGetCart()
   const { mutate } = useLogoutUser()
 
-  console.log(cart);
-  
-  
-
 	return (
 		<ButtonsWrapper disabled={auth?.loggedIn}>
 			<div className='inner-wrapper'>
