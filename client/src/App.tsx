@@ -1,10 +1,13 @@
 import Logo from './components/Logo';
+import { useEffect, useContext } from 'react';
+import { UiStateContext } from './context/UiStateContext';
 import LoginPage from './pages/LoginPage';
 import { useLocation } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme } from './themes/themes';
 import { Routes, Route } from 'react-router-dom';
 import HeaderInnerContainer from './components/header/HeaderInnerContainer';
+import ProductPage from './pages/ProductPage';
 
 import styled from 'styled-components';
 
@@ -15,12 +18,15 @@ import MainProductsPage from './pages/MainProductsPage';
 
 function App() {
 	const navigate = useNavigate();
-
+	const { state: uiState, dispatch } = useContext(UiStateContext);
 	const { pathname } = useLocation();
 	const { data: isAuthenticated } = useAuth();
 
+
 	if (pathname === '/login' && isAuthenticated?.loggedIn) {
-		navigate(`/`);
+		setTimeout(() =>{
+			navigate(`/`);
+		}, 500)
 	}
 
 	return (
@@ -33,13 +39,12 @@ function App() {
 				<main>
 					<Routes>
 						<Route path='/login' element={<LoginPage />} />
+						<Route path='/:id' element={<ProductPage />} />
 						<Route path='/' element={<MainProductsPage />} />
 					</Routes>
 				</main>
 
-				<footer>
-					<small>&copy; Kristofer Padoan 2022</small>
-				</footer>
+				<footer>{/* 					<small>&copy; Kristofer Padoan 2022</small> */}</footer>
 
 				<div className='bg'></div>
 			</AppOuterContainer>
@@ -50,7 +55,6 @@ function App() {
 export default App;
 
 const AppOuterContainer = styled.div`
-
-	width: 100vw;    
+	width: 100vw;
 	height: 100vh;
 `;

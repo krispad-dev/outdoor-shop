@@ -1,7 +1,9 @@
 import { UiState } from './UiStateContext';
+import { User } from '../models/User';
 
 export type ActionType =
     | { type: 'TOGGLE_HEADER_MENU_IS_OPEN' }
+
 
 
 export function UiReducer(state: UiState, action: ActionType) {
@@ -11,7 +13,6 @@ export function UiReducer(state: UiState, action: ActionType) {
                 ...state,
                 headerMenuIsOpen: !state.headerMenuIsOpen,
             };
-
         default:
             return state;
     }

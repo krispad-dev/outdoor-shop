@@ -20,7 +20,6 @@ export default function LoginForm() {
 	const [userMessage, setUserMessage] = useState('');
 	const [isError, setIsError] = useState(false);
 
-	
 	function submitHandler(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
 
@@ -36,14 +35,13 @@ export default function LoginForm() {
 	useEffect(() => {
 		setUserMessage(data?.error);
 	}, [data?.error]);
-	
 
- 	useEffect(() => {
+	useEffect(() => {
 		if (data?.success) {
 			setIsError(false);
 			setUserMessage(`Inloggning lyckades - Välkommen`);
-		}  
-	}, [data?.success]); 
+		}
+	}, [data?.success]);
 
 	return (
 		<OuterContainer>

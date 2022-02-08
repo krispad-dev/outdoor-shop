@@ -13,6 +13,9 @@ export default function HeaderInnerContainer() {
 }
 
 const InnerHeaderContainer = styled.div`
-	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 95%;
 	height: 100%;
 `;

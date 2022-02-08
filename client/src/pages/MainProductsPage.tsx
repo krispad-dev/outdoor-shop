@@ -16,4 +16,5 @@ export default function MainProductsPage() {
 
 const MainProductsPageContainer = styled.section`
 	padding: 1rem;
+	overflow-y: scroll;
 `;

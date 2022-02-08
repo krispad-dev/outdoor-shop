@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import TextBtn from '../TextBtn';
+import TextBtn from './TextBtn';
 
 export default function ProductListHeader({ buttons }: { buttons: string[] }) {
 	return (
@@ -15,5 +15,6 @@ export default function ProductListHeader({ buttons }: { buttons: string[] }) {
 const StyledContainer = styled.div`
 	
 	display: flex;
+	flex-wrap: wrap;
 
 `;
