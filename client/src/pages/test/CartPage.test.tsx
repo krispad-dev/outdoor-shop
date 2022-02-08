@@ -1,17 +1,17 @@
 import { render, screen } from '@testing-library/react';
-import ProductPage from '../ProductPage';
+import CartPage from '../CartPage';
 import { useQuery, QueryClient, QueryClientProvider } from 'react-query';
 const queryClient = new QueryClient();
 
 
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes } from 'react-router-dom';
 
-describe('ProductPage Component', () => {
+describe('CartPage Component', () => {
 	it('should render', () => {
 		render(
 			<BrowserRouter>
 				<QueryClientProvider client={queryClient}>
-					<ProductPage isLoggedIn={true} />
+					<CartPage />
 				</QueryClientProvider>
 			</BrowserRouter>
 		);

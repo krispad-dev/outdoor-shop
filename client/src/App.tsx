@@ -8,7 +8,7 @@ import { lightTheme } from './themes/themes';
 import { Routes, Route } from 'react-router-dom';
 import HeaderInnerContainer from './components/header/HeaderInnerContainer';
 import ProductPage from './pages/ProductPage';
-
+import CartPage from './pages/CartPage';
 import styled from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
@@ -23,9 +23,9 @@ function App() {
 	const { data: isAuthenticated } = useAuth();
 
 	if (pathname === '/login' && isAuthenticated?.loggedIn) {
-		setTimeout(() =>{
+		setTimeout(() => {
 			navigate(`/`);
-		}, 500)
+		}, 500);
 	}
 
 	return (
@@ -38,7 +38,11 @@ function App() {
 				<main>
 					<Routes>
 						<Route path='/login' element={<LoginPage />} />
-						<Route path='/:id' element={<ProductPage isLoggedIn={isAuthenticated?.loggedIn} />} />
+						<Route path='/cart' element={<CartPage />} />
+						<Route
+							path='/:id'
+							element={<ProductPage isLoggedIn={isAuthenticated?.loggedIn} />}
+						/>
 						<Route path='/' element={<MainProductsPage />} />
 					</Routes>
 				</main>
@@ -54,4 +58,8 @@ export default App;
 const AppOuterContainer = styled.div`
 	width: 100vw;
 	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 `;

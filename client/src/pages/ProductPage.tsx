@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductModule from '../components/ProductPage/PrductModule';
-import styled from 'styled-components';
+import StyledPageContainer from '../styled-components/StyledPageContainer'
 
 import { useParams } from 'react-router-dom';
 
@@ -9,16 +9,9 @@ export default function ProductPage({ isLoggedIn }: { isLoggedIn: boolean }) {
 	const { id } = useParams()
 
 	return (
-		<ProductPageContainer>
+		<StyledPageContainer>
 			<ProductModule isLoggedIn={isLoggedIn} id={id as string} />
-		</ProductPageContainer>
+		</StyledPageContainer>
 	);
 }
 
-const ProductPageContainer = styled.section`
-padding: 1rem;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 85vh;
-`;
