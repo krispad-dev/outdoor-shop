@@ -40,7 +40,7 @@ export function Product() {
             }
 
             const res = await pool.query(query)
-            return res.rows
+            return res.rows[0]
         },
 
         async addOne({ product_name, description, in_stock, price, image, category }: Product) {
