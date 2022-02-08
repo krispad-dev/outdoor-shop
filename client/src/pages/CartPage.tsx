@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CartModule from '../components/cart/CartModule';
-import StyledPageContainer from '../styled-components/StyledPageContainer'
+import StyledPageContainer from '../styled-components/StyledPageContainer';
 
-export default function CartPage() {
+export default function CartPage({ isLoggedIn }: { isLoggedIn: boolean }) {
+
 	return (
+
 		<StyledPageContainer>
-			<CartModule />
-		</StyledPageContainer>
+			{isLoggedIn && <CartModule isLoggedIn={isLoggedIn} />}
+		</StyledPageContainer> 
 	);
 }

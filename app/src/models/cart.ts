@@ -22,7 +22,7 @@ export function Cart() {
         async getAll({ user_id }: GetAll) {
 
             const query = {
-                text:`SELECT products.product_id, users.user_id, cart_item_id, product_name, price, item_count, image, description
+                text:`SELECT products.product_id, products.in_stock, users.user_id, cart_item_id, product_name, price, item_count, image, description
                 FROM cart_items 
                 JOIN users 
                 ON users.user_id = cart_items.user_id 

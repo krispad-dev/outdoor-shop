@@ -21,12 +21,21 @@ function App() {
 	const { state: uiState, dispatch } = useContext(UiStateContext);
 	const { pathname } = useLocation();
 	const { data: isAuthenticated } = useAuth();
+	
 
-	if (pathname === '/login' && isAuthenticated?.loggedIn) {
-		setTimeout(() => {
+	useEffect(() => {
+
+		if (pathname === '/login' && isAuthenticated?.loggedIn) {
+			setTimeout(() => {
+				navigate(`/`);
+			}, 500);
+		}
+
+		if (pathname === '/cart' && !isAuthenticated?.loggedIn) {
 			navigate(`/`);
-		}, 500);
-	}
+		}
+		
+	}, [isAuthenticated, pathname]);
 
 	return (
 		<ThemeProvider theme={lightTheme}>
@@ -38,7 +47,10 @@ function App() {
 				<main>
 					<Routes>
 						<Route path='/login' element={<LoginPage />} />
-						<Route path='/cart' element={<CartPage />} />
+						<Route
+							path='/cart'
+							element={<CartPage isLoggedIn={isAuthenticated?.loggedIn} />}
+						/>
 						<Route
 							path='/:id'
 							element={<ProductPage isLoggedIn={isAuthenticated?.loggedIn} />}

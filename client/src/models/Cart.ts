@@ -1,4 +1,5 @@
 export interface Cart {
+    in_stock: number;
     product_id: number;
     user_id: number;
     cart_item_id: number;
@@ -7,6 +8,4 @@ export interface Cart {
     item_count: number;
     image: string;
     description: string;
-
-
 }

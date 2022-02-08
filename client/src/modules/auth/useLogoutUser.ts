@@ -19,6 +19,9 @@ export default function useLogoutUser() {
     const queryClient = useQueryClient();
 
     return useMutation(() => logoutUser(), {
-        onSuccess: () => queryClient.invalidateQueries(['auth'])
+        onSuccess: () => {
+            queryClient.invalidateQueries(['auth']),
+            queryClient.invalidateQueries(['cart'])
+        } 
     });
 }

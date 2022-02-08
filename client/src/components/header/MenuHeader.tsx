@@ -27,6 +27,7 @@ export default function MenuHeader() {
 					CART (
 					<p data-testid='cart-quantity'>{cart?.data?.length ? cart?.data?.length : 0}</p>
 					) <RiShoppingCartLine />
+					<Link to={'/cart'}></Link>
 				</button>
 			</div>
 
@@ -60,11 +61,17 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 	div.inner-wrapper {
 		width: auto;
 		border-radius: 3px;
+
 		display: flex;
 		justify-content: space-between;
 
 		button.cart-btn {
+			position: relative;
 			opacity: ${props => (!props.disabled ? '20%' : '100%')};
+			a {
+				position: absolute;
+				
+			}
 		}
 	}
 

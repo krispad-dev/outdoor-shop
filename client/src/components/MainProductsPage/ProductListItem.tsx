@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Product } from '../../models/Product';
 import TagChip from '../global/TagChip';
+import { formatSek } from '../../helpers/formatSek';
 
 import { Link } from 'react-router-dom';
 
@@ -24,7 +25,7 @@ export default function ProductListItem({
 				<article className='info-article'>
 					<h3 className='product-name'>{product_name}</h3>
 					<p className='product-description'>{description}</p>
-					<p className='product-price'>{price},00 kr</p>
+					<p className='product-price'>{formatSek(price)}</p>
 				</article>
 			</div>
 		</OuterCardContainer>

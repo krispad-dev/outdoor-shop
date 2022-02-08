@@ -5,6 +5,7 @@ import Button from '../global/Button';
 import useGetProduct from '../../modules/products/useGetProduct';
 import useAddToCart from '../../modules/cart/useAddToCart';
 import useGetCart from '../../modules/cart/useGetCart';
+import { formatSek } from '../../helpers/formatSek';
 
 import { isInCart } from '../../helpers/isInCart';
 
@@ -27,7 +28,7 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean,
 				<div className='inner-info-container'>
 					<h3>{product?.data?.product_name}</h3>
 					<p>{product?.data?.description}</p>
-					<p>{product?.data?.price},00 kr</p>
+					<p>{formatSek(product?.data?.price)}</p>
 				</div>
 			</div>
 			<div className='actions-container'>
