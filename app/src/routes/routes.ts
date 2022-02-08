@@ -19,7 +19,8 @@ import {
     getAllProducts, 
     addProduct, 
     updateProduct, 
-    deleteProduct 
+    deleteProduct,
+    getProduct
 } from '../controllers/productController'
 
 import { 
@@ -36,6 +37,7 @@ export const authRouter = express.Router()
 
 //PRODUCTS
 productRouter.get('/', getAllProducts)
+productRouter.get('/1', getProduct)
 productRouter.post('/', validateTokenAdmin, addProduct)
 productRouter.put('/', validateTokenAdmin, updateProduct)
 productRouter.delete('/', validateTokenAdmin, deleteProduct)

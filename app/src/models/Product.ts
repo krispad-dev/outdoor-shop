@@ -33,6 +33,16 @@ export function Product() {
             return res.rows
         },
 
+        async getOne({ product_id }: { product_id: | string  }) {
+            const query = {
+                text: 'SELECT * FROM products WHERE product_id = $1',
+                values: [ product_id ]
+            }
+
+            const res = await pool.query(query)
+            return res.rows
+        },
+
         async addOne({ product_name, description, in_stock, price, image, category }: Product) {
  
             const query = {

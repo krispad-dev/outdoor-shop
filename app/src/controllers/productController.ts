@@ -14,6 +14,21 @@ export async function getAllProducts(req: Request, res: Response) {
     }
 }
 
+export async function getProduct(req: Request, res: Response) {
+
+    try {
+
+        const product = req.query as any
+
+        const data = await Product().getOne(product)
+        return res.status(200).json({ success: true, data }) 
+
+    } catch (error) {
+        return res.status(400).json({ success: false, message: error })
+
+    }
+}
+
 export async function addProduct(req: Request, res: Response) {
 
     try {
