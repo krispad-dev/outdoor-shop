@@ -17,6 +17,10 @@ import useAuth from '../../../modules/auth/useAuth';
 jest.mock('../../../modules/auth/useAuth');
 const useAuthMock = useAuth as jest.Mock<any>;
 
+import useLogoutUser from '../../../modules/auth/useLogoutUser';
+jest.mock('../../../modules/auth/useLogoutUser');
+const useLogoutUserMock = useLogoutUser as jest.Mock<any>;
+
 describe('Menu Component', () => {
 	function ComponentWrappedInContext() {
 		const initialState = {
@@ -43,6 +47,10 @@ describe('Menu Component', () => {
 	useAuthMock.mockReturnValue({
 		data: { isLoggedIn: true },
 	});
+
+	useLogoutUserMock.mockReturnValue({
+		data: { success: true }
+	})
 
 	it('should render', () => {
 		render(<ComponentWrappedInContext />);

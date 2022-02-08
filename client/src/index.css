@@ -30,12 +30,28 @@ p {
 	margin: 0;
 }
 
+h3 {
+	font-size: 1.5rem;
+	text-transform: uppercase;
+	font-weight: 300;
+}
+
+p {
+	font-weight: 300;
+	font-size: 0.8rem;
+}
+
+
 ul,
 li {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
+
+
+
+
 
 header {
 	height: 5rem;

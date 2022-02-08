@@ -12,6 +12,7 @@ export async function loginUser(req: Request, res: Response) {
     try {
         const { user_password, email } = req.body;
         const userTryingToLogIn = await User().getOne({ email: email })
+        
 
         if (!userTryingToLogIn) {
             throw Error('Could not find user with given email')
@@ -38,9 +39,9 @@ export async function loginUser(req: Request, res: Response) {
         .cookie(
             'authToken', 
             authToken,  { 
-                sameSite: 'strict', 
+/*                 sameSite: 'strict', 
                 httpOnly: true, 
-                secure: true, 
+                secure: true,  */
             })
 
         .json({

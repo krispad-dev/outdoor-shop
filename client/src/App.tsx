@@ -1,4 +1,4 @@
-import Logo from './components/Logo';
+import Logo from './components/header/Logo';
 import { useEffect, useContext } from 'react';
 import { UiStateContext } from './context/UiStateContext';
 import LoginPage from './pages/LoginPage';
@@ -22,7 +22,6 @@ function App() {
 	const { pathname } = useLocation();
 	const { data: isAuthenticated } = useAuth();
 
-
 	if (pathname === '/login' && isAuthenticated?.loggedIn) {
 		setTimeout(() =>{
 			navigate(`/`);
@@ -39,12 +38,10 @@ function App() {
 				<main>
 					<Routes>
 						<Route path='/login' element={<LoginPage />} />
-						<Route path='/:id' element={<ProductPage />} />
+						<Route path='/:id' element={<ProductPage isLoggedIn={isAuthenticated?.loggedIn} />} />
 						<Route path='/' element={<MainProductsPage />} />
 					</Routes>
 				</main>
-
-				<footer>{/* 					<small>&copy; Kristofer Padoan 2022</small> */}</footer>
 
 				<div className='bg'></div>
 			</AppOuterContainer>

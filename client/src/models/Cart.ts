@@ -1,5 +1,5 @@
 export interface Cart {
-
+    product_id: number;
     user_id: number;
     cart_item_id: number;
     product_name: string;

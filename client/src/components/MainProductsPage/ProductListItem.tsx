@@ -71,7 +71,7 @@ const OuterCardContainer = styled.li<{ image: string }>`
 			}
 			p.product-description {
 				font-size: 0.8rem;
-				opacity: ${props => props.theme.blach};
+				opacity: ${props => props.theme.black};
 				font-weight: 300;
 			}
 			p.product-price {

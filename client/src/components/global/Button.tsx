@@ -20,7 +20,7 @@ export default function Button({
 	isLoading,
 }: ButtonProps) {
 	return (
-		<StyledButton disabled={isDisabled} onClick={clickHandler}>
+		<StyledButton isDisabled={isDisabled} disabled={isDisabled} onClick={clickHandler}>
 			{!isLoading && text}
 			{!isLoading && icon}
 			{isLoading && spinner}
@@ -28,25 +28,25 @@ export default function Button({
 	);
 }
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ isDisabled?: boolean }>`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	cursor: pointer;
 	border: none;
-	width: 15rem;
 	height: 4rem;
 	background-color: #111;
 	color: #fff;
-	border-radius: 0.4rem;
-	font-size: 3rem;
+	border-radius: 0.1rem;
 	text-transform: uppercase;
-	margin-right: 1rem;
 	padding: 1rem;
+	opacity: ${props => props.isDisabled ? '30%' : '100%'};
+	pointer-events: ${props => props.isDisabled && 'none'};;
 
 	background-color: ${props => props.theme.black};
 	color: ${props => props.theme.textColor};
-	border: none;
+
+
 	font-size: 1.5rem;
 	font-weight: 300;
 	width: 100%;

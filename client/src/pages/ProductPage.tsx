@@ -2,10 +2,15 @@ import React from 'react';
 import ProductModule from '../components/ProductPage/PrductModule';
 import styled from 'styled-components';
 
-export default function ProductPage() {
+import { useParams } from 'react-router-dom';
+
+export default function ProductPage({ isLoggedIn }: { isLoggedIn: boolean }) {
+
+	const { id } = useParams()
+
 	return (
 		<ProductPageContainer>
-			<ProductModule />
+			<ProductModule isLoggedIn={isLoggedIn} id={id as string} />
 		</ProductPageContainer>
 	);
 }

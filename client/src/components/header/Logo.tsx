@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { GiCampingTent } from 'react-icons/gi';
 import { Link } from 'react-router-dom';
 
+
 export default function Logo() {
 	return (
 		<StyledLogoContainer>
 			<Link to={'/'}></Link>
 			<h1>.outdoor</h1>
-			<GiCampingTent /* style={{fontSize: '4rem'}} */ />
+			<GiCampingTent />
 		</StyledLogoContainer>
 	);
 }
