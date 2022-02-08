@@ -12,7 +12,7 @@ export function User() {
     return {
 
         async getAll() {
-            const query = 'SELECT * FROM users'
+            const query = 'SELECT user_name, email, role FROM users'
             const res = await pool.query(query)
             return res.rows
         },
@@ -20,7 +20,7 @@ export function User() {
         async getOne({ email }: { email: string }) {
 
             const query = {
-                text: 'SELECT * FROM users WHERE email = $1',
+                text: 'SELECT user_name, email, role FROM users WHERE email = $1',
                 values: [ email ]
             }
 
