@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import styled from 'styled-components';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
@@ -8,14 +8,26 @@ import useGetCart from '../../modules/cart/useGetCart';
 import useAuth from '../../modules/auth/useAuth';
 import useLogoutUser from '../../modules/auth/useLogoutUser';
 
+import useOutsideClick from '../../helpers/hooks/useOutsideClick';
+
 export default function MenuHeader() {
 	const { state, dispatch } = useContext(UiStateContext);
 	const { data: auth } = useAuth();
 	const { data: cart } = useGetCart();
 	const { mutate } = useLogoutUser();
 
+	const ref = useRef<HTMLHeadingElement>(null)
+
+	useOutsideClick(ref, () => {
+
+		  dispatch({
+			type: 'CLOSE_HEADER_MENU',
+		  });
+	  });
+
+
 	return (
-		<ButtonsWrapper disabled={auth?.loggedIn}>
+		<ButtonsWrapper ref={ref} disabled={auth?.loggedIn}>
 			<div className='inner-wrapper'>
 				<button
 					onClick={() => dispatch({ type: 'TOGGLE_HEADER_MENU_IS_OPEN' })}
