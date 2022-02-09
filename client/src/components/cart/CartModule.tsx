@@ -2,25 +2,33 @@ import styled from 'styled-components';
 import CartItemList from '../cart/CartItemList';
 import useGetCart from '../../modules/cart/useGetCart';
 import Button from '../global/Button';
-import { cartTotal } from '../../helpers/cartTotal'
+import { cartTotal } from '../../helpers/cartTotal';
 
 export default function CartModule({ isLoggedIn }: { isLoggedIn: boolean }) {
 	const { data: cartItems } = useGetCart();
+
+	const isCartItemsLength = cartItems && cartItems?.data?.length;
+	const isCartItems = cartItems && cartItems?.data?.length > 0;
+
+
+	const totalSumExclVat = cartTotal(isCartItems && cartItems?.data, false);
+	const totalSumInclVat = cartTotal(isCartItems && cartItems?.data, true);
 
 
 	return (
 		<ProductModuleContainer>
 			<div role={'img'} className='image-container'>
-				<h3>VARUKORG ({cartItems?.data?.length} varor)</h3>
-				<CartItemList cartItems={cartItems?.data} />
+				<h3>VARUKORG ({isCartItemsLength} varor)</h3>
+				{isCartItems && <CartItemList cartItems={cartItems && cartItems?.data} />}
+
 			</div>
 			<div className='info-container'>
 				<div className='inner-info-container'>
 					<div className='totals-container'>
 						<h3>TOTAL</h3>
-						<p>Deltotal: {cartTotal(cartItems && cartItems?.data)}</p>
+						<p>Deltotal: {totalSumExclVat}</p>
 						<p>Frakt: Gratis</p>
-						<p>Kostnad inkl. moms:{cartTotal(cartItems && cartItems?.data, true)} </p>
+						<p>Kostnad inkl. moms:{totalSumInclVat} </p>
 					</div>
 
 					<Button text={'slutför köp'} />
@@ -83,10 +91,9 @@ const ProductModuleContainer = styled.div`
 		grid-area: image-container;
 		background-position: center;
 		background-size: cover;
-
 	}
 
-	@media (max-width: 975px) {
+	@media (max-width: 675px) {
 		grid-template-columns: 1fr;
 		grid-template-rows: 35%, 35%, 30%;
 

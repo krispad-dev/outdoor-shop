@@ -22,7 +22,7 @@ export function Cart() {
         async getAll({ user_id }: GetAll) {
 
             const query = {
-                text:`SELECT products.product_id, products.in_stock, users.user_id, cart_item_id, product_name, price, item_count, image, description
+                text: `SELECT products.product_id, products.in_stock, users.user_id, cart_item_id, product_name, price, item_count, image, description
                 FROM cart_items 
                 JOIN users 
                 ON users.user_id = cart_items.user_id 
@@ -37,7 +37,7 @@ export function Cart() {
             return res.rows
         },
 
-        async addOne({ user_id, product_id }: {  user_id: number, product_id: number }) {
+        async addOne({ user_id, product_id }: { user_id: number, product_id: number }) {
 
             const query = {
                 text: 'INSERT INTO cart_items (user_id, product_id) VALUES($1, $2)',
@@ -49,9 +49,6 @@ export function Cart() {
         },
 
         async increment({ cart_item_id, user_id }: { cart_item_id: number, user_id: number }) {
-
-            console.log(cart_item_id);
-
 
             const query = {
                 text: `

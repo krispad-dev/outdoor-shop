@@ -40,9 +40,11 @@ function App() {
 	return (
 		<ThemeProvider theme={lightTheme}>
 			<AppOuterContainer className='App'>
+				
+				{pathname !== '/login' &&
 				<header>
 					<HeaderInnerContainer />
-				</header>
+				</header>}
 
 				<main>
 					<Routes>

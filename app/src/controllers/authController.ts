@@ -35,13 +35,12 @@ export async function loginUser(req: Request, res: Response) {
             { expiresIn: '1h' }
         )
 
-        return res
-        .cookie(
+        return res.cookie(
             'authToken', 
             authToken,  { 
-                sameSite: 'strict', 
+/*                 sameSite: 'strict', 
                 httpOnly: true, 
-                secure: true, 
+                secure: true,  */
             })
 
         .json({

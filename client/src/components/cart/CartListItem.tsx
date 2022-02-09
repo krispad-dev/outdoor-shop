@@ -2,59 +2,67 @@ import React from 'react';
 import styled from 'styled-components';
 import { Cart } from '../../models/Cart';
 import { formatSek } from '../../helpers/formatSek';
+import CartItemCounter from './CartItemCounter';
 
-export default function CartListItem({ image, product_name, description, in_stock, price }: Cart) {
+export default function CartListItem({ image, product_name, description, in_stock, price, cart_item_id, item_count }: Cart) {
+	
+
 	return (
 		<ListItemContainer>
 			<div className='left-container'>
-				<div className='cart-inner-container'>
-					<img src={image} alt='' />
-				</div>
-				<div className='info-container'>
-					<h4>{product_name}</h4>
-					<p>{description}</p>
-					<p>{formatSek(price)}</p>
-					<p>Kvar i webblager: {in_stock}</p>
-				</div>
+				<img src={image} alt='image of product' />
 			</div>
 
-		<div className="rightContainer">
+			<div className='middle-container'>
+				<h4>{product_name}</h4>
+				<p>{description}</p>
+				<p> <strong>{formatSek(price)}</strong> </p>
+				<p>Kvar i webblager: {in_stock}</p>
+			</div>
 
-			
-		</div>
-
+			<div className='right-container'>
+				<CartItemCounter cart_item_id={cart_item_id} item_count={item_count} />
+			</div>
 		</ListItemContainer>
 	);
 }
 
 const ListItemContainer = styled.li`
-	display: flex;
+	height: auto;
+	min-height: 5rem;
+	
+	display: grid;
+	padding: 1rem;
+	grid-template-columns: 25% 25% 50%;
+	grid-template-rows: 1fr;
+	margin-top: 0.5rem;
 
+	background-color: ${props => props.theme.cardColor};
+
+	grid-template-areas: 'left middle right';
 
 	div.left-container {
-		display: flex;
-		justify-content: flex-start;
-		align-items: flex-start;
-	}
-
-
-	div.cart-inner-container {
+		grid-area: left;
 		height: 100%;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		object-fit: cover;
 		img {
-			height: 100px;
+			width: 50%;
+			object-fit: cover;
+			max-height: 8rem;
 		}
 	}
 
-	div.info-container {
-		display: flex;
-		flex-direction: column;
-		align-items: flex-start;
-		margin: 1rem;
+	div.middle-container {
+		grid-area: middle;
+		h4{
+			font-size: 1.2rem;
+			text-transform: uppercase;
+		}
 	}
-	background-color: ${props => props.theme.cardColor};
-	height: 9rem;
+
+	div.right-container {
+		grid-area: right;
+		display: flex;
+		justify-content: flex-end;
+		align-items: flex-start;
+	}
 `;

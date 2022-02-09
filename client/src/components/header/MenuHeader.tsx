@@ -89,9 +89,10 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 
 	button.menu-item-card {
 		height: 2rem;
-		background-color: black;
+		background-color: ${props => props.theme.btnColor};
 		opacity: 30%;
 		width: 100%;
+		
 	}
 
 	button {
@@ -105,9 +106,10 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 		height: 3rem;
 		width: auto;
 		color: white;
-		background-color: black;
+		background-color: ${props => props.theme.btnColor};
 		border: none;
 		cursor: pointer;
+		border-radius: 3px;
 		border-left: 1px solid white;
 		svg {
 			margin: 0rem 0.5rem;

@@ -5,13 +5,15 @@ export const lightTheme = {
     cardColor: '#FAFAFA',
     cardColorDark: '#F2F2F2',
 
-    black: '#111',
+    btnColor: '#222222',
+
+    black: '#11111',
 
     textColor: '#fff',
     textColorDark: '#121212',
 
     accentColor: '#87C5C5',
-    
+
     textHighEmph: '87%',
     textMediumEmph: '60%',
     textLowEmpEmph: '38%',
