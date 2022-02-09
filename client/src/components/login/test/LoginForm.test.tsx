@@ -14,12 +14,12 @@ describe('login Component', () => {
 		</BrowserRouter>
 	);
 
-	beforeEach(() => {
-		useLoginUserMock.mockReturnValue({
-			mutate: jest.fn(),
-			data: { error: 'Ingen användare hittas med angiven epost' },
-			success: false,
-		});
+	const mockMutate = jest.fn();
+
+	useLoginUserMock.mockReturnValue({
+		mutate: mockMutate,
+		data: { error: 'Ingen användare hittas med angiven epost', type: 'email' },
+		success: false,
 	});
 
 	it('should render component with logo', () => {
@@ -29,8 +29,8 @@ describe('login Component', () => {
 	it('should have two input fields ("epost, "lösenord")', () => {
 		render(<ReactQueryResponseMock />);
 
-		const email = screen.getByLabelText('Epost');
-		const password = screen.getByLabelText('Lösenord');
+		const email = screen.getByLabelText(/epost/i);
+		const password = screen.getByLabelText(/lösenord/i);
 
 		expect(email).toBeInTheDocument();
 		expect(password).toBeInTheDocument();
@@ -39,42 +39,66 @@ describe('login Component', () => {
 	it('should have a button ("LOGGA IN")', () => {
 		render(<ReactQueryResponseMock />);
 
-		const button = screen.getByRole('button', { name: /LOGGA IN/ });
+		const button = screen.getByRole('button', { name: /logga in/i });
 
 		expect(button).toBeInTheDocument();
 	});
 
-	it('should give informative error message when incorrect password or email is passed', () => {
+	it('should give informative error message when credentials do not match', () => {
 		render(<ReactQueryResponseMock />);
 
-		const email = screen.getByLabelText('Epost');
-		const password = screen.getByLabelText('Lösenord');
-
-		userEvent.type(password, 'aWorngPassword');
-		userEvent.type(email, 'aWrongEmail');
-
-		const button = screen.getByRole('button', { name: /LOGGA IN/ });
+		const email = screen.getByLabelText(/epost/i);
+		const password = screen.getByLabelText(/lösenord/i);
+		userEvent.type(email, 'testuser@testuser.com');
+		userEvent.type(password, '1234567');
+		const button = screen.getByRole('button', { name: /logga in/i });
 		userEvent.click(button);
 
-		const errMessage = screen.getByText('Ingen användare hittas med angiven epost');
-
-		expect(errMessage).toHaveTextContent('Ingen användare hittas med angiven epost');
-	});
-
-	it('should give informative error message when no input is passed', () => {
-		render(<ReactQueryResponseMock />);
-
-		const button = screen.getByRole('button', { name: /LOGGA IN/ });
-
-		const email = screen.getByLabelText('Epost');
-		const password = screen.getByLabelText('Lösenord');
-
-		userEvent.type(password, '{selectall}{backspace}');
-		userEvent.type(email, '{selectall}{backspace}');
-
-		userEvent.click(button);
-		const errMessage = screen.getByText('Fel - fält kan inte vara tomt');
+		expect(mockMutate).toHaveBeenCalledTimes(1);
+		const errMessage = screen.getByText(/ingen användare hittas med angiven epost/i);
 
 		expect(errMessage).toBeInTheDocument();
 	});
-});
+
+	it('should inform me about invalid email input', () => {
+		render(<ReactQueryResponseMock />);
+
+		const email = screen.getByLabelText(/epost/i);
+		userEvent.type(email, 'testuser_testuserm');
+		const helperText = screen.getByText(/Använd formatet: namn@dinmejl\.se/i);
+
+		expect(helperText).toBeInTheDocument()
+
+	});
+
+	it('should inform me about invalid password input', () => {
+		render(<ReactQueryResponseMock />);
+
+		const password = screen.getByLabelText(/lösenord/i);
+		userEvent.type(password, '234');
+		const helperText = screen.getByText(/minst sex tecken/i);
+
+		expect(helperText).toBeInTheDocument()
+
+	});
+
+	 	it('should only let me submit my information when field input is valid', () => {
+		render(<ReactQueryResponseMock />);
+
+		const button = screen.getByRole('button', { name: /logga in/i });
+
+		expect(button).toBeDisabled()
+
+		const email = screen.getByLabelText(/epost/i);
+		const password = screen.getByLabelText(/lösenord/i);
+
+		userEvent.type(password, 'validinput');
+		userEvent.type(email, 'validInput@validinput.com');
+
+		expect(button).not.toBeDisabled()
+
+		userEvent.click(button);
+
+		expect(mockMutate).toHaveBeenCalledTimes(2);
+	}); 
+})

@@ -16,6 +16,7 @@
     "@types/react-icons": "^3.0.0",
     "@types/styled-components": "^5.1.21",
     "esbuild": "^0.14.18",
+    "formik": "^2.2.9",
     "history": "^5.2.0",
     "nodemon": "^2.0.15",
     "react": "^17.0.2",

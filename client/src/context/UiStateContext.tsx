@@ -22,6 +22,8 @@ export const UiStateContext = createContext<ContextProps>({
 	dispatch: () => null,
 });
 
+
+
 function UiStateProvider({ children }: React.PropsWithChildren<{}>) {
 	const [state, dispatch] = useReducer(UiReducer, initialState);
 

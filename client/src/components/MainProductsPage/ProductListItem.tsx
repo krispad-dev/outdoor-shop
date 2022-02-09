@@ -33,6 +33,7 @@ export default function ProductListItem({
 }
 
 const OuterCardContainer = styled.li<{ image: string }>`
+
 	position: relative;
 	display: grid;
 	cursor: pointer;

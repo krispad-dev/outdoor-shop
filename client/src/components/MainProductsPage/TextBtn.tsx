@@ -11,6 +11,7 @@ const StyledTextBtn = styled.button`
 	opacity: ${props => props.theme.textHighEmph};
 	text-transform: uppercase;
 	font-size: 1.1rem;
+  font-weight: 900;
 	border: none;
   cursor: pointer;
   border-radius: 1px;

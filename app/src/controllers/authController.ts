@@ -15,11 +15,11 @@ export async function loginUser(req: Request, res: Response) {
         
 
         if (!userTryingToLogIn) {
-            throw Error('Could not find user with given email')
+            throw Error('Vi hittar inte det angivna kontot')
         }
         
         if (!await bcCompare(user_password, userTryingToLogIn.user_password)) {
-            throw Error('Password is not a match')
+            throw Error('Lösenord matchar inte din epost')
         }
 
         const jwtPayload = {
@@ -39,9 +39,9 @@ export async function loginUser(req: Request, res: Response) {
         .cookie(
             'authToken', 
             authToken,  { 
-/*                 sameSite: 'strict', 
+                sameSite: 'strict', 
                 httpOnly: true, 
-                secure: true,  */
+                secure: true, 
             })
 
         .json({
@@ -50,7 +50,11 @@ export async function loginUser(req: Request, res: Response) {
         })
 
     } catch (error) {
-        return res.status(400).json({ success: false, error: parseError(error) })
+        return res.status(400).json({ 
+            success: false, 
+            type: parseError(error) === 'Lösenord matchar inte din epost' ? 'password' : 'email',
+            error: parseError(error) 
+        })
     }
 }
 

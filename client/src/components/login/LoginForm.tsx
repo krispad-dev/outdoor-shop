@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
@@ -7,65 +7,59 @@ import { LoginUser } from '../../modules/auth/useLoginUser';
 
 import useLoginUser from '../../modules/auth/useLoginUser';
 import BtnSpinner from '../global/loaders/BtnSpinner';
-import { useNavigate } from 'react-router-dom';
 
-import { isEmpty } from '../../helpers/validators';
+import { isValidEmail, isValidPassword, loginSchema } from '../../helpers/validators';
 
 export default function LoginForm() {
-	const navigate = useNavigate();
-
 	const { mutate, data, isLoading } = useLoginUser();
 	const [formData, setFormData] = useState<LoginUser>({ email: '', password: '' });
 
-	const [userMessage, setUserMessage] = useState('');
-	const [isError, setIsError] = useState(false);
+	console.log(data?.error);
+	
 
 	function submitHandler(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-
-		if (isEmpty(formData.email || formData.password)) {
-			setUserMessage('Fel - fält kan inte vara tomt');
-			setIsError(true);
-		} else {
-			mutate(formData);
-			setIsError(true);
-		}
+		mutate(formData);
 	}
 
-	useEffect(() => {
-		setUserMessage(data?.error);
-	}, [data?.error]);
+	const emailHelperText = isValidEmail(formData.email)
+		? isValidEmail(formData.email)
+		: data?.type === 'email'
+		? data?.error
+		: ' ';
 
-	useEffect(() => {
-		if (data?.success) {
-			setIsError(false);
-			setUserMessage(`Inloggning lyckades - Välkommen`);
-		}
-	}, [data?.success]);
+	const pwdHelperText = isValidPassword(formData.password)
+		? isValidPassword(formData.password)
+		: data?.type === 'password'
+		? data?.error
+		: ' ';
 
 	return (
 		<OuterContainer>
 			<h2 className='logo'>outdoor</h2>
 			<form action='submit' onSubmit={e => submitHandler(e)}>
 				<TextField
-					error={isError}
+					autoComplete='true'
+					error={data?.success === false}
 					margin='normal'
 					id='email'
 					label='Epost'
 					variant='outlined'
 					placeholder='Epost'
+					helperText={emailHelperText}
 					onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
 					name='email'
 				/>
 
 				<TextField
-					error={isError}
+					autoComplete='true'
+					error={data?.success === false}
 					margin='normal'
 					id='password'
 					label='Lösenord'
 					variant='outlined'
 					placeholder='Lösenord'
-					helperText={userMessage}
+					helperText={pwdHelperText}
 					onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
 					name='password'
 					type={'password'}
@@ -73,8 +67,8 @@ export default function LoginForm() {
 
 				<Button
 					spinner={<BtnSpinner />}
-					text='LOGGA IN'
-					isDisabled={false}
+					text={data?.success ? 'välkommen' : 'logga in'}
+					isDisabled={!loginSchema.isValidSync(formData)}
 					isLoading={isLoading}
 				/>
 			</form>
