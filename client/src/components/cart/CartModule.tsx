@@ -7,6 +7,7 @@ import { cartTotal } from '../../helpers/cartTotal'
 export default function CartModule({ isLoggedIn }: { isLoggedIn: boolean }) {
 	const { data: cartItems } = useGetCart();
 
+
 	return (
 		<ProductModuleContainer>
 			<div role={'img'} className='image-container'>

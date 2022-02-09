@@ -89,7 +89,7 @@ describe('Menu Component', () => {
 		const menuBtn = screen.getByRole('button', { name: /meny/i });
 		userEvent.click(menuBtn);
 
-		const link = screen.getByRole('link');
-		expect(link).toBeInTheDocument();
+		const link = screen.getAllByRole('link');
+		expect(link[0]).toHaveAttribute('href', '/cart')
 	});
 });
