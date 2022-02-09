@@ -11,7 +11,7 @@ describe('CartPage Component', () => {
 		render(
 			<BrowserRouter>
 				<QueryClientProvider client={queryClient}>
-					<CartPage />
+					<CartPage isLoggedIn={true} />
 				</QueryClientProvider>
 			</BrowserRouter>
 		);

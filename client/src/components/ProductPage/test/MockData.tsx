@@ -12,6 +12,7 @@ export const mockData: Product = {
 }; 
 
 export const mockCart: Cart = {
+    in_stock: 10,
     product_id: 1,
     user_id: 1,
     cart_item_id: 2,
