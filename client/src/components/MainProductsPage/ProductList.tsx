@@ -9,10 +9,13 @@ const loaderArray = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
 export default function ProductList() {
 	const { data: products, isLoading } = useGetProducts();
 
+	const sortedProducts = products?.data
+	?.sort((a: Product, b: Product) => a.product_id - b.product_id) 
+
 	return (
 		<OuterListContainer>
 
-			{products?.data?.map((product: Product) => (
+			{sortedProducts && sortedProducts?.map((product: Product) => (
 				<ProductListItem key={product.product_id} {...product} />
 			))} 
 
