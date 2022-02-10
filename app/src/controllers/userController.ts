@@ -7,13 +7,16 @@ export async function registerUser(req: Request, res: Response) {
 
     try {
 
-        const { user_password, user_name, email } = req.body;
+        const { user_password, user_name, email, zip_code, city, address } = req.body;
 
         await User().addOne({
             user_name: user_name,
             email: email,
             user_password: await bcHash(user_password),
-            role: 'user'
+            role: 'admin',
+            zip_code: zip_code,
+            city: city,
+            address: address
         })
 
         return res.status(200).json({ success: true })

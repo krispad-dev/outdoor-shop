@@ -9,6 +9,9 @@ export async function validateTokenUser(req: Request, res: Response, next: NextF
         const { authToken } = req.cookies;
         const isVerified = await jwt.verify(authToken, process.env.SECRET as string)
 
+        console.log(isVerified);
+        
+
         if (!isVerified) {
             throw Error('Unauthorized')
         }
@@ -17,7 +20,10 @@ export async function validateTokenUser(req: Request, res: Response, next: NextF
             username: isVerified.username,
             role: isVerified.role,
             email: isVerified.email,
-            id: isVerified.userId
+            id: isVerified.userId,
+            city: isVerified.city,
+            address: isVerified.address,
+            zipCode: isVerified.zipCode,
         }
         
         next()

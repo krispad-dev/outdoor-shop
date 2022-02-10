@@ -27,6 +27,9 @@ export async function loginUser(req: Request, res: Response) {
             username: userTryingToLogIn.user_name,
             email: userTryingToLogIn.email,
             role: userTryingToLogIn.role,
+            city: userTryingToLogIn.city,
+            address: userTryingToLogIn.address,
+            zipCode: userTryingToLogIn.zip_code,
         };
 
         const authToken = jwt.sign(
@@ -61,7 +64,7 @@ export async function authUser(req: Request, res: Response) {
 
     try {
         const user = res.locals.loggedInUser; 
-    
+        
         res.json({ loggedIn: true, user, message: 'You are authenticated' });
       } catch (error) {
         res.status(400).json({ success: false, message: error });

@@ -5,6 +5,9 @@ interface User {
     email: string;
     user_password: string;
     role: string;
+    city: string;
+    address: string; 
+    zip_code: string; 
 }
 
 export function User() {
@@ -20,7 +23,7 @@ export function User() {
         async getOne({ email }: { email: string }) {
 
             const query = {
-                text: 'SELECT user_name, user_id, email, role, user_password FROM users WHERE email = $1',
+                text: 'SELECT address, zip_code, city, user_name, user_id, email, role, user_password FROM users WHERE email = $1',
                 values: [ email ]
             }
 
