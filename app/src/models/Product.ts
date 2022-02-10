@@ -71,9 +71,6 @@ export function Product() {
 
         async adjustStock({ product_id, in_stock }: { product_id: number, in_stock: number }) {
 
-            console.log(product_id);
-            
-
             const query = {
                 text:`    
                 UPDATE products
