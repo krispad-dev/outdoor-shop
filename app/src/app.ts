@@ -7,7 +7,8 @@ import {
     productRouter, 
     cartRouter, 
     userRouter,
-    authRouter
+    authRouter,
+    orderRouter
 } from './routes/routes'
 
 
@@ -20,6 +21,7 @@ app.use('/api/products', productRouter)
 app.use('/api/cart', cartRouter)
 app.use('/api/users', userRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/order', orderRouter)
 
 app.use(express.static(path.join(__dirname, '../public')))
 

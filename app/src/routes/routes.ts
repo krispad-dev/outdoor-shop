@@ -30,10 +30,16 @@ import {
 } from "../controllers/authController";
 
 
+import { 
+    orderProducts 
+} from "../controllers/orderController";
+
+
 export const productRouter = express.Router()
 export const cartRouter = express.Router()
 export const userRouter = express.Router()
 export const authRouter = express.Router()
+export const orderRouter = express.Router()
 
 //PRODUCTS
 productRouter.get('/', getAllProducts)
@@ -56,3 +62,6 @@ userRouter.get('/', validateTokenAdmin, getUsers)
 authRouter.post('/login', loginUser)
 authRouter.post('/logout', logoutUser)
 authRouter.post('/', validateTokenUser, authUser)
+
+//ORDER 
+orderRouter.post('/', validateTokenUser, orderProducts)

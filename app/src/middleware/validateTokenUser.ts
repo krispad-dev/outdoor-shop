@@ -7,10 +7,7 @@ export async function validateTokenUser(req: Request, res: Response, next: NextF
     try {
 
         const { authToken } = req.cookies;
-        const isVerified = await jwt.verify(authToken, process.env.SECRET as string)
-
-        console.log(isVerified);
-        
+        const isVerified = await jwt.verify(authToken, process.env.SECRET as string)        
 
         if (!isVerified) {
             throw Error('Unauthorized')

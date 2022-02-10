@@ -69,6 +69,24 @@ export function Product() {
             return res.rows
         },
 
+        async adjustStock({ product_id, in_stock }: { product_id: number, in_stock: number }) {
+
+            console.log(product_id);
+            
+
+            const query = {
+                text:`    
+                UPDATE products
+                SET in_stock = $1
+                WHERE product_id = $2;
+            `,
+                values: [ in_stock, product_id ],
+              }
+              
+            const res = await pool.query(query)
+            return res.rows
+        },
+
         async delete({ product_id }: { product_id: number }) {
 
             const query = {
