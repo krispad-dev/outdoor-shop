@@ -3,17 +3,16 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import Button from '../global/Button';
-import { LoginUser } from '../../modules/auth/useLoginUser';
-
 import useLoginUser from '../../modules/auth/useLoginUser';
 import BtnSpinner from '../global/loaders/BtnSpinner';
 
+import { LoginUser } from '../../modules/auth/useLoginUser';
 import { isValidEmail, isValidPassword, loginSchema } from '../../helpers/validators';
 
 export default function LoginForm() {
+
 	const { mutate, data, isLoading } = useLoginUser();
 	const [formData, setFormData] = useState<LoginUser>({ email: '', password: '' });
-
 
 	function submitHandler(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();

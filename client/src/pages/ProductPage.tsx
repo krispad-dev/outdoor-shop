@@ -1,5 +1,4 @@
-import React from 'react';
-import ProductModule from '../components/ProductPage/PrductModule';
+import ProductModule from '../components/ProductPage/ProductModule';
 import StyledPageContainer from '../styled-components/StyledPageContainer'
 
 import { useParams } from 'react-router-dom';

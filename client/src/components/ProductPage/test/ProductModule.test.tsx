@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { mockData } from '../../MainProductsPage/test/MockData';
-import ProductModule from '../PrductModule';
+import ProductModule from '../ProductModule';
 import userEvent from '@testing-library/user-event';
 
 // Mock my hook

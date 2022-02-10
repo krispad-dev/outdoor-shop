@@ -17,7 +17,7 @@ export default function CartListItem({ image, product_name, description, in_stoc
 				<h4>{product_name}</h4>
 				<p>{description}</p>
 				<p> <strong>{formatSek(price)}</strong> </p>
-				<p>Kvar i webblager: {in_stock}</p>
+				<p id='kvar-i-webblager'>Kvar i webblager: <strong>{in_stock}</strong> </p>
 			</div>
 
 			<div className='right-container'>
@@ -28,6 +28,14 @@ export default function CartListItem({ image, product_name, description, in_stoc
 }
 
 const ListItemContainer = styled.li`
+	h3, h2, h4 {
+		font-weight: 500;
+		opacity: ${props => props.theme.textHighEmph};
+	}
+	h4 {
+		text-transform: uppercase;
+	}
+
 	height: auto;
 	min-height: 5rem;
 	
@@ -35,7 +43,7 @@ const ListItemContainer = styled.li`
 	padding: 1rem;
 	grid-template-columns: 25% 25% 50%;
 	grid-template-rows: 1fr;
-	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
 
 	background-color: ${props => props.theme.cardColor};
 
@@ -53,10 +61,10 @@ const ListItemContainer = styled.li`
 
 	div.middle-container {
 		grid-area: middle;
-		h4{
-			font-size: 1.2rem;
-			text-transform: uppercase;
+		p#kvar-i-webblager {
+			margin-top: 1rem;
 		}
+
 	}
 
 	div.right-container {

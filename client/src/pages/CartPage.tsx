@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import CartModule from '../components/cart/CartModule';
 import StyledPageContainer from '../styled-components/StyledPageContainer';
 

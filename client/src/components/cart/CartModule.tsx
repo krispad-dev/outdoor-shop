@@ -3,45 +3,68 @@ import CartItemList from '../cart/CartItemList';
 import useGetCart from '../../modules/cart/useGetCart';
 import Button from '../global/Button';
 import { cartTotal } from '../../helpers/cartTotal';
+import useAuth from '../../modules/auth/useAuth';
+import usePlaceOrder from '../../modules/order/usePlaceOrder';
+import BtnSpinner from '../global/loaders/BtnSpinner';
 
 export default function CartModule({ isLoggedIn }: { isLoggedIn: boolean }) {
 	const { data: cartItems } = useGetCart();
+	const { data: data } = useAuth()
+	const { mutate: placeOrder, isLoading } = usePlaceOrder()
 
+	function placeOrderHandler() {
+		placeOrder()
+	}
+
+	const loggedInUser = data?.user; 
+	
 	const isCartItemsLength = cartItems && cartItems?.data?.length;
 	const isCartItems = cartItems && cartItems?.data?.length > 0;
-
 
 	const totalSumExclVat = cartTotal(isCartItems && cartItems?.data, false);
 	const totalSumInclVat = cartTotal(isCartItems && cartItems?.data, true);
 
-
 	return (
 		<ProductModuleContainer>
 			<div role={'img'} className='image-container'>
-				<h3>VARUKORG ({isCartItemsLength} varor)</h3>
 				{isCartItems && <CartItemList cartItems={cartItems && cartItems?.data} />}
-
 			</div>
 			<div className='info-container'>
 				<div className='inner-info-container'>
+					<h3>VARUKORG ({isCartItemsLength} varor)</h3>
 					<div className='totals-container'>
 						<h3>TOTAL</h3>
-						<p>Deltotal: {totalSumExclVat}</p>
 						<p>Frakt: Gratis</p>
-						<p>Kostnad inkl. moms:{totalSumInclVat} </p>
+						<p>Deltotal: <em>{totalSumExclVat}</em></p>
+						<p>Kostnad inkl. moms: <em>{totalSumInclVat}</em> </p>
 					</div>
-
-					<Button text={'slutför köp'} />
 				</div>
 			</div>
 			<div className='actions-container'>
-				<div className='inner-actions-container'></div>
+				<div className='inner-actions-container'>
+					<div className='inner-info-container'>
+						<h3>Leveransuppgifter: </h3>
+
+						<p>Address: {loggedInUser?.address}</p>
+						<p>Postnummer:{loggedInUser?.zipCode} </p>
+						<p>Stad: {loggedInUser?.city} </p>
+						<p>Orderbekräftelse till: {loggedInUser?.email} </p>
+					</div>
+
+					<Button spinner={<BtnSpinner/>} isLoading={isLoading} clickHandler={placeOrderHandler} text={'slutför köp'} />
+				</div>
 			</div>
 		</ProductModuleContainer>
 	);
 }
 
 const ProductModuleContainer = styled.div`
+
+	h3, h2 {
+		font-weight: 500;
+		opacity: ${props => props.theme.textHighEmph};
+	}
+
 	gap: 1rem;
 	width: 100%;
 	height: 100%;
@@ -66,40 +89,39 @@ const ProductModuleContainer = styled.div`
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			width: 95%;
-			height: 95%;
+			width: 90%;
+			height: 90%;
 		}
 	}
 
 	div.actions-container {
 		display: flex;
 		justify-content: center;
+		align-items: center;
 		div.inner-actions-container {
 			display: flex;
-			align-items: flex-end;
-			height: 95%;
-			width: 95%;
+			align-items: flex-start;
+			flex-direction: column;
+			justify-content: space-between;
+			height: 90%;
+			width: 90%;
 		}
 		grid-area: actions-container;
 		background-color: ${props => props.theme.cardColorDark};
 	}
 
-	div.image-container {
-		h3 {
-			margin-bottom: 1rem;
-		}
+	div.image-container {	
 		grid-area: image-container;
 		background-position: center;
 		background-size: cover;
 	}
 
 	@media (max-width: 675px) {
-		grid-template-columns: 1fr;
-		grid-template-rows: 35%, 35%, 30%;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
 
 		grid-template-areas:
-			'info-container'
-			'image-container'
-			'actions-container';
+			'info-container actions-container'
+			'image-container image-container';
 	}
 `;

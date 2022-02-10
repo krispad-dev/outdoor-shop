@@ -8,7 +8,7 @@ jest.mock('../../../modules/auth/useLoginUser');
 const useLoginUserMock = useLoginUser as jest.Mock<any>;
 
 describe('login Component', () => {
-	const ReactQueryResponseMock = () => (
+	const LoginComponentWrappedInRouter = () => (
 		<BrowserRouter>
 			<LoginForm />
 		</BrowserRouter>
@@ -16,18 +16,20 @@ describe('login Component', () => {
 
 	const mockMutate = jest.fn();
 
-	useLoginUserMock.mockReturnValue({
+
+	useLoginUserMock.mockImplementation(() => ({ 
 		mutate: mockMutate,
-		data: { error: 'Ingen användare hittas med angiven epost', type: 'email' },
-		success: false,
-	});
+		success: false, 
+		data: { error: 'Ingen användare hittas med angiven epost', type: 'email' }
+	}));
+
 
 	it('should render component with logo', () => {
-		render(<ReactQueryResponseMock />);
+		render(<LoginComponentWrappedInRouter />);
 	});
 
 	it('should have two input fields ("epost, "lösenord")', () => {
-		render(<ReactQueryResponseMock />);
+		render(<LoginComponentWrappedInRouter />);
 
 		const email = screen.getByLabelText(/epost/i);
 		const password = screen.getByLabelText(/lösenord/i);
@@ -37,7 +39,7 @@ describe('login Component', () => {
 	});
 
 	it('should have a button ("LOGGA IN")', () => {
-		render(<ReactQueryResponseMock />);
+		render(<LoginComponentWrappedInRouter />);
 
 		const button = screen.getByRole('button', { name: /logga in/i });
 
@@ -45,7 +47,7 @@ describe('login Component', () => {
 	});
 
 	it('should give informative error message when credentials do not match', () => {
-		render(<ReactQueryResponseMock />);
+		render(<LoginComponentWrappedInRouter />);
 
 		const email = screen.getByLabelText(/epost/i);
 		const password = screen.getByLabelText(/lösenord/i);
@@ -55,13 +57,15 @@ describe('login Component', () => {
 		userEvent.click(button);
 
 		expect(mockMutate).toHaveBeenCalledTimes(1);
+		expect(mockMutate).toHaveBeenCalledWith({ email: 'testuser@testuser.com', password: '1234567' });
+
 		const errMessage = screen.getByText(/ingen användare hittas med angiven epost/i);
 
 		expect(errMessage).toBeInTheDocument();
 	});
 
 	it('should inform me about invalid email input', () => {
-		render(<ReactQueryResponseMock />);
+		render(<LoginComponentWrappedInRouter />);
 
 		const email = screen.getByLabelText(/epost/i);
 		userEvent.type(email, 'testuser_testuserm');
@@ -72,7 +76,7 @@ describe('login Component', () => {
 	});
 
 	it('should inform me about invalid password input', () => {
-		render(<ReactQueryResponseMock />);
+		render(<LoginComponentWrappedInRouter />);
 
 		const password = screen.getByLabelText(/lösenord/i);
 		userEvent.type(password, '234');
@@ -83,7 +87,7 @@ describe('login Component', () => {
 	});
 
 	 	it('should only let me submit my information when field input is valid', () => {
-		render(<ReactQueryResponseMock />);
+		render(<LoginComponentWrappedInRouter />);
 
 		const button = screen.getByRole('button', { name: /logga in/i });
 

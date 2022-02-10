@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import Button from '../global/Button';
 
@@ -15,7 +14,7 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean,
 	
 	const { data: product } = useGetProduct(id);
 	const { data: cartItems } = useGetCart();
-	const { mutate, data } = useAddToCart();
+	const { mutate } = useAddToCart();
 
 	function addToCartHandler() {
 		mutate(id);
@@ -23,7 +22,9 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean,
 
 	return (
 		<ProductModuleContainer image={product?.data?.image}>
+
 			<div role={'img'} className='image-container'></div>
+
 			<div className='info-container'>
 				<div className='inner-info-container'>
 					<h3>{product?.data?.product_name}</h3>
@@ -31,6 +32,7 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean,
 					<p>{formatSek(product?.data?.price)}</p>
 				</div>
 			</div>
+
 			<div className='actions-container'>
 				<div className='inner-actions-container'>
 					<Button 
@@ -44,6 +46,7 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean,
 					/>
 				</div>
 			</div>
+
 		</ProductModuleContainer>
 	);
 }

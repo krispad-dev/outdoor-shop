@@ -5,11 +5,11 @@ import { mockCart } from './mockCart'
 describe('CartSetItemQuantity Component', () => {
 	
 	it('should render', () => {
-		render(<CartItemCounter  />);
+		render(<CartItemCounter cart_item_id={1} item_count={20} />);
 	});
 
 	it('should render correct item amount', () => {
-		render(<CartItemCounter  />);
+		render(<CartItemCounter cart_item_id={1} item_count={20} />);
 
 		const itemCount = screen.getByText(/1/i)
 
