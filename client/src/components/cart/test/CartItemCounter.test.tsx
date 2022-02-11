@@ -54,7 +54,7 @@ describe('CartSetItemQuantity Component', () => {
 
 	})
 
-	it('should render correct item amount (2) ', () => {
+	it('should render correct item amount (20) ', () => {
 		render(<CartItemCounter cart_item_id={1} item_count={20} />);
 
 		const itemCount = screen.getByText(/20/i)

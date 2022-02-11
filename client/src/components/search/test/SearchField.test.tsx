@@ -8,12 +8,5 @@ describe('Logo Component', () => {
 		render(<SearchField/>);
 	});
 
-	it('should be able to type in the search filed"', () => {
-		render(<SearchField/>);
 
-		const searchField = screen.getByRole('textbox');
-        userEvent.type(searchField, 'hello world') 
-
-		expect(searchField).toHaveValue(/hello world/i);
-	});
 });

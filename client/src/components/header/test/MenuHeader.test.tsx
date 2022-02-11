@@ -26,6 +26,7 @@ describe('Menu Component', () => {
 		const initialState = {
 			headerMenuIsOpen: false,
 			userAuthState: { success: false, data: {} },
+			searchString: ''
 		};
 
 		const [state, dispatch] = useReducer(UiReducer, initialState);

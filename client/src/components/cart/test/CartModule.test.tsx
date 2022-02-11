@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
 import CartModule from '../CartModule';
 import { mockCart } from './mockCart';
 import { mockUser } from './mockUser';
