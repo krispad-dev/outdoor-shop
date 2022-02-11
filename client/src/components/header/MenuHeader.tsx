@@ -16,45 +16,53 @@ export default function MenuHeader() {
 	const { data: cart } = useGetCart();
 	const { mutate } = useLogoutUser();
 
-	const ref = useRef<HTMLHeadingElement>(null)
+	const ref = useRef<HTMLHeadingElement>(null);
+
+	const isLoggedIn = auth?.loggedIn;
+	const cartItemCount = cart?.data?.length ? cart?.data?.length : 0;
+	const menuIsOpen = state.headerMenuIsOpen;
 
 	useOutsideClick(ref, () => {
-
-		  dispatch({
+		dispatch({
 			type: 'CLOSE_HEADER_MENU',
-		  });
-	  });
+		});
+	});
 
+	function toggleMenuHandler() {
+		dispatch({ type: 'TOGGLE_HEADER_MENU_IS_OPEN' });
+	}
 
 	return (
-		<ButtonsWrapper ref={ref} disabled={auth?.loggedIn}>
+		<ButtonsWrapper ref={ref} disabled={isLoggedIn}>
+
 			<div className='inner-wrapper'>
-				<button
-					onClick={() => dispatch({ type: 'TOGGLE_HEADER_MENU_IS_OPEN' })}
-					className='menu-btn'
-				>
+				<button onClick={toggleMenuHandler} className='menu-btn'>
 					MENY
 				</button>
+				
 				<button disabled={true} className='cart-btn'>
-					CART (
-					<p data-testid='cart-quantity'>{cart?.data?.length ? cart?.data?.length : 0}</p>
-					) <RiShoppingCartLine />
-					<Link to={'/cart'}></Link>
+					CART (<p data-testid='cart-quantity'>{cartItemCount}</p> ) 
+					<RiShoppingCartLine />
+					{isLoggedIn && <Link to={'/cart'}></Link>}
 				</button>
 			</div>
 
-			{state.headerMenuIsOpen && (
+			{menuIsOpen && (
+
 				<div className='menu-items-container'>
-					{!auth?.loggedIn && (
+
+					{!isLoggedIn && (
 						<button className='menu-item-card'>
 							LOGIN<Link to={'/login'}></Link>{' '}
 						</button>
 					)}
-					{auth?.loggedIn && (
+
+					{isLoggedIn && (
 						<button onClick={() => mutate()} className='menu-item-card'>
 							LOGOUT{' '}
 						</button>
 					)}
+
 				</div>
 			)}
 		</ButtonsWrapper>
@@ -82,7 +90,6 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 			opacity: ${props => (!props.disabled ? '20%' : '100%')};
 			a {
 				position: absolute;
-				
 			}
 		}
 	}
@@ -92,7 +99,6 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 		background-color: ${props => props.theme.btnColor};
 		opacity: 30%;
 		width: 100%;
-		
 	}
 
 	button {

@@ -1,67 +1,65 @@
-import Logo from './components/header/Logo';
-import { useEffect, useContext } from 'react';
-import { UiStateContext } from './context/UiStateContext';
-import LoginPage from './pages/LoginPage';
+
 import { useLocation } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { lightTheme } from './themes/themes';
 import { Routes, Route } from 'react-router-dom';
+import { Navigate } from 'react-router-dom'
+
 import HeaderInnerContainer from './components/header/HeaderInnerContainer';
 import ProductPage from './pages/ProductPage';
 import CartPage from './pages/CartPage';
 import styled from 'styled-components';
-
-import { useNavigate } from 'react-router-dom';
-
+import LoginPage from './pages/LoginPage';
 import useAuth from './modules/auth/useAuth';
 import MainProductsPage from './pages/MainProductsPage';
 
 function App() {
-	const navigate = useNavigate();
-	const { state: uiState, dispatch } = useContext(UiStateContext);
+
 	const { pathname } = useLocation();
 	const { data: isAuthenticated } = useAuth();
 	
-
-	useEffect(() => {
-
-		if (pathname === '/login' && isAuthenticated?.loggedIn) {
-			setTimeout(() => {
-				navigate(`/`);
-			}, 500);
-		}
-
-		if (pathname === '/cart' && !isAuthenticated?.loggedIn) {
-			navigate(`/`);
-		}
-		
-	}, [isAuthenticated, pathname]);
 
 	return (
 		<ThemeProvider theme={lightTheme}>
 			<AppOuterContainer className='App'>
 				
-				{pathname !== '/login' &&
-				<header>
-					<HeaderInnerContainer />
-				</header>}
+				{ pathname !== '/login' &&
+					<header>
+						<HeaderInnerContainer />
+					</header>
+				}
 
 				<main>
 					<Routes>
-						<Route path='/login' element={<LoginPage />} />
-						<Route
+
+						<Route 
+							path='/login' 
+							element={!isAuthenticated?.loggedIn 
+							? <LoginPage /> 
+							: <Navigate to={'/'} /> } 
+						/>
+
+						<Route 
 							path='/cart'
-							element={<CartPage isLoggedIn={isAuthenticated?.loggedIn} />}
+							element={isAuthenticated?.loggedIn 
+							? <CartPage isLoggedIn={isAuthenticated?.loggedIn}/> 
+							: <Navigate to={'/'} />} 
 						/>
-						<Route
-							path='/:id'
-							element={<ProductPage isLoggedIn={isAuthenticated?.loggedIn} />}
+
+						<Route 
+							path='/:id' 
+							element={<ProductPage 
+							isLoggedIn={isAuthenticated?.loggedIn} />}
 						/>
-						<Route path='/' element={<MainProductsPage />} />
+
+						<Route 
+							path='/' 
+							element={<MainProductsPage />} 
+						/>
+
 					</Routes>
 				</main>
-
-				<div className='bg'></div>
+				
 			</AppOuterContainer>
 		</ThemeProvider>
 	);
