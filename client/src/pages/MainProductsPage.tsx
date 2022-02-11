@@ -6,9 +6,9 @@ import StyledPageContainer from '../styled-components/StyledPageContainer'
 export default function MainProductsPage() {
 	return (
 		<StyledPageContainer>
-			<ProductListHeader
+{/* 			<ProductListHeader
 				buttons={['alla', 'vinter', 'vandra', 'klättra', 'verktyg', 'bära', 'sova']}
-			/>
+			/> */}
 			<ProductList />
 		</StyledPageContainer>
 	);

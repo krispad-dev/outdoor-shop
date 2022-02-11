@@ -6,21 +6,22 @@ import useAddToCart from '../../modules/cart/useAddToCart';
 import useGetCart from '../../modules/cart/useGetCart';
 import { formatSek } from '../../helpers/formatSek';
 
+import SkeletonColor from '../global/loaders/SkeletonLoader';
 import { isInCart } from '../../helpers/isInCart';
 
 
 
 export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean, id: string }) {	
 	
-	const { data: product } = useGetProduct(id);
+	const { data: product, isLoading } = useGetProduct(id);
 	const { data: cartItems } = useGetCart();
 	const { mutate } = useAddToCart();
 
 	function addToCartHandler() {
 		mutate(id);
 	}
-
 	return (
+		
 		<ProductModuleContainer image={product?.data?.image}>
 
 			<div role={'img'} className='image-container'></div>
@@ -52,12 +53,13 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean,
 }
 
 const ProductModuleContainer = styled.div<{ image: string }>`
+
 	gap: 1rem;
 	width: 100%;
 	height: 100%;
 	display: grid;
 
-	grid-template-columns: 1fr, 1fr;
+	grid-template-columns:  auto, auto;
 	grid-template-rows: 1fr, 1fr;
 
 	grid-template-areas:

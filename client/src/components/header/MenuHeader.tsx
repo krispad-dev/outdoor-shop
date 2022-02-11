@@ -103,7 +103,7 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		height: 3rem;
+		height: 2.5rem;
 		width: auto;
 		color: white;
 		background-color: ${props => props.theme.btnColor};

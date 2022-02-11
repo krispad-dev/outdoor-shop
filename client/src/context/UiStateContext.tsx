@@ -4,7 +4,8 @@ import { User } from '../models/User';
 
 export interface UiState {
 	headerMenuIsOpen: boolean;
-	userAuthState: { success: boolean, data: User | {} }
+	userAuthState: { success: boolean, data: User | {} };
+	searchString: string;
 }
 
 interface ContextProps {
@@ -14,7 +15,8 @@ interface ContextProps {
 
 const initialState: UiState = {
 	headerMenuIsOpen: false,
-	userAuthState: { success: false, data: {} }
+	userAuthState: { success: false, data: {} },
+	searchString: ''
 };
 
 export const UiStateContext = createContext<ContextProps>({

@@ -18,14 +18,14 @@ const StyledLogoContainer = styled.div`
 display: flex;
 align-items: flex-end;
 	position: relative;
-	font-size: 2rem;
+	font-size: 1.5rem;
 	cursor: pointer;
 	a {
 		z-index: 200;
 	}
 
 	svg {
-		font-size: 4rem;
+		font-size: 3rem;
 		color: ${props => props.theme.accentColor};
 	}
 
