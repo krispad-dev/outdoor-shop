@@ -1,13 +1,12 @@
-import React, { useContext, useRef } from 'react';
-import styled from 'styled-components';
+import { useContext, useRef } from 'react';
 import { RiShoppingCartLine } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
 import { UiStateContext } from '../../context/UiStateContext';
 
+import styled from 'styled-components';
 import useGetCart from '../../modules/cart/useGetCart';
 import useAuth from '../../modules/auth/useAuth';
 import useLogoutUser from '../../modules/auth/useLogoutUser';
-
 import useOutsideClick from '../../helpers/hooks/useOutsideClick';
 
 export default function MenuHeader() {
@@ -17,7 +16,6 @@ export default function MenuHeader() {
 	const { mutate } = useLogoutUser();
 
 	const ref = useRef<HTMLHeadingElement>(null);
-
 	const isLoggedIn = auth?.loggedIn;
 	const cartItemCount = cart?.data?.length ? cart?.data?.length : 0;
 	const menuIsOpen = state.headerMenuIsOpen;
@@ -34,23 +32,20 @@ export default function MenuHeader() {
 
 	return (
 		<ButtonsWrapper ref={ref} disabled={isLoggedIn}>
-
 			<div className='inner-wrapper'>
 				<button onClick={toggleMenuHandler} className='menu-btn'>
 					MENY
 				</button>
-				
+
 				<button disabled={true} className='cart-btn'>
-					CART (<p data-testid='cart-quantity'>{cartItemCount}</p> ) 
+					CART (<p data-testid='cart-quantity'>{cartItemCount}</p> )
 					<RiShoppingCartLine />
 					{isLoggedIn && <Link to={'/cart'}></Link>}
 				</button>
 			</div>
 
 			{menuIsOpen && (
-
 				<div className='menu-items-container'>
-
 					{!isLoggedIn && (
 						<button className='menu-item-card'>
 							LOGIN<Link to={'/login'}></Link>{' '}
@@ -62,7 +57,6 @@ export default function MenuHeader() {
 							LOGOUT{' '}
 						</button>
 					)}
-
 				</div>
 			)}
 		</ButtonsWrapper>

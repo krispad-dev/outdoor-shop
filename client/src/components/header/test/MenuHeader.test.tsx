@@ -26,7 +26,7 @@ describe('Menu Component', () => {
 		const initialState = {
 			headerMenuIsOpen: false,
 			userAuthState: { success: false, data: {} },
-			searchString: ''
+			searchString: '',
 		};
 
 		const [state, dispatch] = useReducer(UiReducer, initialState);
@@ -40,18 +40,21 @@ describe('Menu Component', () => {
 		);
 	}
 
-	useGetCartMock.mockReturnValue({
+	const testMutate = jest.fn();
+
+	useGetCartMock.mockImplementation(() => ({
 		data: { data: [mockCart] },
 		success: false,
-	});
+	}));
 
-	useAuthMock.mockReturnValue({
-		data: { isLoggedIn: true },
-	});
+	useAuthMock.mockImplementation(() => ({
+		data: { loggedIn: true },
+	}));
 
-	useLogoutUserMock.mockReturnValue({
-		data: { success: true }
-	})
+	useLogoutUserMock.mockImplementation(() => ({
+		mutate: testMutate,
+		data: { success: true },
+	}));
 
 	it('should render', () => {
 		render(<ComponentWrappedInContext />);
@@ -73,8 +76,8 @@ describe('Menu Component', () => {
 		const menuBtn = screen.getByRole('button', { name: /meny/i });
 		userEvent.click(menuBtn);
 
-		const menuOption = screen.getByRole('button', { name: /login/i });
-		expect(menuOption).toBeInTheDocument();
+		const logoutButton = screen.getByRole('button', { name: /logout/i });
+		expect(logoutButton).toBeInTheDocument();
 	});
 
 	it('cart items quantity should be the accurate amount ', () => {
@@ -91,6 +94,37 @@ describe('Menu Component', () => {
 		userEvent.click(menuBtn);
 
 		const link = screen.getAllByRole('link');
-		expect(link[0]).toHaveAttribute('href', '/cart')
+		expect(link[0]).toHaveAttribute('href', '/cart');
+	});
+
+	it('link to login page should be present ', () => {
+		useAuthMock.mockImplementation(() => ({
+			data: { loggedIn: false },
+		}));
+
+		render(<ComponentWrappedInContext />);
+
+		const menuBtn = screen.getByRole('button', { name: /meny/i });
+		userEvent.click(menuBtn);
+
+		const link = screen.getAllByRole('link');
+		expect(link[0]).toHaveAttribute('href', '/login');
+	});
+
+	describe('logout', () => {
+		it('should call logout when user clicks logout', () => {
+			useAuthMock.mockImplementation(() => ({
+				data: { loggedIn: true },
+			}));
+
+			render(<ComponentWrappedInContext />);
+			const menuBtn = screen.getByRole('button', { name: /meny/i });
+			userEvent.click(menuBtn);
+
+			const logoutButton = screen.getByRole('button', { name: /logout/i });
+			userEvent.click(logoutButton);
+
+			expect(testMutate).toHaveBeenCalledTimes(1);
+		});
 	});
 });
