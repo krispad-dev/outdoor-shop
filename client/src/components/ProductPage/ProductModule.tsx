@@ -9,7 +9,7 @@ import { formatSek } from '../../helpers/formatSek';
 import { isInCart } from '../../helpers/isInCart';
 
 export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean; id: string }) {
-	const { data: product, isLoading } = useGetProduct(id);
+	const { data: product } = useGetProduct(id);
 	const { data: cartItems } = useGetCart();
 	const { mutate } = useAddToCart();
 
@@ -19,13 +19,14 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean;
 
 	return (
 		<ProductModuleContainer image={product?.data?.image}>
-			<div role={'img'} className='image-container'></div>
+			<div role={'img'} className='image-container'>
+			</div>
 
 			<div className='info-container'>
 				<div className='inner-info-container'>
 					<div>
 						<h3>{product?.data?.product_name}</h3>
-						<p>{product?.data?.description}</p>
+						<p>{product?.data?.description}</p> 
 					</div>
 				</div>
 			</div>
@@ -59,7 +60,7 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 	height: 100%;
 	display: grid;
 
-	grid-template-columns: auto, auto;
+	grid-template-columns: 50vw, 50vw;
 	grid-template-rows: 1fr, 1fr;
 
 	grid-template-areas:
@@ -70,15 +71,22 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 		grid-area: info-container;
 		background-color: ${props => props.theme.cardColor};
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		justify-content: flex-start;
+		align-items: flex-start;
+		flex-direction: column;
+
+
 
 		div.inner-info-container {
-			display: flex;
 			flex-direction: column;
-			justify-content: space-between;
+			display: flex;
 			width: 95%;
 			height: 95%;
+			padding: 1rem;
+			p {
+				margin-top: 1rem;
+			}
+
 		}
 	}
 
@@ -107,7 +115,7 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 			}
 		}
 		grid-area: actions-container;
-		background-color: ${props => props.theme.cardColorDark};
+		background-color: ${props => props.theme.cardColor};
 	}
 
 	div.image-container {
@@ -116,15 +124,20 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 		background-image: url(${props => props.image});
 		background-position: center;
 		background-size: cover;
+		width: 50vw;
+		img {
+			object-fit: cover;
+			width: 50%;
+		}
 	}
 
 	@media (max-width: 975px) {
-		grid-template-columns: 1fr;
+		grid-template-columns: 1fr 1fr;
 		grid-template-rows: 35%, 35%, 30%;
 
 		grid-template-areas:
-			'info-container'
-			'image-container'
-			'actions-container';
+			'info-container info-container'
+		
+			'image-container actions-container';
 	}
 `;

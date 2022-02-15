@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
+const GlobalStyle = createGlobalStyle<any>`
 
 body {
 	margin: 0;
@@ -32,12 +32,14 @@ h6,
 p {
 	padding: 0;
 	margin: 0;
+    opacity: ${props => props.theme.textMediumEmph};
 }
 
 h3 {
 	font-size: 1.5rem;
 	text-transform: uppercase;
 	font-weight: 700;
+    opacity: ${props => props.theme.textMediumEmph};
 }
 
 p {
@@ -113,5 +115,4 @@ button:hover {
 
 `;
 
-
-export default GlobalStyle
+export default GlobalStyle;

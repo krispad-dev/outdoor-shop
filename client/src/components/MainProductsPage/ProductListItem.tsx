@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Product } from '../../models/Product';
 import TagChip from '../global/TagChip';
 import { formatSek } from '../../helpers/formatSek';
+import { shortenLongStrings } from '../../helpers/shortenLogString';
 
 import { Link } from 'react-router-dom';
 
@@ -24,8 +25,9 @@ export default function ProductListItem({
 			<div className='bottom-container'>
 				<article className='info-article'>
 					<h3 className='product-name'>{product_name}</h3>
-					<p className='product-description'>{description}</p>
-					<p className='product-price'>{formatSek(price)}</p>
+					<p className='product-description'>{shortenLongStrings(description, 200)}</p>
+					<p className='product-price'><em>{formatSek(price)}</em></p>
+
 				</article>
 			</div>
 		</OuterCardContainer>
@@ -74,13 +76,14 @@ const OuterCardContainer = styled.li<{ image: string }>`
 				font-size: 0.8rem;
 				opacity: ${props => props.theme.black};
 				font-weight: 300;
+				margin-top: 1rem;
 			}
 			p.product-price {
 				font-size: 1rem;
 				opacity: ${props => props.theme.textHighEmph};
 				font-weight: 300;
 				margin-top: 2rem;
-				font-weight: 100;
+				font-weight: 500;
 			}
 		}
 	}

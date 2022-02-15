@@ -104,9 +104,5 @@ const AppOuterContainer = styled.div`
 	flex-direction: column;
 	overflow: hidden;
 
-	h4{ 
-		color: ;
-	}
-
 `;
 
