@@ -46,7 +46,7 @@ const StyledButton = styled.button<{ isDisabled?: boolean }>`
 	background-color: ${props => props.theme.black};
 	color: ${props => props.theme.textColor};
 
-
+	
 	font-size: 1.5rem;
 	font-weight: 300;
 	width: 100%;

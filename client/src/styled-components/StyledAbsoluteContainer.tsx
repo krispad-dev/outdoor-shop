@@ -13,6 +13,23 @@ const StyledAbsoluteContainer = styled.section<{ bgImage: string }>`
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-image: url(${props => props.bgImage});
+	overflow: hidden;
+
+	width: 100%;
+	a {
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: ${ props => props.theme.accentColor };
+		left:0rem;
+		bottom: 3rem;
+		position: unset;
+	}
+
+	div.header-container {
+		width: 70%;
+		display: flex;
+		justify-content: space-around;
+	}
 `;
 
 export default StyledAbsoluteContainer

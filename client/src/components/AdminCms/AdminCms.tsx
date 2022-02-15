@@ -3,6 +3,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { UiStateContext } from '../../context/UiStateContext';
 import {
 	createUpdate,
@@ -23,6 +24,8 @@ import BtnSpinner from '../global/loaders/BtnSpinner';
 import SearchToUpdate from './SearchToUpdate';
 import AdminToggleButton from './ToggleButton';
 
+import { useWindowSize, useWindowWidth, useWindowHeight } from '@react-hook/window-size';
+
 export default function AdminCms() {
 	const initialState = {
 		product_name: '',
@@ -35,6 +38,8 @@ export default function AdminCms() {
 
 	const [csmIsLoading, setCmsIsLoading] = useState(false);
 	const [formData, setFormData] = useState<FormData>(initialState);
+
+	const useWidth = useWindowWidth();
 
 	const { state, dispatch } = useContext(UiStateContext);
 	const { data: products } = useGetProducts();
@@ -59,7 +64,6 @@ export default function AdminCms() {
 		isLoading: isLoadingDelete,
 		isSuccess: deleteIsSuccess,
 	} = useDeleteProduct();
-
 
 	const currentMode = state.adminMode;
 
@@ -122,7 +126,7 @@ export default function AdminCms() {
 		if (currentMode === 'new') {
 			setFormData(initialState);
 		}
-		dispatch({ type: 'SET_PRODUCT_TO_EDIT', payload: null})
+		dispatch({ type: 'SET_PRODUCT_TO_EDIT', payload: null });
 	}, [currentMode]);
 
 	useEffect(() => {
@@ -131,14 +135,7 @@ export default function AdminCms() {
 		if (isSuccess) {
 			dispatch({ type: 'SET_ACTIVATE_SNACK', payload: snackText });
 		}
-
 	}, [deleteIsSuccess, updateIsSuccess, addIsSuccess]);
-
-
-
-	console.log(	state.productToUpdate);
-	
-
 
 	const snackText =
 		currentMode === 'new'
@@ -152,13 +149,19 @@ export default function AdminCms() {
 	const isSuccess = deleteIsSuccess || updateIsSuccess || addIsSuccess;
 	return (
 		<StyledFormContainer>
-			<h2 className='logo'>admin</h2>
+			<div className='header-container'>
+				<Link to={'/'}>X</Link>
+				{useWidth > 400 && <h2 className='logo'>admin</h2>}
+			</div>
 
 			<InnerContainer>
 				<Box
 					component='form'
 					sx={{
-						'& > :not(style)': { m: 1, width: '30ch' },
+						'& > :not(style)': {
+							m: useWidth > 400 ? 1 : 0.5,
+							width: useWidth < 400 ? '20ch' : '25ch',
+						},
 					}}
 					noValidate
 					autoComplete='off'
@@ -166,78 +169,11 @@ export default function AdminCms() {
 				>
 					<AdminToggleButton />
 					<SearchToUpdate products={products.data} isDisabled={currentMode === 'new'} />
-					<TextField
-						disabled={currentMode === 'delete'}
-						value={formData.product_name}
-						size='medium'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='product_name'
-						label='Produktnamn'
-						variant='outlined'
-						placeholder='Produktnamn'
-						helperText={productNameHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='product name'
-						type={'text'}
-					/>
-					<TextField
-						disabled={currentMode === 'delete'}
-						value={formData.description}
-						size='medium'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='description'
-						label='Beskrivning'
-						variant='outlined'
-						placeholder='Beskrivning'
-						helperText={descriptionHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='Beskrivning'
-						type={'text'}
-					/>
-					<TextField
-						disabled={currentMode === 'delete'}					
-						value={formData.category}
-						size='medium'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='category'
-						label='Kategori'
-						variant='outlined'
-						placeholder='Kategori'
-						helperText={categoryHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='Kategori'
-						type={'text'}
-					/>
 
-					<TextField
-						disabled={currentMode === 'delete'}					
-						value={formData.in_stock}
-						size='medium'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='in_stock'
-						label='Lagerstatus'
-						InputProps={{
-							startAdornment: <InputAdornment position='start'>Antal</InputAdornment>,
-						}}
-						variant='outlined'
-						placeholder='Lagerstatus'
-						helperText={stockValueHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='Lagerstatus'
-						type='number'
-					/>
 					<TextField
 						disabled={currentMode === 'delete'}
 						value={formData.price}
-						size='medium'
+						size='small'
 						autoComplete='true'
 						error={isError}
 						margin='normal'
@@ -256,8 +192,28 @@ export default function AdminCms() {
 
 					<TextField
 						disabled={currentMode === 'delete'}
+						value={formData.in_stock}
+						size='small'
+						autoComplete='true'
+						error={isError}
+						margin='normal'
+						id='in_stock'
+						label='Lagerstatus'
+						InputProps={{
+							startAdornment: <InputAdornment position='start'>Antal</InputAdornment>,
+						}}
+						variant='outlined'
+						placeholder='Lagerstatus'
+						helperText={stockValueHelperText}
+						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
+						name='Lagerstatus'
+						type='number'
+					/>
+
+					<TextField
+						disabled={currentMode === 'delete'}
 						value={formData.image}
-						size='medium'
+						size='small'
 						autoComplete='true'
 						error={isError}
 						margin='normal'
@@ -270,7 +226,56 @@ export default function AdminCms() {
 						name='Bild'
 						type='text'
 					/>
-	
+
+					<TextField
+						disabled={currentMode === 'delete'}
+						value={formData.product_name}
+						size='small'
+						autoComplete='true'
+						error={isError}
+						margin='normal'
+						id='product_name'
+						label='Produktnamn'
+						variant='outlined'
+						placeholder='Produktnamn'
+						helperText={productNameHelperText}
+						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
+						name='product name'
+						type={'text'}
+					/>
+					<TextField
+						disabled={currentMode === 'delete'}
+						value={formData.description}
+						size='small'
+						autoComplete='true'
+						error={isError}
+						margin='normal'
+						id='description'
+						label='Beskrivning'
+						variant='outlined'
+						placeholder='Beskrivning'
+						helperText={descriptionHelperText}
+						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
+						name='Beskrivning'
+						type={'text'}
+					/>
+					<TextField
+						disabled={currentMode === 'delete'}
+						value={formData.category}
+						size='small'
+						autoComplete='true'
+						error={isError}
+						margin='normal'
+						id='category'
+						label='Kategori'
+						variant='outlined'
+						placeholder='Kategori'
+						helperText={categoryHelperText}
+						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
+						name='Kategori'
+						type={'text'}
+					/>
+
 					<Button
 						spinner={<BtnSpinner />}
 						text={

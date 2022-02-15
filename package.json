@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@react-hook/window-size": "^3.0.7"
+  }
+}

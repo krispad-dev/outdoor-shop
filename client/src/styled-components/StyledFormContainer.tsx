@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const StyledFormContainer = styled.div`
 	display: flex;
@@ -8,25 +8,30 @@ const StyledFormContainer = styled.div`
 	justify-content: center;
 	background-color: ${props => props.theme.cardColor};
 
-	width: 40vw;
-	min-width: 20rem;
-	max-width: 30rem;
 	border-radius: 5px;
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 	opacity: 97%;
-	padding: 3rem 0rem;
+	padding: 2rem;
 
 	form {
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+
+		overflow: scroll;
+
+		::-webkit-scrollbar {
+			display: none;
+		}
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
 	}
 
 	h2.logo {
 		color: ${props => props.theme.accentColor};
-		font-size: 4rem;
+		font-size: 2rem;
 	}
 `;
 
-export default StyledFormContainer
+export default StyledFormContainer;
