@@ -38,4 +38,5 @@ export default function Search() {
 
 const StyledSearchContainer = styled.div`
 	position: relative;
+	width: 99.5%;
 `;

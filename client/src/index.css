@@ -49,12 +49,11 @@ li {
 }
 
 header {
-	height: 6rem;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	position: static;
+
 }
 
 main {

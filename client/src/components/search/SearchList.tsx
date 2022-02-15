@@ -19,5 +19,5 @@ const ListContainer = styled.ul`
 	width: 100%;
 	height: auto;
 	margin-top: 0.5rem;
-	z-index: 100;
+	z-index: 900;
 `;

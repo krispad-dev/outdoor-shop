@@ -6,29 +6,26 @@ import Search from '../search/Search';
 export default function HeaderInnerContainer() {
 	return (
 		<InnerHeaderContainer>
-			<Logo />
-			<div className='menu-search-wrapper'>
-				<Search />
+			<div className='logo-menu-wrapper'>
+				<Logo />
 				<MenuHeader />
 			</div>
+			<Search />
 		</InnerHeaderContainer>
 	);
 }
 
 const InnerHeaderContainer = styled.div`
 	display: flex;
-	flex-wrap: wrap;
 	justify-content: space-between;
-	align-items: center;
+	align-items: flex-start;
+	flex-direction: column;
 	width: 95%;
-	height: 100%;
 
-	@media(max-width: 500px) {
-		justify-content: center;
-		margin-top: 1rem;
-	}
-
-	div.menu-search-wrapper {
+	div.logo-menu-wrapper {
+		width: 100%;
 		display: flex;
-	} 
+		justify-content: space-between;
+		align-items: center;
+	}
 `;

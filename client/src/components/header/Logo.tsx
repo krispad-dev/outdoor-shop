@@ -15,8 +15,8 @@ export default function Logo() {
 }
 
 const StyledLogoContainer = styled.div`
-display: flex;
-align-items: flex-end;
+	display: flex;
+	align-items: flex-end;
 	position: relative;
 	font-size: 1.5rem;
 	cursor: pointer;
@@ -27,6 +27,16 @@ align-items: flex-end;
 	svg {
 		font-size: 3rem;
 		color: ${props => props.theme.accentColor};
+	}
+
+	@media(max-width: 400px) {
+		font-size: 1rem;
+
+		svg {
+		font-size: 2rem;
+		color: ${props => props.theme.accentColor};
+	}
+
 	}
 
 

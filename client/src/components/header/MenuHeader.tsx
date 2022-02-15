@@ -43,7 +43,7 @@ export default function MenuHeader() {
 				</button>
 
 				<button disabled={true} className='cart-btn'>
-					CART (<p data-testid='cart-quantity'>{cartItemCount}</p> )
+					CART&nbsp;(<p data-testid='cart-quantity'>{cartItemCount}</p> )
 					<RiShoppingCartLine />
 					{isLoggedIn && <Link to={'/cart'}></Link>}
 				</button>
@@ -75,7 +75,7 @@ export default function MenuHeader() {
 
 const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 	position: relative;
-
+	z-index: 999;
 	div.menu-items-container {
 		margin-top: 0.2rem;
 		position: absolute;
@@ -85,7 +85,6 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 	div.inner-wrapper {
 		width: auto;
 		border-radius: 3px;
-
 		display: flex;
 		justify-content: space-between;
 
@@ -101,7 +100,7 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 	button.menu-item-card {
 		height: 2rem;
 		background-color: ${props => props.theme.btnColor};
-		opacity: 30%;
+
 		width: 100%;
 	}
 

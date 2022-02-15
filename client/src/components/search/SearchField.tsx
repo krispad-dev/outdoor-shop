@@ -20,10 +20,10 @@ export default function SearchField() {
 }
 
 const StyledInput = styled.input`
-	width: 100%;
+
 	padding-left: 0.4rem;
 	height: 2.5rem;
-
+	width: 100%;
 	border: none;
 	border-radius: 3px;
 	background-color: ${props => props.theme.cardColorDark};

@@ -16,6 +16,8 @@ import useAuth from './modules/auth/useAuth';
 import MainProductsPage from './pages/MainProductsPage';
 import AdminPage from './pages/AdminPage';
 import Snack from './components/global/Snack';
+import Search from './components/search/Search';
+
 
 function App() {
 
@@ -87,10 +89,10 @@ export default App;
 
 const AppOuterContainer = styled.div`
 	width: 100vw;
-	height: 100%;
+	height: 95vh;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
 	flex-direction: column;
-
+	overflow: hidden;
 `;
