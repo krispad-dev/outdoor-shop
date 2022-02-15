@@ -1,13 +1,14 @@
 import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import MenuHeader from '../MenuHeader';
+
 import { mockCart } from './mockCart';
 import { UiStateContext } from '../../../context/UiStateContext';
-
 import { BrowserRouter } from 'react-router-dom';
-
 import { useReducer } from 'react';
 import { UiReducer } from '../../../context/UiReducer';
+
+
+import userEvent from '@testing-library/user-event';
+import MenuHeader from '../MenuHeader';
 
 import useGetCart from '../../../modules/cart/useGetCart';
 jest.mock('../../../modules/cart/useGetCart');

@@ -20,7 +20,7 @@ export default function SearchCard({
 }
 
 const ListItemContainer = styled.li`
-position: relative;
+	position: relative;
 	p {
 		font-weight: 600;
 	}
@@ -37,7 +37,7 @@ position: relative;
 	align-items: center;
 	background-color: ${props => props.theme.cardColorDark};
 	border-radius: 3px;
-	width: 95%;
+	width: 100%;
 	height: 2rem;
 	padding: 0.5rem;
 	div.inner-container {

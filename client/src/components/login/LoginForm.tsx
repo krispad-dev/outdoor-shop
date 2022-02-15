@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
-
-import TextField from '@mui/material/TextField';
-import styled from 'styled-components';
-import Button from '../global/Button';
-import useLoginUser from '../../modules/auth/useLoginUser';
-import BtnSpinner from '../global/loaders/BtnSpinner';
-
+import { useState } from 'react';
 import { LoginUser } from '../../modules/auth/useLoginUser';
 import { isValidEmail, isValidPassword, loginSchema } from '../../helpers/validators';
 
-export default function LoginForm() {
+import TextField from '@mui/material/TextField';
+import Button from '../global/Button';
+import useLoginUser from '../../modules/auth/useLoginUser';
+import BtnSpinner from '../global/loaders/BtnSpinner';
+import StyledFormContainer from '../../styled-components/StyledFormContainer';
 
+export default function LoginForm() {
 	const { mutate, data, isLoading } = useLoginUser();
 	const [formData, setFormData] = useState<LoginUser>({ email: '', password: '' });
 
@@ -32,7 +30,7 @@ export default function LoginForm() {
 		: ' ';
 
 	return (
-		<OuterContainer>
+		<StyledFormContainer>
 			<h2 className='logo'>outdoor</h2>
 			<form action='submit' onSubmit={e => submitHandler(e)}>
 				<TextField
@@ -69,35 +67,6 @@ export default function LoginForm() {
 					isLoading={isLoading}
 				/>
 			</form>
-		</OuterContainer>
+		</StyledFormContainer>
 	);
 }
-
-const OuterContainer = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background-color: ${props => props.theme.cardColor};
-	height: 60vh;
-	width: 40vw;
-	min-width: 20rem;
-	max-width: 30rem;
-	border-radius: 5px;
-	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-	opacity: 97%;
-	padding: 3rem 0rem;
-
-	form {
-		width: 15rem;
-	}
-
-	input {
-		width: 13.3rem;
-	}
-
-	h2.logo {
-		color: ${props => props.theme.accentColor};
-		font-size: 4rem;
-	}
-`;

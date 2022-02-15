@@ -1,26 +1,13 @@
-import React from 'react';
 import LoginForm from '../components/login/LoginForm';
-import styled from 'styled-components';
+import StyledAbsoluteContainer from '../styled-components/StyledAbsoluteContainer';
+
+const bgImage = 
+'https://images.unsplash.com/photo-1500220959218-81a28e9292d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80'
 
 export default function LoginPage() {
 	return (
-		<OuterContainer>
+		<StyledAbsoluteContainer bgImage={bgImage}>
 			<LoginForm />
-		</OuterContainer>
+		</StyledAbsoluteContainer>
 	);
 }
-
-const OuterContainer = styled.section`
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-position: center;
-	background-repeat: no-repeat;
-	background-size: cover;
-	background-image: url(https://images.unsplash.com/photo-1500220959218-81a28e9292d0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80);
-`;

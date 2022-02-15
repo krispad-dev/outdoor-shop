@@ -15,7 +15,7 @@ export default function SearchList({ products }: { products: Product[] }) {
 const ListContainer = styled.ul`
 	background-color: #fff;
 	position: absolute;
-	left: 0.5rem;
+
 	width: 100%;
 	height: auto;
 	margin-top: 0.5rem;

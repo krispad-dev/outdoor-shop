@@ -8,8 +8,6 @@ export async function validateTokenAdmin(req: Request, res: Response, next: Next
 
         const { authToken } = req.cookies;
         const isVerified = await jwt.verify(authToken, process.env.SECRET as string)
-
-        console.log(isVerified);
         
 
         if (isVerified.role !== 'admin') {

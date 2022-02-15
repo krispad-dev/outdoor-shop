@@ -56,13 +56,14 @@ export function Product() {
 
         async update({ product_id, product_name, description, in_stock, price, image, category }: updateOne) {
 
+
             const query = {
                 text:`    
                 UPDATE products
                 SET product_name = $1, description = $2, price = $3, in_stock = $4, image = $5, category = $6
-                WHERE product_id = $6;
+                WHERE product_id = $7;
             `,
-                values: [product_name, description, in_stock, price, product_id, image, category],
+                values: [product_name, description, price, in_stock, image, category, product_id],
               }
               
             const res = await pool.query(query)

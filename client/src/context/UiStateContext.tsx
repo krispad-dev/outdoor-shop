@@ -1,11 +1,17 @@
-import React, { createContext, useReducer, Dispatch, useEffect } from 'react';
+import React, { createContext, useReducer, Dispatch } from 'react';
 import { UiReducer, ActionType } from './UiReducer';
 import { User } from '../models/User';
+import { Product } from '../models/Product';
+
 
 export interface UiState {
 	headerMenuIsOpen: boolean;
 	userAuthState: { success: boolean, data: User | {} };
 	searchString: string;
+	adminMode?: string; 
+	productToUpdate?: Product | null
+	snackIsActive?: boolean
+	snackMessage?: string
 }
 
 interface ContextProps {
@@ -16,7 +22,11 @@ interface ContextProps {
 const initialState: UiState = {
 	headerMenuIsOpen: false,
 	userAuthState: { success: false, data: {} },
-	searchString: ''
+	searchString: '',
+	adminMode: 'new',
+	productToUpdate: null,
+	snackMessage: '',
+	snackIsActive: false
 };
 
 export const UiStateContext = createContext<ContextProps>({
