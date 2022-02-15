@@ -1,10 +1,8 @@
-import Box from '@mui/material/Box';
-import InputAdornment from '@mui/material/InputAdornment';
-import TextField from '@mui/material/TextField';
 import { useContext, useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useWindowSize } from '@react-hook/window-size';
 import { Link } from 'react-router-dom';
 import { UiStateContext } from '../../context/UiStateContext';
+
 import {
 	createUpdate,
 	isValidCategory,
@@ -14,6 +12,7 @@ import {
 	isValidProductName,
 	isValidStockValue,
 } from '../../helpers/validators';
+
 import useAddProduct, { FormData } from '../../modules/products/useAddProduct';
 import useDeleteProduct from '../../modules/products/useDeleteProduct';
 import useGetProducts from '../../modules/products/useGetProducts';
@@ -23,10 +22,13 @@ import Button from '../global/Button';
 import BtnSpinner from '../global/loaders/BtnSpinner';
 import SearchToUpdate from './SearchToUpdate';
 import AdminToggleButton from './ToggleButton';
-
-import { useWindowSize, useWindowWidth, useWindowHeight } from '@react-hook/window-size';
+import styled from 'styled-components';
+import Box from '@mui/material/Box';
+import InputAdornment from '@mui/material/InputAdornment';
+import TextField from '@mui/material/TextField';
 
 export default function AdminCms() {
+
 	const initialState = {
 		product_name: '',
 		description: '',
@@ -39,10 +41,12 @@ export default function AdminCms() {
 	const [csmIsLoading, setCmsIsLoading] = useState(false);
 	const [formData, setFormData] = useState<FormData>(initialState);
 
-	const useWidth = useWindowWidth();
+	const [width, height] = useWindowSize()
 
 	const { state, dispatch } = useContext(UiStateContext);
 	const { data: products } = useGetProducts();
+
+
 
 	const {
 		mutate: mutateAdd,
@@ -51,12 +55,16 @@ export default function AdminCms() {
 		isSuccess: addIsSuccess,
 	} = useAddProduct();
 
+
+
 	const {
 		mutate: mutateUpdate,
 		data: dataUpdate,
 		isLoading: isLoadingUpdate,
 		isSuccess: updateIsSuccess,
 	} = useUpdateProduct();
+
+
 
 	const {
 		mutate: mutateDelete,
@@ -65,12 +73,18 @@ export default function AdminCms() {
 		isSuccess: deleteIsSuccess,
 	} = useDeleteProduct();
 
+
+
 	const currentMode = state.adminMode;
+
+
 
 	const isError =
 		dataDelete?.success === false &&
 		dataUpdate?.success === false &&
 		dataAdd?.success === false;
+
+
 
 	function submitHandler(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -83,6 +97,8 @@ export default function AdminCms() {
 			mutateDelete(state?.productToUpdate?.product_id);
 		}
 	}
+
+
 
 	const productNameHelperText = isValidProductName(formData?.product_name)
 		? isValidProductName(formData?.product_name)
@@ -108,6 +124,8 @@ export default function AdminCms() {
 		? isValidImageUrl(formData?.image)
 		: ' ';
 
+
+
 	useEffect(() => {
 		if (isLoadingAdd && isLoadingUpdate && isLoadingDelete) {
 			setCmsIsLoading(true);
@@ -116,11 +134,15 @@ export default function AdminCms() {
 		}
 	}, [isLoadingAdd, isLoadingUpdate, isLoadingDelete]);
 
+
+
 	useEffect(() => {
 		if (state.productToUpdate) {
 			setFormData(state?.productToUpdate);
 		}
 	}, [state.productToUpdate]);
+
+
 
 	useEffect(() => {
 		if (currentMode === 'new') {
@@ -129,6 +151,8 @@ export default function AdminCms() {
 		dispatch({ type: 'SET_PRODUCT_TO_EDIT', payload: null });
 	}, [currentMode]);
 
+
+
 	useEffect(() => {
 		setFormData(initialState);
 
@@ -136,6 +160,8 @@ export default function AdminCms() {
 			dispatch({ type: 'SET_ACTIVATE_SNACK', payload: snackText });
 		}
 	}, [deleteIsSuccess, updateIsSuccess, addIsSuccess]);
+
+
 
 	const snackText =
 		currentMode === 'new'
@@ -147,11 +173,12 @@ export default function AdminCms() {
 			: '';
 
 	const isSuccess = deleteIsSuccess || updateIsSuccess || addIsSuccess;
+
 	return (
 		<StyledFormContainer>
 			<div className='header-container'>
 				<Link to={'/'}>X</Link>
-				{useWidth > 400 && <h2 className='logo'>admin</h2>}
+				{width > 400 && <h2 className='logo'>admin</h2>}
 			</div>
 
 			<InnerContainer>
@@ -159,8 +186,8 @@ export default function AdminCms() {
 					component='form'
 					sx={{
 						'& > :not(style)': {
-							m: useWidth > 400 ? 1 : 0.5,
-							width: useWidth < 400 ? '20ch' : '25ch',
+							m: width > 400 ? 1 : 0.5,
+							width: width < 400 ? '20ch' : '25ch',
 						},
 					}}
 					noValidate

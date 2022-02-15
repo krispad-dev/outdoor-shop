@@ -1,42 +1,90 @@
 import { render, screen } from '@testing-library/react';
 import { mockData } from './MockData';
 import { QueryClient, QueryClientProvider } from 'react-query';
-
-import useGetProducts from '../../../modules/products/useGetProducts';
-import AdminCms from '../AdminCms';
-import userEvent from '@testing-library/user-event';
 import { UiStateContext } from '../../../context/UiStateContext';
-
 import { useReducer } from 'react';
 import { UiReducer } from '../../../context/UiReducer';
+import { BrowserRouter } from 'react-router-dom';
 
+import AdminCms from '../AdminCms';
+import userEvent from '@testing-library/user-event';
+
+import useGetProducts from '../../../modules/products/useGetProducts';
 jest.mock('../../../modules/products/useGetProducts');
 const useGetProductsMock = useGetProducts as jest.Mock<any>;
+
+import useDeleteProduct from '../../../modules/products/useDeleteProduct';
+jest.mock('../../../modules/products/useDeleteProduct');
+const useDeleteProductMock = useDeleteProduct as jest.Mock<any>;
+
+import useUpdateProduct from '../../../modules/products/useUpdateProduct';
+jest.mock('../../../modules/products/useUpdateProduct');
+const useUpdateProductMock = useUpdateProduct as jest.Mock<any>;
+
+import useAddProduct from '../../../modules/products/useAddProduct';
+jest.mock('../../../modules/products/useAddProduct');
+const useAddProductMock = useAddProduct as jest.Mock<any>;
+
+import { useWindowSize } from '@react-hook/window-size';
+jest.mock('@react-hook/window-size');
+const useWindowSizeMock = useWindowSize as jest.Mock<any>;
+
 const queryClient = new QueryClient();
 
 describe('AdminCms Component', () => {
+
+
 	function ComponentWrappedInContext() {
 		const initialState = {
 			headerMenuIsOpen: false,
 			userAuthState: { success: false, data: {} },
 			searchString: '',
-			isAdminAddProduct: true,
-			productToUpdate: {},
+			adminMode: 'new',
+			productToUpdate: null,
+			snackMessage: '',
+			snackIsActive: false,
 		};
 
 		const [state, dispatch] = useReducer(UiReducer, initialState);
 
 		return (
 			<UiStateContext.Provider value={{ state, dispatch }}>
-				<AdminCms />
+				<BrowserRouter>
+					<AdminCms />
+				</BrowserRouter>
 			</UiStateContext.Provider>
 		);
 	}
+
+	const deleteMutateMock = jest.fn();
+	const updateMutateMock = jest.fn();
+	const addMutateMock = jest.fn();
 
 	useGetProductsMock.mockImplementation(() => ({
 		data: { data: mockData },
 		success: false,
 	}));
+
+	useDeleteProductMock.mockImplementation(() => ({
+		mutate: deleteMutateMock,
+		data: { data: mockData },
+		success: false,
+	}));
+
+	useUpdateProductMock.mockImplementation(() => ({
+		mutate: updateMutateMock,
+		data: { data: mockData },
+		success: false,
+	}));
+
+	useAddProductMock.mockImplementation(() => ({
+		mutate: addMutateMock,
+		data: { data: mockData },
+		success: false,
+	}));
+
+	useWindowSizeMock.mockImplementation(() => ([ 1000 ]));
+
 
 	it('should render', () => {
 		render(
@@ -57,31 +105,18 @@ describe('AdminCms Component', () => {
 			</QueryClientProvider>
 		);
 
-		const header = screen.getByRole('heading', { name: /admin/i });
+		screen.getByRole('heading', { name: /admin/i });
+		screen.getByRole('button', { name: /skapa/i });
 
-		const skapaBtn = screen.getByRole('button', { name: /skapa/i });
+		screen.getByText(/ändra/i);
+		screen.getByText(/ny/i);
+		screen.getByText(/radera/i);
+		screen.getByLabelText(/beskrivning/i);
+		screen.getByLabelText(/lagerstatus/i);
+		screen.getByLabelText(/pris/i);
+		screen.getByLabelText(/produktnamn/i);
+		screen.getByText(/admin/i);
 
-		const upDateProduct = screen.getByText(/ändra produkt/i);
-		const addProduct = screen.getByText(/ny produkt/i);
-
-		const description = screen.getByLabelText(/beskrivning/i);
-		const in_stock = screen.getByLabelText(/lagerstatus/i);
-		const price = screen.getByLabelText(/pris/i);
-		const product_name = screen.getByLabelText(/produktnamn/i);
-		const category = screen.getByLabelText(/kategori/i);
-
-		expect(skapaBtn).toBeInTheDocument();
-		expect(header).toBeInTheDocument();
-		expect(description).toBeInTheDocument();
-		expect(in_stock).toBeInTheDocument();
-		expect(price).toBeInTheDocument();
-		expect(product_name).toBeInTheDocument();
-		expect(category).toBeInTheDocument();
-		expect(upDateProduct).toBeInTheDocument();
-		expect(addProduct).toBeInTheDocument();
-
-		const adminLogo = screen.getByText(/admin/i);
-		expect(adminLogo).toBeInTheDocument();
 	});
 
 	it('should switch the button to "uppdatera", and render "sök på en produkt" input in update mode (switch component clicked once and mode is set to update) ', () => {
@@ -91,7 +126,7 @@ describe('AdminCms Component', () => {
 			</QueryClientProvider>
 		);
 
-		const modeSwitch = screen.getByText(/ändra produkt/i);
+		const modeSwitch = screen.getByText(/ändra/i);
 
 		const inputField = screen.getByLabelText(/välj produkt/i);
 		expect(inputField).toBeDisabled();
@@ -117,8 +152,8 @@ describe('AdminCms Component', () => {
 		expect(screen.getByText(/minst 4 tecken/i)).toBeInTheDocument();
 		userEvent.clear(product_name);
 
-		userEvent.type(product_name, 'qwertyuiopasdfghjklzxcv');
-		expect(screen.getByText(/max 20 tecken/i)).toBeInTheDocument();
+		userEvent.type(product_name, 'qwertyuiopasdfghjgerogkeprgokaeprohkaephkoaethijaetöohijaetpoöiklzxcv');
+		expect(screen.getByText(/max 50 tecken/i)).toBeInTheDocument();
 		userEvent.clear(product_name);
 	});
 
@@ -191,9 +226,8 @@ describe('AdminCms Component', () => {
 			</QueryClientProvider>
 		);
 
-		const sendUpdateBtn = screen.getByRole('button', { name: /skapa/i });
-
-		userEvent.click(sendUpdateBtn);
+		const sendUpdateBtn = screen.queryByRole('button', { name: /skapa/i });
+		
 		expect(sendUpdateBtn).toBeDisabled();
 	});
 });
