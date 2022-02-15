@@ -1,3 +1,7 @@
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalStyle = createGlobalStyle`
+
 body {
 	margin: 0;
 	box-sizing: border-box;
@@ -102,3 +106,12 @@ button:hover {
 	transition: 0.2s ease-in-out;
 	opacity: 80%;
 }
+
+
+
+
+
+`;
+
+
+export default GlobalStyle

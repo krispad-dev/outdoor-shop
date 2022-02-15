@@ -1,17 +1,17 @@
-import React, { createContext, useReducer, Dispatch } from 'react';
+import React, { createContext, useReducer, Dispatch, useEffect } from 'react';
 import { UiReducer, ActionType } from './UiReducer';
 import { User } from '../models/User';
 import { Product } from '../models/Product';
-
+import { useLocation } from 'react-router-dom';
 
 export interface UiState {
 	headerMenuIsOpen: boolean;
-	userAuthState: { success: boolean, data: User | {} };
+	userAuthState: { success: boolean; data: User | {} };
 	searchString: string;
-	adminMode?: string; 
-	productToUpdate?: Product | null
-	snackIsActive?: boolean
-	snackMessage?: string
+	adminMode?: string;
+	productToUpdate?: Product | null;
+	snackIsActive?: boolean;
+	snackMessage?: string;
 }
 
 interface ContextProps {
@@ -26,7 +26,7 @@ const initialState: UiState = {
 	adminMode: 'new',
 	productToUpdate: null,
 	snackMessage: '',
-	snackIsActive: false
+	snackIsActive: false,
 };
 
 export const UiStateContext = createContext<ContextProps>({
@@ -34,10 +34,9 @@ export const UiStateContext = createContext<ContextProps>({
 	dispatch: () => null,
 });
 
-
-
 function UiStateProvider({ children }: React.PropsWithChildren<{}>) {
 	const [state, dispatch] = useReducer(UiReducer, initialState);
+
 
 
 	return (

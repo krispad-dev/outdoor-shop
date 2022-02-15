@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { lightTheme } from './themes/themes';
 import { Routes, Route } from 'react-router-dom';
 import { Navigate } from 'react-router-dom'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { UiStateContext } from './context/UiStateContext';
 
 import HeaderInnerContainer from './components/header/HeaderInnerContainer';
@@ -16,7 +16,8 @@ import useAuth from './modules/auth/useAuth';
 import MainProductsPage from './pages/MainProductsPage';
 import AdminPage from './pages/AdminPage';
 import Snack from './components/global/Snack';
-import Search from './components/search/Search';
+
+import GlobalStyle from './globalStyle';
 
 
 function App() {
@@ -25,11 +26,17 @@ function App() {
 	const { data: authState } = useAuth();
 	const { state, dispatch } = useContext(UiStateContext)
 
+
+	const isAuthenticated = authState?.loggedIn
 	const isAuthenticatedAdmin = authState?.loggedIn 
 	&& authState?.user?.role
 	 === 'admin'
 
-	const isAuthenticated = authState?.loggedIn
+
+	useEffect(() => {
+		dispatch({ type: 'CLOSE_HEADER_MENU' });
+		dispatch({ type: 'SET_SEARCH_STRING', payload: '' });
+	}, [pathname]);
 
 	
 	return (
@@ -81,6 +88,7 @@ function App() {
 					{state.snackIsActive && <Snack text={state?.snackMessage} />}
 				</main>
 			</AppOuterContainer>
+			<GlobalStyle />
 		</ThemeProvider>
 	);
 }
@@ -95,4 +103,10 @@ const AppOuterContainer = styled.div`
 	align-items: center;
 	flex-direction: column;
 	overflow: hidden;
+
+	h4{ 
+		color: ;
+	}
+
 `;
+

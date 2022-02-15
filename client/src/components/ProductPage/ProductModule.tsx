@@ -4,15 +4,11 @@ import Button from '../global/Button';
 import useGetProduct from '../../modules/products/useGetProduct';
 import useAddToCart from '../../modules/cart/useAddToCart';
 import useGetCart from '../../modules/cart/useGetCart';
-import { formatSek } from '../../helpers/formatSek';
 
-import SkeletonColor from '../global/loaders/SkeletonLoader';
+import { formatSek } from '../../helpers/formatSek';
 import { isInCart } from '../../helpers/isInCart';
 
-
-
-export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean, id: string }) {	
-	
+export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean; id: string }) {
 	const { data: product, isLoading } = useGetProduct(id);
 	const { data: cartItems } = useGetCart();
 	const { mutate } = useAddToCart();
@@ -20,46 +16,50 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean,
 	function addToCartHandler() {
 		mutate(id);
 	}
-	return (
-		
-		<ProductModuleContainer image={product?.data?.image}>
 
+	return (
+		<ProductModuleContainer image={product?.data?.image}>
 			<div role={'img'} className='image-container'></div>
 
 			<div className='info-container'>
 				<div className='inner-info-container'>
-					<h3>{product?.data?.product_name}</h3>
-					<p>{product?.data?.description}</p>
-					<p>{formatSek(product?.data?.price)}</p>
+					<div>
+						<h3>{product?.data?.product_name}</h3>
+						<p>{product?.data?.description}</p>
+					</div>
 				</div>
 			</div>
 
 			<div className='actions-container'>
 				<div className='inner-actions-container'>
-					<Button 
-					isDisabled={isInCart(cartItems?.data, id as string) || !isLoggedIn } 
-					clickHandler={addToCartHandler} 
-					text={isInCart(cartItems?.data, id as string) 
-						? 'finns i cart' 
-						: !isLoggedIn 
-						? 'logga in för att handla' 
-						: 'lägg i cart'} 
+					<div>
+						<h4>Kvar i lager:  {product?.data?.in_stock} /st</h4>
+						<h4>{formatSek(product?.data?.price)}</h4>
+					</div>
+					<Button
+						isDisabled={isInCart(cartItems?.data, id as string) || !isLoggedIn}
+						clickHandler={addToCartHandler}
+						text={
+							isInCart(cartItems?.data, id as string)
+								? 'finns i cart'
+								: !isLoggedIn
+								? 'logga in för att handla'
+								: 'lägg i cart'
+						}
 					/>
 				</div>
 			</div>
-
 		</ProductModuleContainer>
 	);
 }
 
 const ProductModuleContainer = styled.div<{ image: string }>`
-
 	gap: 1rem;
 	width: 100%;
 	height: 100%;
 	display: grid;
 
-	grid-template-columns:  auto, auto;
+	grid-template-columns: auto, auto;
 	grid-template-rows: 1fr, 1fr;
 
 	grid-template-areas:
@@ -74,6 +74,9 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 		align-items: center;
 
 		div.inner-info-container {
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
 			width: 95%;
 			height: 95%;
 		}
@@ -82,11 +85,26 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 	div.actions-container {
 		display: flex;
 		justify-content: center;
+
 		div.inner-actions-container {
+		
 			display: flex;
-			align-items: flex-end;
+			align-items: flex-start;
+			flex-direction: column;
+			justify-content: flex-end;
 			height: 95%;
 			width: 95%;
+			div {
+				h4 {
+					font-size: 1rem;
+					padding: 0.5rem;
+				}
+				height: 100%;
+				width: 100%;
+				border: 1px solid #ccc;
+				border-radius:  5px;
+				margin: 2rem 0rem;
+			}
 		}
 		grid-area: actions-container;
 		background-color: ${props => props.theme.cardColorDark};
