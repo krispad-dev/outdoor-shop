@@ -48,6 +48,7 @@ export default function CartModule({ isLoggedIn }: { isLoggedIn: boolean }) {
 						<div>
 
 							<h3>Leveransuppgifter: </h3>
+							<p>Användarnamn: <em> {loggedInUser?.username} </em></p>
 							<p>Address: <em> {loggedInUser?.address} </em></p>
 							<p>Postnummer: <em> {loggedInUser?.zipCode} </em> </p>
 							<p>Stad: <em> {loggedInUser?.city} </em> </p>
