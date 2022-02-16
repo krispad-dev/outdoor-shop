@@ -27,12 +27,12 @@ describe('CartSetItemQuantity Component', () => {
 
 	
 	it('should render', () => {
-		render(<CartItemCounter cart_item_id={1} item_count={20} />);
+		render(<CartItemCounter disabled={false} cart_item_id={1} item_count={20} />);
 	});
 
 
 	it('should have two clickable buttons (increment and decrement) Should call increment on "upp" and decrement on "down"', () => {
-		render(<CartItemCounter cart_item_id={1} item_count={20} />);
+		render(<CartItemCounter disabled={false} cart_item_id={1} item_count={20} />);
 
 		const button = screen.getAllByRole('button')
 		userEvent.click(button[0])
@@ -45,7 +45,7 @@ describe('CartSetItemQuantity Component', () => {
 	})
 
 	it('should call delete instead of decrement function when cart item amount is 1 or less)', () => {
-		render(<CartItemCounter cart_item_id={1} item_count={1} />);
+		render(<CartItemCounter disabled={false} cart_item_id={1} item_count={1} />);
 
 		const button = screen.getAllByRole('button')
 		userEvent.click(button[0])
@@ -55,7 +55,7 @@ describe('CartSetItemQuantity Component', () => {
 	})
 
 	it('should render correct item amount (20) ', () => {
-		render(<CartItemCounter cart_item_id={1} item_count={20} />);
+		render(<CartItemCounter disabled={false} cart_item_id={1} item_count={20} />);
 
 		const itemCount = screen.getByText(/20/i)
 
