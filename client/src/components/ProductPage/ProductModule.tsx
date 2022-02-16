@@ -54,7 +54,7 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean;
 
 			<div className='actions-container'>
 				<div className='inner-actions-container'>
-					<div>
+					<div className='inner-actions-info-container'>
 						<h4>Kvar i webblager: {product?.data?.in_stock} </h4>
 						<h4>{formatSek(product?.data?.price)}</h4>
 					</div>
@@ -100,8 +100,8 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 		grid-area: info-container;
 		background-color: ${props => props.theme.cardColor};
 		display: flex;
-		justify-content: flex-start;
-		align-items: flex-start;
+		justify-content: center;
+		align-items: center;
 		flex-direction: column;
 
 		div.inner-info-container {
@@ -117,22 +117,26 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 	}
 
 	div.actions-container {
+		grid-area: actions-container;
+		background-color: ${props => props.theme.cardColor};
 		display: flex;
 		justify-content: center;
-		flex-direction: column;
 		align-items: center;
+		flex-direction: column;
+
 
 		div.inner-actions-container {
 			display: flex;
 			flex-direction: column;
-			justify-content: space-between;
+
 			height: 95%;
 			width: 95%;
-			div {
-				padding: 0.5rem;
+
+			div.inner-actions-info-container {
+
 				h4 {
 					font-size: 0.7rem;
-					padding: 0.1rem;
+					padding: 0.4rem;
 				}
 				height: 100%;
 				width: 100%;
@@ -141,8 +145,7 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 				margin: 2rem 0rem;
 			}
 		}
-		grid-area: actions-container;
-		background-color: ${props => props.theme.cardColor};
+
 	}
 
 	div.image-container {
