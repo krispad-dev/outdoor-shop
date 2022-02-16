@@ -80,7 +80,8 @@ describe('AdminCms Component', () => {
 	useAddProductMock.mockImplementation(() => ({
 		mutate: addMutateMock,
 		data: { data: mockData },
-		success: false,
+		success: true,
+		isSuccess: true
 	}));
 
 	useWindowSizeMock.mockImplementation(() => ([ 1000 ]));
@@ -307,5 +308,32 @@ describe('AdminCms Component', () => {
 		})
 		
 	});
+
+
+	it('should let me search for a product to select', () => {
+		render(
+			<QueryClientProvider client={queryClient}>
+				<ComponentWrappedInContext />
+			</QueryClientProvider>
+		);
+
+
+		const setUpdateModeBtn = screen.getByRole('button', { name: /ändra/i });
+		userEvent.click(setUpdateModeBtn)
+
+		const chooseProduct = screen.getByLabelText(/välj produkt/i);
+		userEvent.type(chooseProduct, 's')
+
+		const productChoice = screen.getByText(/super rope/i);
+		userEvent.click(productChoice)
+
+		const categoryField = screen.getByLabelText(/kategori/i);
+	
+
+		expect(categoryField).toHaveValue('test category 3')
+		
+	});
+
+
 });
 

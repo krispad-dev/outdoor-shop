@@ -11,7 +11,7 @@ const useGetProductsMock = useGetProducts as jest.Mock<any>;
 
 describe('ProductList component', () => {
 	// mock my return value
-	useGetProductsMock.mockReturnValue({ data: { data: [mockData] }, success: true });
+	useGetProductsMock.mockImplementation(() => ({ data: { data: [mockData] }, success: true }));
 
 	it('should render', () => {
 		render(

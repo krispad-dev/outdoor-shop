@@ -38,7 +38,6 @@ describe('ProductListItem', () => {
 				<ProductListItem {...mockData} />
 			</BrowserRouter>
 		);
-
-		const link = screen.getByRole('link');
+		expect(screen.getByRole('link')).toHaveAttribute('href', '/1');
 	});
 });
