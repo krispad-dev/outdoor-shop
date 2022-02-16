@@ -25,7 +25,6 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean;
 	const isDisabledCounter = currentCartItem?.item_count >= currentCartItem?.in_stock;
 	const isDisabledAddToCartBtn = product?.data?.in_stock <= 0;
 
-
 	function addToCartHandler() {
 		mutate(id);
 	}
