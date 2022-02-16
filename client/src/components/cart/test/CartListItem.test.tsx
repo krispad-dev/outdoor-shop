@@ -24,13 +24,11 @@ describe('CartModule Component', () => {
 		
 
 		const title = screen.getByRole('heading', { name: /test tent 2/i })
-		const description = screen.getByText(/tent description/i)
 		const price = screen.getByText((/1 595,00 kr/i))
 		const leftInStock = screen.getByText(/20/i) 
 		const image = screen.getByRole('img')
 
 		expect(title).toBeInTheDocument()
-		expect(description).toBeInTheDocument()
 		expect(price).toBeInTheDocument()
 		expect(leftInStock).toBeInTheDocument()
 		expect(image).toBeInTheDocument()
