@@ -69,7 +69,7 @@ describe('login Component', () => {
 
 		const email = screen.getByLabelText(/epost/i);
 		userEvent.type(email, 'testuser_testuserm');
-		const helperText = screen.getByText(/Använd formatet: namn@dinmejl\.se/i);
+		const helperText = screen.getByText(/Format: namn@dinmejl\.se/i);
 
 		expect(helperText).toBeInTheDocument()
 
