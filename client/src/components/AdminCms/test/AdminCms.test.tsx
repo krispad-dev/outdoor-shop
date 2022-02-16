@@ -105,7 +105,6 @@ describe('AdminCms Component', () => {
 			</QueryClientProvider>
 		);
 
-		screen.getByRole('heading', { name: /admin/i });
 		screen.getByRole('button', { name: /skapa/i });
 
 		screen.getByText(/ändra/i);
@@ -115,7 +114,6 @@ describe('AdminCms Component', () => {
 		screen.getByLabelText(/lagerstatus/i);
 		screen.getByLabelText(/pris/i);
 		screen.getByLabelText(/produktnamn/i);
-		screen.getByText(/admin/i);
 
 	});
 
@@ -148,8 +146,8 @@ describe('AdminCms Component', () => {
 
 		const product_name = screen.getByLabelText(/produktnamn/i);
 
-		userEvent.type(product_name, 'sko');
-		expect(screen.getByText(/minst 4 tecken/i)).toBeInTheDocument();
+		userEvent.type(product_name, 'sk');
+		expect(screen.getByText(/minst 3 tecken/i)).toBeInTheDocument();
 		userEvent.clear(product_name);
 
 		userEvent.type(product_name, 'qwertyuiopasdfghjgerogkeprgokaeprohkaephkoaethijaetöohijaetpoöiklzxcv');
@@ -166,8 +164,8 @@ describe('AdminCms Component', () => {
 
 		const description = screen.getByLabelText(/beskrivning/i);
 
-		userEvent.type(description, 'sko');
-		expect(screen.getByText(/minst 4 tecken/i)).toBeInTheDocument();
+		userEvent.type(description, 'sk');
+		expect(screen.getByText(/minst 3 tecken/i)).toBeInTheDocument();
 	});
 
 	it('should show informative message if product category input is invalid', () => {
@@ -179,8 +177,8 @@ describe('AdminCms Component', () => {
 
 		const category = screen.getByLabelText(/kategori/i);
 
-		userEvent.type(category, 'sko');
-		expect(screen.getByText(/minst 4 tecken/i)).toBeInTheDocument();
+		userEvent.type(category, 'sk');
+		expect(screen.getByText(/minst 3 tecken/i)).toBeInTheDocument();
 	});
 
 	it('should show informative message if product stock value input is invalid', () => {
