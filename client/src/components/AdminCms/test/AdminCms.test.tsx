@@ -114,6 +114,8 @@ describe('AdminCms Component', () => {
 		screen.getByLabelText(/lagerstatus/i);
 		screen.getByLabelText(/pris/i);
 		screen.getByLabelText(/produktnamn/i);
+		screen.getByLabelText(/bild/i);
+		screen.getByLabelText(/kategori/i);
 
 	});
 
@@ -228,4 +230,82 @@ describe('AdminCms Component', () => {
 		
 		expect(sendUpdateBtn).toBeDisabled();
 	});
+
+	it('should call delete on delete click', () => {
+		render(
+			<QueryClientProvider client={queryClient}>
+				<ComponentWrappedInContext />
+			</QueryClientProvider>
+		);
+
+		const setDeleteModeBtn = screen.getByRole('button', { name: /radera/i });
+		userEvent.click(setDeleteModeBtn)
+
+		const chooseProduct = screen.getByLabelText(/välj produkt/i);
+		userEvent.type(chooseProduct, 's')
+
+		const productChoice = screen.getByText(/super rope/i);
+		userEvent.click(productChoice)
+
+		const deleteBtn = screen.getAllByRole('button', { name: /radera/i });
+		userEvent.click(deleteBtn[1])
+
+		expect(deleteMutateMock).toHaveBeenCalledTimes(1)
+
+	});
+	it('should call update on update click', () => {
+		render(
+			<QueryClientProvider client={queryClient}>
+				<ComponentWrappedInContext />
+			</QueryClientProvider>
+		);
+
+		
+		const setUpdateModeBtn = screen.getByRole('button', { name: /ändra/i });
+		userEvent.click(setUpdateModeBtn)
+
+		const chooseProduct = screen.getByLabelText(/välj produkt/i);
+		userEvent.type(chooseProduct, 's')
+
+		const productChoice = screen.getByText(/super rope/i);
+		userEvent.click(productChoice)
+
+		const updateBtn = screen.getByRole('button', { name: /uppdatera/i });
+		userEvent.click(updateBtn)
+
+		expect(updateMutateMock).toHaveBeenCalledTimes(1)
+
+
+	});
+
+	it('should call add on add click', () => {
+		render(
+			<QueryClientProvider client={queryClient}>
+				<ComponentWrappedInContext />
+			</QueryClientProvider>
+		);
+
+
+		userEvent.type(screen.getByLabelText(/produktnamn/i), 'newName')
+		userEvent.type(screen.getByLabelText(/beskrivning/i), 'newDescription')
+		userEvent.type(screen.getByLabelText(/pris/i), '1')
+		userEvent.type(screen.getByLabelText(/lagerstatus/i), '1')
+		userEvent.type(screen.getByLabelText(/bild/i), 'https://image.com')
+		userEvent.type(screen.getByLabelText(/kategori/i), 'newCategory')
+
+		const newBtn = screen.getByRole('button', { name: /skapa/i });
+		userEvent.click(newBtn)
+
+		expect(addMutateMock).toHaveBeenCalledTimes(1)
+		expect(addMutateMock).toHaveBeenCalledWith({
+			product_name: 'newName',
+			description: 'newDescription',
+			category: 'newCategory',
+			image: 'https://image.com',
+			in_stock: '11',
+			price: '11',
+		})
+		
+	});
 });
+
