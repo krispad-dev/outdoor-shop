@@ -13,6 +13,7 @@ body {
 	width: 100vw;
 	display: flex;
 	overflow-x: hidden;
+	overflow-y: scroll;
 }
 
 h1 {
@@ -68,6 +69,7 @@ main {
 	display: flex;
 	justify-content: center;
 	align-items: flex-end;
+	overflow-y: scroll;
 }
 
 footer {

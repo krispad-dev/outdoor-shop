@@ -4,29 +4,50 @@ import Button from '../global/Button';
 import useGetProduct from '../../modules/products/useGetProduct';
 import useAddToCart from '../../modules/cart/useAddToCart';
 import useGetCart from '../../modules/cart/useGetCart';
+import CartItemCounter from '../cart/CartItemCounter';
 
+import { useContext, useEffect } from 'react';
+import { UiStateContext } from '../../context/UiStateContext';
+import { Cart } from '../../models/Cart';
 import { formatSek } from '../../helpers/formatSek';
 import { isInCart } from '../../helpers/isInCart';
 
 export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean; id: string }) {
 	const { data: product } = useGetProduct(id);
 	const { data: cartItems } = useGetCart();
-	const { mutate } = useAddToCart();
+	const { mutate, isSuccess } = useAddToCart();
+	const { state, dispatch } = useContext(UiStateContext);
+
+	const currentCartItem = cartItems?.data?.filter(
+		(cartItem: Cart) => cartItem.product_id === parseInt(id)
+	)[0];
+
+	const isDisabledCounter = currentCartItem?.item_count >= currentCartItem?.in_stock;
+	const isDisabledAddToCartBtn = product?.data?.in_stock <= 0;
+
 
 	function addToCartHandler() {
 		mutate(id);
 	}
 
+	useEffect(() => {
+		if (isSuccess) {
+			dispatch({
+				type: 'SET_ACTIVATE_SNACK',
+				payload: `${currentCartItem?.product_name} ligger nu i din korg :) `,
+			});
+		}
+	}, [isSuccess]);
+
 	return (
 		<ProductModuleContainer image={product?.data?.image}>
-			<div role={'img'} className='image-container'>
-			</div>
+			<div role={'img'} className='image-container'></div>
 
 			<div className='info-container'>
 				<div className='inner-info-container'>
 					<div>
 						<h3>{product?.data?.product_name}</h3>
-						<p>{product?.data?.description}</p> 
+						<p>{product?.data?.description}</p>
 					</div>
 				</div>
 			</div>
@@ -34,11 +55,12 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean;
 			<div className='actions-container'>
 				<div className='inner-actions-container'>
 					<div>
-						<h4>Kvar i lager:  {product?.data?.in_stock} /st</h4>
+						<h4>Kvar i webblager: {product?.data?.in_stock} </h4>
 						<h4>{formatSek(product?.data?.price)}</h4>
 					</div>
+
 					<Button
-						isDisabled={isInCart(cartItems?.data, id as string) || !isLoggedIn}
+						isDisabled={isInCart(cartItems?.data, id as string) || !isLoggedIn || isDisabledAddToCartBtn}
 						clickHandler={addToCartHandler}
 						text={
 							isInCart(cartItems?.data, id as string)
@@ -48,6 +70,13 @@ export default function ProductModule({ isLoggedIn, id }: { isLoggedIn: boolean;
 								: 'lägg i cart'
 						}
 					/>
+					{isInCart(cartItems?.data, id as string) && (
+						<CartItemCounter
+							disabled={isDisabledCounter}
+							cart_item_id={currentCartItem?.cart_item_id}
+							item_count={currentCartItem?.item_count}
+						/>
+					)}
 				</div>
 			</div>
 		</ProductModuleContainer>
@@ -60,7 +89,7 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 	height: 100%;
 	display: grid;
 
-	grid-template-columns: 50vw, 50vw;
+	grid-template-columns: 1fr, 1fr;
 	grid-template-rows: 1fr, 1fr;
 
 	grid-template-areas:
@@ -75,8 +104,6 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 		align-items: flex-start;
 		flex-direction: column;
 
-
-
 		div.inner-info-container {
 			flex-direction: column;
 			display: flex;
@@ -86,31 +113,31 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 			p {
 				margin-top: 1rem;
 			}
-
 		}
 	}
 
 	div.actions-container {
 		display: flex;
 		justify-content: center;
+		flex-direction: column;
+		align-items: center;
 
 		div.inner-actions-container {
-		
 			display: flex;
-			align-items: flex-start;
 			flex-direction: column;
-			justify-content: flex-end;
+			justify-content: space-between;
 			height: 95%;
 			width: 95%;
 			div {
+				padding: 0.5rem;
 				h4 {
-					font-size: 1rem;
-					padding: 0.5rem;
+					font-size: 0.7rem;
+					padding: 0.1rem;
 				}
 				height: 100%;
 				width: 100%;
 				border: 1px solid #ccc;
-				border-radius:  5px;
+				border-radius: 5px;
 				margin: 2rem 0rem;
 			}
 		}
@@ -137,7 +164,6 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 
 		grid-template-areas:
 			'info-container info-container'
-		
 			'image-container actions-container';
 	}
 `;

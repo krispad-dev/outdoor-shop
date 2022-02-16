@@ -25,7 +25,7 @@ export default function SearchToUpdate({
 	}
 
 	return (
-		<Stack spacing={2} sx={{ width: 300 }}>
+		<Stack spacing={2} sx={{ width: '25ch' }}>
 			<Autocomplete
 				disabled={isDisabled}
 				id='free-solo-demo'
@@ -36,7 +36,7 @@ export default function SearchToUpdate({
 					}
 				}}
 				options={products.map(product => product.product_name)}
-				renderInput={params => <TextField {...params} label='välj produkt' />}
+				renderInput={params => <TextField {...params} style={{marginTop: '1rem'}}  label='välj produkt' />}
 			/>
 		</Stack>
 	);

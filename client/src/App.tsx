@@ -43,7 +43,7 @@ function App() {
 		<ThemeProvider theme={lightTheme}>
 			<AppOuterContainer className='App'>
 				
-				{ pathname !== '/login' && pathname !== '/admin' &&
+				{ pathname !== '/login' && 
 					<header>
 						<HeaderInnerContainer />
 					</header>
@@ -103,6 +103,5 @@ const AppOuterContainer = styled.div`
 	align-items: center;
 	flex-direction: column;
 	overflow: hidden;
-
 `;
 

@@ -1,5 +1,5 @@
 import AdminCms from '../components/AdminCms/AdminCms';
-import StyledAbsoluteContainer from '../styled-components/StyledAbsoluteContainer';
+import StyledPageContainer from '../styled-components/StyledPageContainer'
 
 
 const bgImage = 
@@ -7,8 +7,8 @@ const bgImage =
 
 export default function AdminPage() {
 	return (
-		<StyledAbsoluteContainer bgImage={bgImage}>
+		<StyledPageContainer bgImage={bgImage} >
 			<AdminCms />
-		</StyledAbsoluteContainer>
+		</StyledPageContainer>
 	);
 }

@@ -32,8 +32,8 @@ export let loginSchema: any = yup.object().shape({
 
 export let createUpdate: any = yup.object().shape({
     product_name: yup.string().required('Fyll i produktnamn här').max(50, 'Max 50 tecken').min(4, 'Minst 4 tecken'),
-    category: yup.string().required('Fyll i kategori här').max(100, 'Max 20 tecken').min(4, 'Minst 4 tecken'),
-    description: yup.string().required('Fyll i beskrivning här').max(1000, 'Max 1000 tecken').min(4, 'Minst 4 tecken'),
+    category: yup.string().required('Fyll i kategori här').max(100, 'Max 20 tecken').min(3, 'Minst 4 tecken'),
+    description: yup.string().required('Fyll i beskrivning här').max(1000, 'Max 1000 tecken').min(3, 'Minst 4 tecken'),
     in_stock: yup.number().required('Fyll i lagerstatus här').max(999, 'Max antal: 999'),
     price: yup.number().required('Fyll i pris här').max(99999, 'Max pris: 99999'),
     image: yup.string().required('Fyll i bildlänk här').url('Fyll i giltig url')
@@ -76,7 +76,7 @@ export function isValidPassword(password: string) {
 export function isValidProductName(product_name: string) {
 
     let isValidProductName = yup.object().shape({
-        product_name: yup.string().required('Fyll i produktnamn här').max(50, 'Max 50 tecken').min(4, 'Minst 4 tecken'),
+        product_name: yup.string().required('Fyll i produktnamn här').max(50, 'Max 50 tecken').min(3, 'Minst 3 tecken'),
     });
 
     try {
@@ -89,7 +89,7 @@ export function isValidProductName(product_name: string) {
 export function isValidDescription(decription: string) {
 
     let isValidDescription = yup.object().shape({
-        description: yup.string().required('Fyll i beskrivning här').max(1000, 'Max 1000 tecken').min(4, 'Minst 4 tecken'),
+        description: yup.string().required('Fyll i beskrivning här').max(1000, 'Max 1000 tecken').min(3, 'Minst 3 tecken'),
     });
 
     try {
@@ -101,7 +101,7 @@ export function isValidDescription(decription: string) {
 export function isValidCategory(category: string) {
 
     let isValidCategory = yup.object().shape({
-        category: yup.string().required('Fyll i kategori här').max(100, 'Max 20 tecken').min(4, 'Minst 4 tecken'),
+        category: yup.string().required('Fyll i kategori här').max(100, 'Max 20 tecken').min(3, 'Minst 3 tecken'),
     });
 
     try {

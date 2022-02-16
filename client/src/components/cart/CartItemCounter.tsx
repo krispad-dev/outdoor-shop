@@ -1,7 +1,5 @@
-import React from 'react';
-import Button from '../global/Button';
-import styled from 'styled-components';
 
+import styled from 'styled-components';
 import useSetCartItemAmount from '../../modules/cart/useSetCartItemCount';
 import useDeleteCart from '../../modules/cart/useDeleteCart';
 
@@ -10,9 +8,11 @@ import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 export default function CartItemCounter({
 	cart_item_id,
 	item_count,
+	disabled
 }: {
 	cart_item_id: number;
 	item_count: number;
+	disabled: boolean
 }) {
 	const { mutate: setCartItemAmount } = useSetCartItemAmount();
 	const { mutate: deleteCartItem } = useDeleteCart();
@@ -23,7 +23,7 @@ export default function CartItemCounter({
 			: () => setCartItemAmount({ id: cart_item_id.toString(), increment: false });
 
 	const handleIncrease = () =>
-		setCartItemAmount({ id: cart_item_id.toString(), increment: true });
+		setCartItemAmount({ id: cart_item_id.toString(), increment: true });		
 
 	return (
 		<CartItemCounterWrapper>
@@ -32,7 +32,7 @@ export default function CartItemCounter({
 			</button>
 
 			<h3> {item_count} </h3>
-			<button onClick={handleIncrease}>
+			<button disabled={disabled} onClick={handleIncrease}>
 				<MdKeyboardArrowUp />
 			</button>
 		</CartItemCounterWrapper>
@@ -40,14 +40,23 @@ export default function CartItemCounter({
 }
 
 const CartItemCounterWrapper = styled.div`
-	position: relative;
+
 	background-color: ${props => props.theme.btnColor};
-	z-index: 0;
+
 	color: #fff;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	border-radius: 3px;
+	animation: grow 0.2s ease-in-out forwards;
+	@keyframes grow {
+		from {
+			height: 0rem;
+		}
+		to {
+			height: 3rem;
+		}
+	}
 
 	button {
 		border-radius: 3px;
@@ -61,10 +70,11 @@ const CartItemCounterWrapper = styled.div`
 	}
 
 	h3 {
-		font-size: 1rem;
-		position: absolute;
+		font-size: 1.5rem;
+		font-family: monospace;
 		top: 6px;
-		z-index: 10;
+		z-index: 999;
+		color: #fff;
 	}
 	svg {
 		font-size: 1.8rem;

@@ -13,7 +13,7 @@ export default function Snack({ text }: { text: string | undefined; }) {
         setTimeout(() => {
             dispatch({ type: 'SET_DEACTIVATE_SNACK' })
 
-        }, 2000)
+        }, 3000)
 
 
     }, [state.snackIsActive])
@@ -30,6 +30,8 @@ export default function Snack({ text }: { text: string | undefined; }) {
 const SnackBar = styled.div<{ isActive: boolean }>`
 	p {
 		margin-right: 0.5rem;
+		font-weight: 700;
+		font-size: 0.8rem;
 	}
 
 	display: flex;
@@ -37,7 +39,8 @@ const SnackBar = styled.div<{ isActive: boolean }>`
 	justify-content: center;
 	align-items: center;
 	color: #fff;
-	font-size: 0.9rem;
+	font-size: 1rem;
+
 	height: auto;
 	padding: 1rem;
 	width: auto;

@@ -24,10 +24,12 @@ export default function CartModule({ isLoggedIn }: { isLoggedIn: boolean }) {
 	const totalSumExclVat = cartTotal(isCartItems && cartItems?.data, false);
 	const totalSumInclVat = cartTotal(isCartItems && cartItems?.data, true);
 
+
 	return (
 		<ProductModuleContainer>
 			<div role={'img'} className='image-container'>
 				{isCartItems && <CartItemList cartItems={cartItems && cartItems?.data} />}
+				{!isCartItems && <div className='cart-item-placeholder'>Inga varor här för tillfället</div> }
 			</div>
 			<div className='info-container'>
 				<div className='inner-info-container'>
@@ -42,23 +44,32 @@ export default function CartModule({ isLoggedIn }: { isLoggedIn: boolean }) {
 			</div>
 			<div className='actions-container'>
 				<div className='inner-actions-container'>
-					<div className='inner-info-container'>
-						<h3>Leveransuppgifter: </h3>
 
-						<p>Address: {loggedInUser?.address}</p>
-						<p>Postnummer:{loggedInUser?.zipCode} </p>
-						<p>Stad: {loggedInUser?.city} </p>
-						<p>Orderbekräftelse till: {loggedInUser?.email} </p>
-					</div>
+						<div>
 
-					<Button spinner={<BtnSpinner/>} isLoading={isLoading} clickHandler={placeOrderHandler} text={'slutför köp'} />
+							<h3>Leveransuppgifter: </h3>
+							<p>Address: <em> {loggedInUser?.address} </em></p>
+							<p>Postnummer: <em> {loggedInUser?.zipCode} </em> </p>
+							<p>Stad: <em> {loggedInUser?.city} </em> </p>
+							<p>Orderbekräftelse till: <em>{loggedInUser?.email} </em></p>
+
+						</div>
+		
+						<Button isDisabled={!isCartItems} spinner={<BtnSpinner/>} isLoading={isLoading} clickHandler={placeOrderHandler} text={'slutför köp'} />
+				
 				</div>
 			</div>
 		</ProductModuleContainer>
+
 	);
 }
 
 const ProductModuleContainer = styled.div`
+	em {
+		font-weight: 600;
+		text-transform: unset;
+	}
+
 
 	h3, h2 {
 		font-weight: 500;
@@ -69,8 +80,9 @@ const ProductModuleContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	display: grid;
+	
 
-	grid-template-columns: 1fr, 1fr;
+	grid-template-columns: 1fr 400px;
 	grid-template-rows: 1fr, 1fr;
 
 	grid-template-areas:
@@ -84,36 +96,64 @@ const ProductModuleContainer = styled.div`
 		justify-content: center;
 		align-items: center;
 		flex-direction: column;
+	
 
 		div.inner-info-container {
+
 			display: flex;
 			flex-direction: column;
 			justify-content: space-between;
-			width: 90%;
-			height: 90%;
+			width: 95%;
+			height: 95%;
+
+			p {
+				margin: 0.5rem;
+				font-size: 0.9rem;
+			}
+			
 		}
 	}
 
 	div.actions-container {
+		grid-area: actions-container;
+		background-color: ${props => props.theme.cardColorDark};
+
+	
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		height: 95%;
 		div.inner-actions-container {
+			padding: 1rem;
 			display: flex;
-			align-items: flex-start;
 			flex-direction: column;
 			justify-content: space-between;
-			height: 90%;
-			width: 90%;
+			align-items: flex-start;
+
+			height: 85%;
+			width: 95%;
+
+			p {
+				margin: 0.5rem;
+				font-size: 0.9rem;
+			}
 		}
-		grid-area: actions-container;
-		background-color: ${props => props.theme.cardColorDark};
+
 	}
 
 	div.image-container {	
 		grid-area: image-container;
 		background-position: center;
 		background-size: cover;
+
+		div.cart-item-placeholder {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			width: 100%;
+			background-color: ${props => props.theme.cardColor};
+		}
 	}
 
 	@media (max-width: 675px) {

@@ -7,11 +7,12 @@ const StyledFormContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	background-color: ${props => props.theme.cardColor};
-
 	border-radius: 5px;
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 	opacity: 97%;
 	padding: 2rem;
+
+
 
 	form {
 		display: flex;
@@ -30,7 +31,14 @@ const StyledFormContainer = styled.div`
 
 	h2.logo {
 		color: ${props => props.theme.accentColor};
-		font-size: 2rem;
+		font-size: 3rem;
+	}
+
+	div.header-container {
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 `;
 

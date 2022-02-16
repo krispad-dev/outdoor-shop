@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { useWindowSize } from '@react-hook/window-size';
-import { Link } from 'react-router-dom';
 import { UiStateContext } from '../../context/UiStateContext';
 
 import {
@@ -28,7 +27,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 
 export default function AdminCms() {
-
 	const initialState = {
 		product_name: '',
 		description: '',
@@ -41,7 +39,7 @@ export default function AdminCms() {
 	const [csmIsLoading, setCmsIsLoading] = useState(false);
 	const [formData, setFormData] = useState<FormData>(initialState);
 
-	const [width, height] = useWindowSize()
+	const [width, height] = useWindowSize();
 
 	const { state, dispatch } = useContext(UiStateContext);
 	const { data: products } = useGetProducts();
@@ -53,16 +51,12 @@ export default function AdminCms() {
 		isSuccess: addIsSuccess,
 	} = useAddProduct();
 
-
-
 	const {
 		mutate: mutateUpdate,
 		data: dataUpdate,
 		isLoading: isLoadingUpdate,
 		isSuccess: updateIsSuccess,
 	} = useUpdateProduct();
-
-
 
 	const {
 		mutate: mutateDelete,
@@ -71,18 +65,12 @@ export default function AdminCms() {
 		isSuccess: deleteIsSuccess,
 	} = useDeleteProduct();
 
-
-
 	const currentMode = state.adminMode;
-
-
 
 	const isError =
 		dataDelete?.success === false &&
 		dataUpdate?.success === false &&
 		dataAdd?.success === false;
-
-
 
 	function submitHandler(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
@@ -95,8 +83,6 @@ export default function AdminCms() {
 			mutateDelete(state?.productToUpdate?.product_id);
 		}
 	}
-
-
 
 	const productNameHelperText = isValidProductName(formData?.product_name)
 		? isValidProductName(formData?.product_name)
@@ -122,8 +108,6 @@ export default function AdminCms() {
 		? isValidImageUrl(formData?.image)
 		: ' ';
 
-
-
 	useEffect(() => {
 		if (isLoadingAdd && isLoadingUpdate && isLoadingDelete) {
 			setCmsIsLoading(true);
@@ -132,15 +116,11 @@ export default function AdminCms() {
 		}
 	}, [isLoadingAdd, isLoadingUpdate, isLoadingDelete]);
 
-
-
 	useEffect(() => {
 		if (state.productToUpdate) {
 			setFormData(state?.productToUpdate);
 		}
 	}, [state.productToUpdate]);
-
-
 
 	useEffect(() => {
 		if (currentMode === 'new') {
@@ -149,8 +129,6 @@ export default function AdminCms() {
 		dispatch({ type: 'SET_PRODUCT_TO_EDIT', payload: null });
 	}, [currentMode]);
 
-
-
 	useEffect(() => {
 		setFormData(initialState);
 
@@ -158,8 +136,6 @@ export default function AdminCms() {
 			dispatch({ type: 'SET_ACTIVATE_SNACK', payload: snackText });
 		}
 	}, [deleteIsSuccess, updateIsSuccess, addIsSuccess]);
-
-
 
 	const snackText =
 		currentMode === 'new'
@@ -174,153 +150,189 @@ export default function AdminCms() {
 
 	return (
 		<StyledFormContainer>
-			<div className='header-container'>
-				<Link to={'/'}>X</Link>
-				{width > 400 && <h2 className='logo'>admin</h2>}
-			</div>
-
 			<InnerContainer>
 				<Box
 					component='form'
 					sx={{
 						'& > :not(style)': {
-							m: width > 400 ? 1 : 0.5,
-							width: width < 400 ? '20ch' : '25ch',
+							m: 1,
+							width: '25ch',
 						},
 					}}
 					noValidate
 					autoComplete='off'
 					onSubmit={submitHandler}
 				>
-					<AdminToggleButton />
-					<SearchToUpdate products={products.data} isDisabled={currentMode === 'new'} />
+					<div>
+						<AdminToggleButton />
+						<SearchToUpdate
+							products={products.data}
+							isDisabled={currentMode === 'new'}
+						/>
 
-					<TextField
-						disabled={currentMode === 'delete'}
-						value={formData.price}
-						size='small'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='price'
-						label='Pris'
-						InputProps={{
-							startAdornment: <InputAdornment position='start'>SEK</InputAdornment>,
-						}}
-						variant='outlined'
-						placeholder='Lagerstatus'
-						helperText={priceHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='Pris'
-						type='number'
-					/>
+						<TextField
+							style={{ width: '100%' }}
+							disabled={currentMode === 'delete'}
+							value={formData.price}
+							size='small'
+							autoComplete='true'
+							error={isError}
+							margin='normal'
+							id='price'
+							label='Pris'
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position='start'>SEK</InputAdornment>
+								),
+							}}
+							variant='outlined'
+							placeholder='Lagerstatus'
+							helperText={priceHelperText ? priceHelperText : ' '}
+							onChange={e =>
+								setFormData({ ...formData, [e.target.id]: e.target.value })
+							}
+							name='Pris'
+							type='number'
+						/>
 
-					<TextField
-						disabled={currentMode === 'delete'}
-						value={formData.in_stock}
-						size='small'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='in_stock'
-						label='Lagerstatus'
-						InputProps={{
-							startAdornment: <InputAdornment position='start'>Antal</InputAdornment>,
-						}}
-						variant='outlined'
-						placeholder='Lagerstatus'
-						helperText={stockValueHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='Lagerstatus'
-						type='number'
-					/>
+						<TextField
+							style={{ width: '100%' }}
+							disabled={currentMode === 'delete'}
+							value={formData.in_stock}
+							size='small'
+							autoComplete='true'
+							error={isError}
+							margin='normal'
+							id='in_stock'
+							label='Lagerstatus'
+							InputProps={{
+								startAdornment: (
+									<InputAdornment position='start'>Antal</InputAdornment>
+								),
+							}}
+							variant='outlined'
+							placeholder='Lagerstatus'
+							helperText={stockValueHelperText ? stockValueHelperText : ' '}
+							onChange={e =>
+								setFormData({ ...formData, [e.target.id]: e.target.value })
+							}
+							name='Lagerstatus'
+							type='number'
+						/>
 
-					<TextField
-						disabled={currentMode === 'delete'}
-						value={formData.image}
-						size='small'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='image'
-						label='Bild'
-						variant='outlined'
-						placeholder='Bild'
-						helperText={imageHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='Bild'
-						type='text'
-					/>
+						<Button
+							spinner={<BtnSpinner />}
+							text={
+								currentMode === 'new'
+									? 'skapa'
+									: currentMode === 'update'
+									? 'uppdatera'
+									: currentMode === 'delete'
+									? 'radera'
+									: deleteIsSuccess || updateIsSuccess || addIsSuccess
+									? 'lyckades'
+									: ''
+							}
+							isDisabled={
+								currentMode !== 'delete' && !createUpdate.isValidSync(formData)
+							}
+							isLoading={isLoadingAdd || isLoadingUpdate || isLoadingDelete}
+						/>
+					</div>
 
-					<TextField
-						disabled={currentMode === 'delete'}
-						value={formData.product_name}
-						size='small'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='product_name'
-						label='Produktnamn'
-						variant='outlined'
-						placeholder='Produktnamn'
-						helperText={productNameHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='product name'
-						type={'text'}
-					/>
-					<TextField
-						disabled={currentMode === 'delete'}
-						value={formData.description}
-						size='small'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='description'
-						label='Beskrivning'
-						variant='outlined'
-						placeholder='Beskrivning'
-						helperText={descriptionHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='Beskrivning'
-						type={'text'}
-					/>
-					<TextField
-						disabled={currentMode === 'delete'}
-						value={formData.category}
-						size='small'
-						autoComplete='true'
-						error={isError}
-						margin='normal'
-						id='category'
-						label='Kategori'
-						variant='outlined'
-						placeholder='Kategori'
-						helperText={categoryHelperText}
-						onChange={e => setFormData({ ...formData, [e.target.id]: e.target.value })}
-						name='Kategori'
-						type={'text'}
-					/>
+					<div>
+						<TextField
+							style={{ width: '100%' }}
+							disabled={currentMode === 'delete'}
+							value={formData.image}
+							size='small'
+							autoComplete='true'
+							error={isError}
+							margin='normal'
+							id='image'
+							label='Bild'
+							variant='outlined'
+							placeholder='Bild'
+							helperText={imageHelperText}
+							onChange={e =>
+								setFormData({ ...formData, [e.target.id]: e.target.value })
+							}
+							name='Bild'
+							type='text'
+						/>
 
-					<Button
-						spinner={<BtnSpinner />}
-						text={
-							currentMode === 'new'
-								? 'skapa'
-								: currentMode === 'update'
-								? 'uppdatera'
-								: currentMode === 'delete'
-								? 'radera'
-								: deleteIsSuccess || updateIsSuccess || addIsSuccess
-								? 'lyckades'
-								: ''
-						}
-						isDisabled={currentMode !== 'delete' && !createUpdate.isValidSync(formData)}
-						isLoading={isLoadingAdd || isLoadingUpdate || isLoadingDelete}
-					/>
+						<TextField
+							style={{ width: '100%' }}
+							disabled={currentMode === 'delete'}
+							value={formData.product_name}
+							size='small'
+							autoComplete='true'
+							error={isError}
+							margin='normal'
+							id='product_name'
+							label='Produktnamn'
+							variant='outlined'
+							placeholder='Produktnamn'
+							helperText={productNameHelperText}
+							onChange={e =>
+								setFormData({ ...formData, [e.target.id]: e.target.value })
+							}
+							name='product name'
+							type={'text'}
+						/>
+						<TextField
+							style={{ width: '100%' }}
+							disabled={currentMode === 'delete'}
+							value={formData.description}
+							size='small'
+							autoComplete='true'
+							error={isError}
+							margin='normal'
+							id='description'
+							label='Beskrivning'
+							variant='outlined'
+							placeholder='Beskrivning'
+							helperText={descriptionHelperText}
+							onChange={e =>
+								setFormData({ ...formData, [e.target.id]: e.target.value })
+							}
+							name='Beskrivning'
+							type={'text'}
+						/>
+						<TextField
+							style={{ width: '100%' }}
+							disabled={currentMode === 'delete'}
+							value={formData.category}
+							size='small'
+							autoComplete='true'
+							error={isError}
+							margin='normal'
+							id='category'
+							label='Kategori'
+							variant='outlined'
+							placeholder='Kategori'
+							helperText={categoryHelperText}
+							onChange={e =>
+								setFormData({ ...formData, [e.target.id]: e.target.value })
+							}
+							name='Kategori'
+							type={'text'}
+						/>
+					</div>
 				</Box>
 			</InnerContainer>
 		</StyledFormContainer>
 	);
 }
 
-const InnerContainer = styled.div``;
+const InnerContainer = styled.div`
+	form {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		width: auto;
+		flex-wrap: wrap;
+		height: 23rem;
+	}
+`;

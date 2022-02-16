@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { LoginUser } from '../../modules/auth/useLoginUser';
 import { isValidEmail, isValidPassword, loginSchema } from '../../helpers/validators';
 
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '../global/Button';
 import useLoginUser from '../../modules/auth/useLoginUser';
@@ -32,7 +33,18 @@ export default function LoginForm() {
 	return (
 		<StyledFormContainer>
 			<h2 className='logo'>outdoor</h2>
-			<form action='submit' onSubmit={e => submitHandler(e)}>
+			<Box
+					component='form'
+					sx={{
+						'& > :not(style)': {
+							m: 1,
+							width: '20ch',
+						},
+					}}
+					noValidate
+					autoComplete='off'
+					onSubmit={submitHandler}
+				>
 				<TextField
 					autoComplete='true'
 					error={data?.success === false}
@@ -66,7 +78,7 @@ export default function LoginForm() {
 					isDisabled={!loginSchema.isValidSync(formData)}
 					isLoading={isLoading}
 				/>
-			</form>
+			</Box>
 		</StyledFormContainer>
 	);
 }

@@ -4,8 +4,9 @@ import { Cart } from '../../models/Cart';
 import { formatSek } from '../../helpers/formatSek';
 import CartItemCounter from './CartItemCounter';
 
-export default function CartListItem({ image, product_name, description, in_stock, price, cart_item_id, item_count }: Cart) {
+export default function CartListItem({ image, product_name, in_stock, price, cart_item_id, item_count }: Cart) {
 	
+	const btnIsDisabled = item_count >= in_stock;
 
 	return (
 		<ListItemContainer>
@@ -15,13 +16,12 @@ export default function CartListItem({ image, product_name, description, in_stoc
 
 			<div className='middle-container'>
 				<h4>{product_name}</h4>
-				<p>{description}</p>
 				<p> <strong>{formatSek(price)}</strong> </p>
-				<p id='kvar-i-webblager'>Kvar i webblager: <strong>{in_stock}</strong> </p>
+				<p id='kvar-i-webblager'>Kvar&nbsp;i&nbsp;webblager:&nbsp;<strong>{in_stock}</strong> </p>
 			</div>
 
 			<div className='right-container'>
-				<CartItemCounter cart_item_id={cart_item_id} item_count={item_count} />
+				<CartItemCounter disabled={btnIsDisabled} cart_item_id={cart_item_id} item_count={item_count} />
 			</div>
 		</ListItemContainer>
 	);
