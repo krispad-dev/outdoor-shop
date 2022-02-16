@@ -47,7 +47,7 @@ export let createUpdate: any = yup.object().shape({
 export function isValidEmail(email: string) {
 
     let isValidEmail = yup.object().shape({
-        email: yup.string().required('Fyll i din mejladress här.').email('Använd formatet: namn@dinmejl.se'),
+        email: yup.string().required('Fyll i din mejladress här.').email('Format: namn@dinmejl.se'),
     });
 
     try {
