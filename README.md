@@ -45,11 +45,11 @@ Tested with [Testing-Library](https://testing-library.com/) and [Jest-DOM](https
 
 ## Clone, install, run and test:
 
-### 0. Clone project:
+### Clone project:
 
 
-Clone project: `git clone https://github.com/krispad-dev/outdoor-shop.git`
-cd into outdoor-shop `cd outdoor-shop`
+1. Clone project: `git clone https://github.com/krispad-dev/outdoor-shop.git`
+2. cd into outdoor-shop `cd outdoor-shop`
 
 
 
