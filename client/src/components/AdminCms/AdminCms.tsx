@@ -133,7 +133,7 @@ export default function AdminCms() {
 	useEffect(() => {
 		setFormData(initialState);
 		
-		if (!isSuccess) {
+		if (isSuccess) {
 			dispatch({ type: 'SET_ACTIVATE_SNACK', payload: snackText });
 		}
 	}, [deleteIsSuccess, updateIsSuccess, addIsSuccess]);
