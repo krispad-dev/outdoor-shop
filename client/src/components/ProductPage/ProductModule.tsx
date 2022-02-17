@@ -109,7 +109,8 @@ const ProductModuleContainer = styled.div<{ image: string }>`
 			width: 95%;
 			height: 95%;
 			padding: 1rem;
-			p {
+			p {	
+				font-weight: 500;
 				margin-top: 1rem;
 			}
 		}

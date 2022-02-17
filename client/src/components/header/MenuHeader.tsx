@@ -105,6 +105,10 @@ const ButtonsWrapper = styled.div<{ disabled: boolean }>`
 	}
 
 	button {
+
+		p {
+			font-weight: 600;
+		}
 		margin: 0.1rem 0rem;
 		position: relative;
 		:hover {

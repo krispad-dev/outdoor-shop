@@ -10,9 +10,10 @@ export default function SearchCard({
 }) {
 	return (
 		<ListItemContainer role={'button'}>
-			<Link to={`/${product_id}`}></Link>
 			<div className='inner-container'>
-				<p>{product_name}</p>
+				<p>
+					{product_name} <Link to={`/${product_id}`}></Link>
+				</p>
 			</div>
 		</ListItemContainer>
 	);

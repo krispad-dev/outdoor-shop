@@ -59,4 +59,10 @@ const StyledButton = styled.button<{ isDisabled?: boolean }>`
 	cursor: pointer;
 	box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 	position: static;
+
+	@media(max-width: 510px) {
+
+		font-size: 0.9rem;
+
+	} 
 `;
