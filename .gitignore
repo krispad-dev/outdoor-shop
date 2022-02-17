@@ -7,4 +7,3 @@ public
 .env
  query.sql
 pgadmin
-*.md
