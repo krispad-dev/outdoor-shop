@@ -14,7 +14,7 @@ Tested with [Testing-Library](https://testing-library.com/) and [Jest-DOM](https
 [Outdoor Shop](https://nature-shop.herokuapp.com/)
 
 
-## User stories (swesdish)
+## User stories (swedish)
 
 - som användare vill jag kunna logga in på mitt konto så jag så jag får möjlighet att handla.
   &nbsp;
