@@ -1,4 +1,4 @@
-# outdoor-shop, simple web shop prototype for outdoor related products.
+# outdoor shop, a simple webshop prototype for outdoor-related products.
 
 
 ### Background
@@ -52,7 +52,7 @@ Tested with [Testing-Library](https://testing-library.com/) and [Jest-DOM](https
 
 1. from root dir (outdoor-shop): `cd app`
 2. inside app dir: `npm i`
-3. inside app dir: add the .env file with the (correct) enviroment variables
+3. inside app dir: add the .env file with the (correct) environment variables
 4. inside app dir: `npm run dev`
     &nbsp;
 
