@@ -13,7 +13,7 @@ export async function registerUser(req: Request, res: Response) {
             user_name: user_name,
             email: email,
             user_password: await bcHash(user_password),
-            role: 'admin',
+            role: 'user',
             zip_code: zip_code,
             city: city,
             address: address
